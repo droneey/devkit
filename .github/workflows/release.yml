@@ -44,7 +44,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           bun --bun x changeset version
           git add .
-          git commit -m "chore: Version packages"
+          git commit -m "chore: Version packages" --no-verify
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
