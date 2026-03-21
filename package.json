@@ -31,6 +31,7 @@
   ],
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
+    "@droneey/devkit-ts-commitlint": "workspace:*",
     "@droneey/devkit-ts-eslint": "workspace:*",
     "@droneey/devkit-ts-prettier": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",

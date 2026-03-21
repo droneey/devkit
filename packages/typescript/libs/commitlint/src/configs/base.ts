@@ -6,13 +6,9 @@ const baseConfig: Commitlint.UserConfig = {
   rules: {
     'body-empty': [Commitlint.RuleConfigSeverity.Error, 'always'],
     'footer-empty': [Commitlint.RuleConfigSeverity.Error, 'always'],
+    'header-case': [Commitlint.RuleConfigSeverity.Disabled],
 
     'body-case': [
-      Commitlint.RuleConfigSeverity.Error,
-      'always',
-      'sentence-case',
-    ],
-    'header-case': [
       Commitlint.RuleConfigSeverity.Error,
       'always',
       'sentence-case',
