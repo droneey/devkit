@@ -28,13 +28,31 @@ jobs:
             fi
           done
 
-      - name: Create release PR or publish
-        uses: changesets/action@v1
-        with:
-          publish: bunx changeset publish
-          version: bunx changeset version
-          title: 'chore: Version packages'
-          commit: 'chore: Version packages'
+      - name: Check for changesets
+        id: changesets
+        run: |
+          if bun --bun x changeset status 2>&1 | grep -q "No changesets present"; then
+            echo "has_changesets=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changesets=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Version packages
+        if: steps.changesets.outputs.has_changesets == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          bun --bun x changeset version
+          git add .
+          git commit -m "chore: Version packages"
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm
+        if: steps.changesets.outputs.has_changesets == 'true'
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          bun --bun x changeset publish
+        env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
