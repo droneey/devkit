@@ -1,0 +1,46 @@
+# OS
+.DS_Store
+
+# Environment
+.env
+
+# Runtime
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary
+.temp/
+.tmp/
+
+# Logs
+**/logs/
+*.log
+
+# Build
+**/dist/
+**/build/
+**/coverage/
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+.claude/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Diagnostic
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# SSL
+ssl/
+acme.json

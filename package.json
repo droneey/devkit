@@ -1,0 +1,64 @@
+{
+  "name": "@droneey/devkit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shared development toolkit for consistent tooling across projects.",
+  "homepage": "https://github.com/droneey/devkit#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git"
+  },
+  "type": "module",
+  "module": "index.ts",
+  "scripts": {
+    "clean": "rm -rf node_modules packages/typescript/libs/*/node_modules bun.lock",
+    "lint": "eslint --fix",
+    "lint:check": "eslint",
+    "lint:packages": "syncpack lint",
+    "lint:packages:fix": "syncpack fix",
+    "prepare": "husky"
+  },
+  "workspaces": [
+    "packages/typescript/libs/*"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@droneey/devkit-ts-eslint": "workspace:*",
+    "@droneey/devkit-ts-prettier": "workspace:*",
+    "@droneey/devkit-ts-tsconfig": "workspace:*",
+    "@eslint/js": "^10.0.1",
+    "@types/bun": "^1.3.11",
+    "eslint": "^10.1.0",
+    "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
+    "syncpack": "^14.2.0",
+    "typescript-eslint": "^8.57.1",
+    "validate-branch-name": "^1.3.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,md,yaml,yml}": [
+      "prettier --write"
+    ],
+    "!(packages/typescript/templates/**)*.{ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "prettier": "@droneey/devkit-ts-prettier",
+  "validate-branch-name": {
+    "pattern": "^(feature|fix|hotfix)/\\d+-[a-z]+(-[a-z]+)*$",
+    "errorMsg": "Branch name must be in the format of (feature|fix|hotfix)/(taskId)-(name)"
+  }
+}

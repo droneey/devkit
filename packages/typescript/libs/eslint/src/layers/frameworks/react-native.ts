@@ -1,0 +1,22 @@
+import eslintPluginReactNative from 'eslint-plugin-react-native';
+
+const reactNativeConfig = [
+  {
+    files: ['**/*.tsx', '**/*.ts'],
+
+    plugins: {
+      'react-native': eslintPluginReactNative,
+    },
+    rules: {
+      'react-native/no-color-literals': 'warn',
+      'react-native/no-inline-styles': 'warn',
+      'react-native/no-raw-text': 'error',
+      'react-native/no-single-element-style-arrays': 'error',
+      'react-native/no-unused-styles': 'error',
+      'react-native/sort-styles': ['warn', 'asc'],
+      'react-native/split-platform-components': 'warn',
+    },
+  },
+];
+
+export { reactNativeConfig };

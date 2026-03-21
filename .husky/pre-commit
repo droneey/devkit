@@ -1,0 +1,5 @@
+# Validate branch name
+bun --bun x validate-branch-name
+
+# Lint staged files
+bun --bun x lint-staged

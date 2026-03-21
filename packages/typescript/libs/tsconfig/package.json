@@ -1,0 +1,33 @@
+{
+  "name": "@droneey/devkit-ts-tsconfig",
+  "version": "1.0.0",
+  "description": "Shared TypeScript configuration with variants for node-cjs, node-esm, browser, and react-native.",
+  "keywords": [
+    "config",
+    "shared",
+    "ts",
+    "tsconfig",
+    "typescript",
+    "typescript-config"
+  ],
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/tsconfig#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git",
+    "directory": "packages/typescript/libs/tsconfig"
+  },
+  "files": [
+    "configs/*"
+  ],
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
