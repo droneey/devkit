@@ -24,7 +24,7 @@
     "lint:check": "eslint",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
-    "version": "changeset",
+    "version": "bun --bun x changeset",
     "prepare": "husky",
     "test": "bun test"
   },
