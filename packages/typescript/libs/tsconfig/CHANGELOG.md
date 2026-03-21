@@ -1,5 +1,11 @@
 # @droneey/devkit-ts-tsconfig
 
+## 1.0.3
+
+### Patch Changes
+
+- [#6](https://github.com/droneey/devkit/pull/6) [`3d4ef99`](https://github.com/droneey/devkit/commit/3d4ef99bc9e5c6dba57fb5f32c74a6138a72bc9a) Thanks [@kurovskyiii](https://github.com/kurovskyiii)! - Fix dist import.
+
 ## 1.0.2
 
 ### Patch Changes

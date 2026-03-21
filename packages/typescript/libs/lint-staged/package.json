@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-lint-staged",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shared lint-staged configuration for running linters on staged files.",
   "keywords": [
     "config",
@@ -30,7 +30,14 @@
   "types": "dist/index.d.ts",
   "publishConfig": {
     "main": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    }
   },
   "scripts": {
     "build": "rimraf dist && bun build --target=node ./index.ts --outdir dist && bun run build:declaration",
