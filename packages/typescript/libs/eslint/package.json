@@ -34,7 +34,13 @@
   "main": "index.ts",
   "module": "index.ts",
   "publishConfig": {
-    "main": "dist/index.js"
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js"
+      }
+    }
   },
   "scripts": {
     "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist"
