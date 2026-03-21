@@ -2,7 +2,7 @@ import * as DroneeyEslintSetup from '@droneey/devkit-ts-eslint';
 
 const config = [
   {
-    ignores: ['.syncpackrc.ts', '**/templates/**'],
+    ignores: ['.syncpackrc.ts', '**/templates/**', '**/jest-preset.js'],
   },
   {
     languageOptions: {
