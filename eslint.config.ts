@@ -13,6 +13,7 @@ const config = [
   },
   ...DroneeyEslintSetup.configs.base,
   ...DroneeyEslintSetup.configs.node,
+  ...DroneeyEslintSetup.configs.test,
   {
     files: [
       './packages/typescript/libs/prettier/index.ts',

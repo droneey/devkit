@@ -32,9 +32,8 @@
     "types": "dist/index.d.ts"
   },
   "scripts": {
-    "build": "bun build --target=node ./index.ts --outdir dist && bun run build:declaration",
-    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json --outdir dist",
-    "postbuild": "rimraf tsconfig.types.tsbuildinfo"
+    "build": "rimraf dist && bun build --target=node ./index.ts --outdir dist && bun run build:declaration",
+    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json --outdir dist && rimraf tsconfig.types.tsbuildinfo"
   },
   "files": [
     "dist/*"

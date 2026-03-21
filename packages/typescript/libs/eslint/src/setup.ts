@@ -6,7 +6,7 @@ import {
   reactConfig,
   reactNativeConfig,
   testConfig,
-} from './layers';
+} from './configs';
 
 const configs = {
   base: baseConfig,

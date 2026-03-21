@@ -33,15 +33,11 @@
   "type": "module",
   "main": "index.ts",
   "module": "index.ts",
-  "types": "dist/index.d.ts",
   "publishConfig": {
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "main": "dist/index.js"
   },
   "scripts": {
-    "build": "bun build --target=node --packages=external ./index.ts --outdir dist && bun run build:declaration",
-    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json --outdir dist",
-    "postbuild": "rimraf tsconfig.types.tsbuildinfo"
+    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist"
   },
   "files": [
     "dist/*"

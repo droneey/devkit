@@ -1,2 +1,2 @@
-export * from './base';
-export * from './end-to-end';
+export { baseConfig } from './base';
+export { endToEndConfig } from './end-to-end';

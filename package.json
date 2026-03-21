@@ -24,7 +24,8 @@
     "lint:check": "eslint",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "bun test"
   },
   "workspaces": [
     "packages/typescript/libs/*"
