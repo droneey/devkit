@@ -24,6 +24,7 @@
     "lint:check": "eslint",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
+    "version": "changeset",
     "prepare": "husky",
     "test": "bun test"
   },
@@ -31,6 +32,8 @@
     "packages/typescript/libs/*"
   ],
   "devDependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
     "@commitlint/cli": "^20.5.0",
     "@droneey/devkit-ts-commitlint": "workspace:*",
     "@droneey/devkit-ts-eslint": "workspace:*",
