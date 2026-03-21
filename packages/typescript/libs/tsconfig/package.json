@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-tsconfig",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Shared TypeScript configuration with variants for node-cjs, node-esm, browser, and react-native.",
   "keywords": [
     "config",
