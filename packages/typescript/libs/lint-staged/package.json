@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-lint-staged",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared lint-staged configuration for running linters on staged files.",
   "keywords": [
     "config",
