@@ -1,0 +1,71 @@
+name: Auto Changeset from Branch
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+
+jobs:
+  create-changeset:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Determine bump type from branch name
+        id: bump
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          PREFIX=$(echo "$BRANCH" | cut -d/ -f1)
+          case "$PREFIX" in
+            feature) echo "type=minor" >> "$GITHUB_OUTPUT" ;;
+            fix|hotfix) echo "type=patch" >> "$GITHUB_OUTPUT" ;;
+            *) echo "No version bump for branch prefix: $PREFIX"; exit 0 ;;
+          esac
+
+      - name: Detect changed packages
+        id: packages
+        run: |
+          CHANGED=""
+          for pkg in packages/typescript/libs/*/; do
+            name=$(jq -r '.name' "$pkg/package.json")
+            if git diff --name-only origin/main...HEAD | grep -q "^$pkg"; then
+              CHANGED="$CHANGED $name"
+            fi
+          done
+          echo "list=$CHANGED" >> "$GITHUB_OUTPUT"
+
+      - name: Create changeset
+        if: steps.bump.outputs.type && steps.packages.outputs.list
+        env:
+          BUMP_TYPE: ${{ steps.bump.outputs.type }}
+          PACKAGES: ${{ steps.packages.outputs.list }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          FILENAME=".changeset/pr-${PR_NUMBER}.md"
+
+          # Skip if changeset already exists
+          if [ -f "$FILENAME" ]; then
+            echo "Changeset already exists, skipping"
+            exit 0
+          fi
+
+          echo "---" > "$FILENAME"
+          for pkg in $PACKAGES; do
+            echo "\"$pkg\": $BUMP_TYPE" >> "$FILENAME"
+          done
+          echo "---" >> "$FILENAME"
+          echo "" >> "$FILENAME"
+          echo "$PR_TITLE" >> "$FILENAME"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FILENAME"
+          git commit -m "chore: Add changeset for PR #${PR_NUMBER}" --no-verify
+          git push
