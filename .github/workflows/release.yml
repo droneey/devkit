@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install --frozen-lockfile
+
+      - name: Build packages
+        run: |
+          for pkg in packages/typescript/libs/*/; do
+            if [ -f "$pkg/package.json" ] && grep -q '"build"' "$pkg/package.json"; then
+              echo "Building $pkg"
+              cd "$pkg" && bun run build && cd -
+            fi
+          done
+
+      - name: Create release PR or publish
+        uses: changesets/action@v1
+        with:
+          publish: bunx changeset publish
+          version: bunx changeset version
+          title: 'chore: Version packages'
+          commit: 'chore: Version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
