@@ -30,7 +30,14 @@
   "types": "dist/index.d.ts",
   "publishConfig": {
     "main": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    }
   },
   "scripts": {
     "build": "rimraf dist && bun build --target=node ./index.ts --outdir dist && bun run build:declaration",
