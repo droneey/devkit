@@ -2,8 +2,12 @@ import globals from 'globals';
 
 const testConfig = [
   {
-    files: ['**/*.spec.ts', '**/*.test.ts', '**/*.spec.tsx', '**/*.test.tsx'],
-
+    files: [
+      '**/*.spec.ts',
+      '**/*.test.ts',
+      '**/*.spec.tsx',
+      '**/*.test.tsx',
+    ],
     languageOptions: {
       globals: {
         ...globals.jest,

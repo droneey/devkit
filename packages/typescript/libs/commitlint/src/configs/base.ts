@@ -1,17 +1,25 @@
 import * as Commitlint from '@commitlint/types';
 
 const baseConfig: Commitlint.UserConfig = {
-  extends: ['@commitlint/config-conventional'],
-
+  extends: [
+    '@commitlint/config-conventional',
+  ],
   rules: {
-    'body-empty': [Commitlint.RuleConfigSeverity.Error, 'always'],
-    'footer-empty': [Commitlint.RuleConfigSeverity.Error, 'always'],
-    'header-case': [Commitlint.RuleConfigSeverity.Disabled],
-
     'body-case': [
       Commitlint.RuleConfigSeverity.Error,
       'always',
       'sentence-case',
+    ],
+    'body-empty': [
+      Commitlint.RuleConfigSeverity.Error,
+      'always',
+    ],
+    'footer-empty': [
+      Commitlint.RuleConfigSeverity.Error,
+      'always',
+    ],
+    'header-case': [
+      Commitlint.RuleConfigSeverity.Disabled,
     ],
     'subject-case': [
       Commitlint.RuleConfigSeverity.Error,

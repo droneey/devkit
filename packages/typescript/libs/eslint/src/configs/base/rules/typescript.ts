@@ -1,15 +1,24 @@
 import eslintTs from 'typescript-eslint';
 
-import { baseNamingConvention, privateMemberConvention } from '../../shared';
+import {
+  baseNamingConvention,
+  privateMemberConvention,
+} from '../../shared/index.ts';
 
-const IGNORED_MAGIC_NUMBERS = [0, 1, -1];
+const IGNORED_MAGIC_NUMBERS = [
+  0,
+  1,
+  -1,
+];
 
 const typescriptConfig = [
   eslintTs.configs.eslintRecommended,
   ...eslintTs.configs.recommendedTypeChecked,
   {
-    files: ['**/*.ts', '**/*.tsx'],
-
+    files: [
+      '**/*.ts',
+      '**/*.tsx',
+    ],
     languageOptions: {
       parser: eslintTs.parser,
 
@@ -20,8 +29,6 @@ const typescriptConfig = [
     rules: {
       '@typescript-eslint/default-param-last': 'error',
       '@typescript-eslint/explicit-function-return-type': 'error',
-      '@typescript-eslint/init-declarations': ['error', 'always'],
-      '@typescript-eslint/method-signature-style': ['error', 'method'],
       '@typescript-eslint/no-confusing-void-expression': 'error',
       '@typescript-eslint/no-deprecated': 'error',
       '@typescript-eslint/no-dynamic-delete': 'error',
@@ -51,7 +58,6 @@ const typescriptConfig = [
       '@typescript-eslint/promise-function-async': 'error',
       '@typescript-eslint/related-getter-setter-pairs': 'error',
       '@typescript-eslint/require-array-sort-compare': 'error',
-      '@typescript-eslint/return-await': ['error', 'always'],
       '@typescript-eslint/unified-signatures': 'error',
       '@typescript-eslint/use-unknown-in-catch-callback-variable': 'error',
 
@@ -84,11 +90,19 @@ const typescriptConfig = [
           allowHigherOrderFunctions: false,
         },
       ],
+      '@typescript-eslint/init-declarations': [
+        'error',
+        'always',
+      ],
       '@typescript-eslint/max-params': [
         'error',
         {
           max: 3,
         },
+      ],
+      '@typescript-eslint/method-signature-style': [
+        'error',
+        'method',
       ],
       '@typescript-eslint/naming-convention': [
         'error',
@@ -116,6 +130,10 @@ const typescriptConfig = [
       ],
       '@typescript-eslint/no-unnecessary-parameter-property-assignment':
         'error',
+      '@typescript-eslint/return-await': [
+        'error',
+        'always',
+      ],
       '@typescript-eslint/switch-exhaustiveness-check': [
         'error',
         {

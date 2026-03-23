@@ -1,5 +1,7 @@
 const config = {
-  extends: ['@droneey/devkit-ts-commitlint'],
+  extends: [
+    '@droneey/devkit-ts-commitlint',
+  ],
 };
 
 export default config;

@@ -33,7 +33,10 @@ const perfectionistConfig = [
             'private-accessor-property',
             'property',
             'accessor-property',
-            ['get-method', 'set-method'],
+            [
+              'get-method',
+              'set-method',
+            ],
             'constructor',
             'static-method',
             'protected-method',
@@ -52,16 +55,24 @@ const perfectionistConfig = [
 
           customGroups: {
             type: {
-              react: ['^react$', '^react-.+'],
+              react: [
+                '^react$',
+                '^react-.+',
+              ],
             },
             value: {
-              react: ['^react$', '^react-.+'],
+              react: [
+                '^react$',
+                '^react-.+',
+              ],
             },
           },
           groups: [
             'builtin',
             'builtin-type',
-            ['react'],
+            [
+              'react',
+            ],
             'external',
             'external-type',
             'internal',
@@ -133,11 +144,15 @@ const perfectionistConfig = [
       'perfectionist/sort-jsx-props': [
         'warn',
         {
-          groups: ['shorthand', 'multiline', 'callback', 'unknown'],
-
           customGroups: {
             callback: '^on.+',
           },
+          groups: [
+            'shorthand',
+            'multiline',
+            'callback',
+            'unknown',
+          ],
         },
       ],
       'perfectionist/sort-modules': [
@@ -202,8 +217,13 @@ const perfectionistConfig = [
       'perfectionist/sort-objects': [
         'warn',
         {
-          groups: ['unknown', 'multiline', 'method'],
           newlinesBetween: 'always',
+
+          groups: [
+            'unknown',
+            'multiline',
+            'method',
+          ],
         },
       ],
       'perfectionist/sort-union-types': [

@@ -11,12 +11,16 @@ import {
   secretsConfig,
   typescriptConfig,
   unicornConfig,
-} from './rules';
+} from './rules/index.ts';
 
 const gitignorePath = path.resolve(process.cwd(), '.gitignore');
 
 const baseConfig = [
-  ...(fs.existsSync(gitignorePath) ? [includeIgnoreFile(gitignorePath)] : []),
+  ...(fs.existsSync(gitignorePath)
+    ? [
+        includeIgnoreFile(gitignorePath),
+      ]
+    : []),
   {
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
@@ -29,16 +33,18 @@ const baseConfig = [
   ...importConfig,
   ...perfectionistConfig,
   {
-    files: ['eslint.config.{js,ts}'],
-
+    files: [
+      'eslint.config.{js,ts}',
+    ],
     rules: {
       'import-x/no-default-export': 'off',
       'max-lines': 'off',
     },
   },
   {
-    files: ['commitlint.config.{js,ts}'],
-
+    files: [
+      'commitlint.config.{js,ts}',
+    ],
     rules: {
       'import-x/no-default-export': 'off',
     },

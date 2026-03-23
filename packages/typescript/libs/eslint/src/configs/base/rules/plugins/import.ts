@@ -6,7 +6,6 @@ const importConfig = [
       'import-x': eslintPluginImportX,
     },
     rules: {
-      'import-x/consistent-type-specifier-style': ['warn', 'prefer-top-level'],
       'import-x/export': 'warn',
       'import-x/exports-last': 'error',
       'import-x/first': 'warn',
@@ -22,6 +21,10 @@ const importConfig = [
       'import-x/no-self-import': 'warn',
       'import-x/no-unassigned-import': 'warn',
 
+      'import-x/consistent-type-specifier-style': [
+        'warn',
+        'prefer-top-level',
+      ],
       'import-x/no-useless-path-segments': [
         'warn',
         {

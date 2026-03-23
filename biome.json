@@ -1,0 +1,85 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "extends": [
+    "@droneey/devkit-ts-biome/base",
+    "@droneey/devkit-ts-biome/test"
+  ],
+  "overrides": [
+    {
+      "includes": [
+        "**/templates/**"
+      ],
+      "linter": {
+        "enabled": false
+      },
+      "assist": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      }
+    },
+    {
+      "includes": [
+        "**/*.ts"
+      ],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "useExplicitType": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "eslint.config.ts",
+        "commitlint.config.ts",
+        ".syncpackrc.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/jest-preset.js"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noCommonJs": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/libs/eslint/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/commitlint/index.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    }
+  ]
+}

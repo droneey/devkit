@@ -1,0 +1,79 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "overrides": [
+    {
+      "includes": [
+        "**/*.tsx",
+        "**/*.jsx"
+      ],
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedAttributes": {
+              "level": "on"
+            }
+          }
+        }
+      },
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useHookAtTopLevel": "error",
+            "useExhaustiveDependencies": "error",
+            "noChildrenProp": "error",
+            "useJsxKeyInIterable": "error",
+            "noNestedComponentDefinitions": "error",
+            "noNextAsyncClientComponent": "error",
+            "noLeakedRender": "error"
+          },
+          "nursery": {
+            "noJsxPropsBind": "error"
+          },
+          "a11y": {
+            "useButtonType": "error",
+            "useAnchorContent": "error",
+            "useValidAnchor": "error",
+            "useAriaPropsForRole": "error",
+            "useAltText": "error",
+            "useHtmlLang": "error",
+            "useHeadingContent": "error",
+            "noRedundantRoles": "error",
+            "noAutofocus": "warn",
+            "useKeyWithClickEvents": "error",
+            "noPositiveTabindex": "error",
+            "noRedundantAlt": "error",
+            "noLabelWithoutControl": "error",
+            "noInteractiveElementToNoninteractiveRole": "error",
+            "useIframeTitle": "error",
+            "noSvgWithoutTitle": "error",
+            "useValidAriaValues": "error",
+            "noAriaHiddenOnFocusable": "error",
+            "useSemanticElements": "error",
+            "useValidAriaProps": "error",
+            "useValidAriaRole": "error",
+            "noStaticElementInteractions": "error"
+          },
+          "suspicious": {
+            "noArrayIndexKey": "warn",
+            "noDuplicateJsxProps": "error",
+            "noReactForwardRef": "error"
+          },
+          "style": {
+            "noImplicitBoolean": "error",
+            "useFragmentSyntax": "error",
+            "useConsistentCurlyBraces": "error",
+            "useComponentExportOnlyModules": "error",
+            "useSelfClosingElements": "error"
+          },
+          "complexity": {
+            "noUselessFragments": "error"
+          },
+          "security": {
+            "noDangerouslySetInnerHtml": "error",
+            "noBlankTarget": "error"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,20 +1,28 @@
-import { baseNamingConvention, privateMemberConvention } from '../shared';
+import {
+  baseNamingConvention,
+  privateMemberConvention,
+} from '../shared/index.ts';
 
 const nestjsConfig = [
   {
-    files: ['**/*.ts'],
-
+    files: [
+      '**/*.ts',
+    ],
     rules: {
       '@typescript-eslint/init-declarations': 'off',
       // NestJS dependency injection patterns require more constructor parameters
-      '@typescript-eslint/max-params': ['error', { max: 5 }],
       '@typescript-eslint/no-extraneous-class': 'off',
       '@typescript-eslint/parameter-properties': 'off',
       'import-x/no-commonjs': 'off',
-      'max-statements': ['warn', { max: 20 }],
       'no-empty-function': 'off',
       'unicorn/prefer-top-level-await': 'off',
 
+      '@typescript-eslint/max-params': [
+        'error',
+        {
+          max: 5,
+        },
+      ],
       '@typescript-eslint/naming-convention': [
         'error',
         ...baseNamingConvention,
@@ -27,6 +35,12 @@ const nestjsConfig = [
           max: 100,
           skipBlankLines: true,
           skipComments: true,
+        },
+      ],
+      'max-statements': [
+        'warn',
+        {
+          max: 20,
         },
       ],
     },

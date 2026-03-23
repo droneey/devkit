@@ -27,13 +27,19 @@ const config: RcFile = {
   versionGroups: [
     {
       label: 'Workspace packages use workspace protocol',
-      dependencies: ['@droneey/**'],
-      dependencyTypes: ['dev'],
+      dependencies: [
+        '@droneey/**',
+      ],
+      dependencyTypes: [
+        'dev',
+      ],
       pinVersion: 'workspace:*',
     },
     {
       label: 'Peer dependencies intentionally use wider ranges',
-      dependencyTypes: ['peer'],
+      dependencyTypes: [
+        'peer',
+      ],
       isIgnored: true,
     },
     {
@@ -52,7 +58,11 @@ const config: RcFile = {
     {
       label: 'Use caret ranges for all dependencies',
       range: '^',
-      dependencyTypes: ['dev', 'prod', 'peer'],
+      dependencyTypes: [
+        'dev',
+        'prod',
+        'peer',
+      ],
     },
   ],
 };

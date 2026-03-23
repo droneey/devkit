@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import { configs } from '../setup';
+import { configs } from '../setup.ts';
 
 describe('prettier configs', () => {
   test('exports base config', () => {

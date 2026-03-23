@@ -5,5 +5,8 @@
     "emitDeclarationOnly": true,
     "declaration": true
   },
-  "exclude": ["dist", "src/__tests__"]
+  "exclude": [
+    "dist",
+    "src/__tests__"
+  ]
 }

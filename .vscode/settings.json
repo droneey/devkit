@@ -1,3 +1,20 @@
 {
-  "cSpell.words": ["Droneey"]
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
+  },
+
+  "[javascript][typescript][javascriptreact][typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+
+  "cSpell.words": [
+    "Droneey"
+  ]
 }

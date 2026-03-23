@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import { configs } from '../setup';
+import { configs } from '../setup.ts';
 
 describe('eslint configs', () => {
   test('exports all config layers', () => {
@@ -34,9 +34,7 @@ describe('eslint configs', () => {
   });
 
   test('base config includes rules', () => {
-    const configWithRules = configs.base.find(
-      (c: Record<string, unknown>) => c.rules,
-    );
+    const configWithRules = configs.base.find((c) => 'rules' in c);
     expect(configWithRules).toBeDefined();
   });
 });

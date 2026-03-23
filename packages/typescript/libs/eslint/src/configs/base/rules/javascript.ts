@@ -4,18 +4,10 @@ const javascriptConfig = [
   eslintJs.configs.recommended,
   {
     rules: {
-      'arrow-body-style': ['error', 'as-needed'],
-      'capitalized-comments': ['error', 'always'],
       'consistent-return': 'error',
       curly: 'error',
       'default-case-last': 'error',
       'dot-notation': 'error',
-      eqeqeq: ['error', 'always'],
-      'func-names': ['error', 'as-needed'],
-      'func-style': ['error', 'expression'],
-      'grouped-accessor-pairs': ['error', 'getBeforeSet'],
-      'logical-assignment-operators': ['error', 'always'],
-      'max-statements': ['warn', { max: 15 }],
       'no-alert': 'error',
       'no-array-constructor': 'error',
       'no-caller': 'error',
@@ -59,7 +51,6 @@ const javascriptConfig = [
       'no-useless-return': 'error',
       'no-var': 'error',
       'no-void': 'error',
-      'operator-assignment': ['error', 'always'],
       'prefer-arrow-callback': 'error',
       'prefer-const': 'error',
       'prefer-exponentiation-operator': 'error',
@@ -70,12 +61,10 @@ const javascriptConfig = [
       'prefer-rest-params': 'error',
       'prefer-spread': 'error',
       'prefer-template': 'error',
-      radix: ['error', 'as-needed'],
       'require-atomic-updates': 'error',
       'require-await': 'error',
       'require-unicode-regexp': 'error',
       'symbol-description': 'error',
-      yoda: ['error', 'never'],
 
       'accessor-pairs': [
         'error',
@@ -90,11 +79,39 @@ const javascriptConfig = [
           checkForEach: true,
         },
       ],
+      'arrow-body-style': [
+        'error',
+        'as-needed',
+      ],
+      'capitalized-comments': [
+        'error',
+        'always',
+      ],
       complexity: [
         'warn',
         {
           max: 8,
         },
+      ],
+      eqeqeq: [
+        'error',
+        'always',
+      ],
+      'func-names': [
+        'error',
+        'as-needed',
+      ],
+      'func-style': [
+        'error',
+        'expression',
+      ],
+      'grouped-accessor-pairs': [
+        'error',
+        'getBeforeSet',
+      ],
+      'logical-assignment-operators': [
+        'error',
+        'always',
       ],
       'max-classes-per-file': [
         'warn',
@@ -129,6 +146,12 @@ const javascriptConfig = [
           max: 3,
         },
       ],
+      'max-statements': [
+        'warn',
+        {
+          max: 15,
+        },
+      ],
       'no-duplicate-imports': [
         'error',
         {
@@ -152,6 +175,18 @@ const javascriptConfig = [
           avoidExplicitReturnArrows: true,
           avoidQuotes: true,
         },
+      ],
+      'operator-assignment': [
+        'error',
+        'always',
+      ],
+      radix: [
+        'error',
+        'as-needed',
+      ],
+      yoda: [
+        'error',
+        'never',
       ],
     },
   },

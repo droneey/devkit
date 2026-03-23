@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import { configs } from '../setup';
+import { configs } from '../setup.ts';
 
 const ALLOWED_TYPES = [
   'feat',
@@ -32,19 +32,29 @@ describe('commitlint configs', () => {
 
   test('disables header-case', () => {
     const rules = configs.base.rules!;
-    const [severity] = rules['header-case'] as [number];
+    const [severity] = rules['header-case'] as [
+      number,
+    ];
     expect(severity).toBe(0);
   });
 
   test('enforces sentence-case on subject', () => {
     const rules = configs.base.rules!;
-    const rule = rules['subject-case'] as [number, string, string];
+    const rule = rules['subject-case'] as [
+      number,
+      string,
+      string,
+    ];
     expect(rule[2]).toBe('sentence-case');
   });
 
   test('allows all expected commit types', () => {
     const rules = configs.base.rules!;
-    const rule = rules['type-enum'] as [number, string, string[]];
+    const rule = rules['type-enum'] as [
+      number,
+      string,
+      string[],
+    ];
     expect(rule[2]).toEqual(ALLOWED_TYPES);
   });
 });
