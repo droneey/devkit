@@ -1,1 +1,1 @@
-export { configs } from './src/setup';
+export { configs } from './src/setup.ts';

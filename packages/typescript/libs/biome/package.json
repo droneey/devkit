@@ -1,0 +1,41 @@
+{
+  "name": "@droneey/devkit-ts-biome",
+  "version": "1.0.3",
+  "description": "Shared Biome configuration for formatting and linting.",
+  "keywords": [
+    "biome",
+    "config",
+    "formatter",
+    "linter",
+    "shared"
+  ],
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/biome#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git",
+    "directory": "packages/typescript/libs/biome"
+  },
+  "exports": {
+    "./base": "./configs/base.json",
+    "./test": "./configs/test.json",
+    "./node": "./configs/environments/node.json",
+    "./browser": "./configs/environments/browser.json",
+    "./nestjs": "./configs/frameworks/nestjs.json",
+    "./react": "./configs/frameworks/react.json",
+    "./react-native": "./configs/frameworks/react-native.json"
+  },
+  "files": [
+    "configs/*"
+  ],
+  "peerDependencies": {
+    "@biomejs/biome": ">=1.9.0"
+  }
+}

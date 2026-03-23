@@ -1,0 +1,31 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "overrides": [
+    {
+      "includes": [
+        "**/*.spec.ts",
+        "**/*.test.ts",
+        "**/*.spec.tsx",
+        "**/*.test.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noNonNullAssertion": "off",
+            "noMagicNumbers": "off",
+            "useConsistentMemberAccessibility": "off"
+          },
+          "suspicious": {
+            "noEmptyBlockStatements": "off"
+          },
+          "complexity": {
+            "noStaticOnlyClass": "off"
+          },
+          "nursery": {
+            "useExplicitType": "off"
+          }
+        }
+      }
+    }
+  ]
+}

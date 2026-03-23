@@ -1,0 +1,23 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "overrides": [
+    {
+      "includes": [
+        "**/*.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noParameterProperties": "off"
+          },
+          "suspicious": {
+            "noEmptyBlockStatements": "off"
+          },
+          "complexity": {
+            "noStaticOnlyClass": "off"
+          }
+        }
+      }
+    }
+  ]
+}

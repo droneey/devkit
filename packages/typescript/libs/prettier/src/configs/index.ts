@@ -1,1 +1,1 @@
-export { baseConfig } from './base';
+export { baseConfig } from './base.ts';

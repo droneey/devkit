@@ -4,8 +4,10 @@ import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 
 const reactConfig = [
   {
-    files: ['**/*.tsx', '**/*.jsx'],
-
+    files: [
+      '**/*.tsx',
+      '**/*.jsx',
+    ],
     plugins: {
       'jsx-a11y': eslintPluginJsxA11y,
       react: eslintPluginReact,
@@ -32,8 +34,6 @@ const reactConfig = [
       'react-hooks/exhaustive-deps': 'error',
       'react-hooks/rules-of-hooks': 'error',
       'react/button-has-type': 'error',
-      'react/jsx-boolean-value': ['error', 'never'],
-      'react/jsx-fragments': ['error', 'syntax'],
       'react/jsx-no-constructed-context-values': 'error',
       'react/jsx-no-duplicate-props': 'error',
       'react/jsx-no-leaked-render': 'error',
@@ -46,9 +46,20 @@ const reactConfig = [
       'react/no-unstable-nested-components': 'error',
       'react/self-closing-comp': 'error',
 
+      'react/jsx-boolean-value': [
+        'error',
+        'never',
+      ],
       'react/jsx-curly-brace-presence': [
         'error',
-        { children: 'never', props: 'never' },
+        {
+          children: 'never',
+          props: 'never',
+        },
+      ],
+      'react/jsx-fragments': [
+        'error',
+        'syntax',
       ],
     },
     settings: {

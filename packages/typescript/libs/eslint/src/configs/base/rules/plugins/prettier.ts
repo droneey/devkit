@@ -1,5 +1,7 @@
 import prettierEslintConfig from 'eslint-config-prettier';
 
-const prettierConfig = [prettierEslintConfig];
+const prettierConfig = [
+  prettierEslintConfig,
+];
 
 export { prettierConfig };

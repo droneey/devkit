@@ -1,0 +1,65 @@
+{
+  "name": "@droneey/devkit-ts-biome-eslint",
+  "version": "1.0.0",
+  "description": "Lean ESLint config for Biome projects — type-checked rules only.",
+  "keywords": [
+    "biome",
+    "config",
+    "eslint",
+    "eslint-config",
+    "lint",
+    "type-checked",
+    "typescript"
+  ],
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/biome-eslint#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git",
+    "directory": "packages/typescript/libs/biome-eslint"
+  },
+  "type": "module",
+  "main": "index.ts",
+  "module": "index.ts",
+  "publishConfig": {
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "devDependencies": {
+    "@eslint/compat": "^2.0.3",
+    "@types/bun": "^1.3.11",
+    "eslint": "^10.1.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "globals": "^17.4.0",
+    "rimraf": "^6.1.3",
+    "typescript-eslint": "^8.57.1"
+  },
+  "peerDependencies": {
+    "eslint": "^10.0.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "typescript": "^5"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-react-native": {
+      "optional": true
+    }
+  }
+}

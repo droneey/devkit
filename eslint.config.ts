@@ -1,8 +1,12 @@
-import * as DroneeyEslintSetup from '@droneey/devkit-ts-eslint';
+import * as DroneeyBiomeEslint from '@droneey/devkit-ts-biome-eslint';
 
 const config = [
   {
-    ignores: ['.syncpackrc.ts', '**/templates/**', '**/jest-preset.js'],
+    ignores: [
+      '.syncpackrc.ts',
+      '**/templates/**',
+      '**/jest-preset.js',
+    ],
   },
   {
     languageOptions: {
@@ -11,23 +15,16 @@ const config = [
       },
     },
   },
-  ...DroneeyEslintSetup.configs.base,
-  ...DroneeyEslintSetup.configs.node,
-  ...DroneeyEslintSetup.configs.test,
+  ...DroneeyBiomeEslint.configs.base,
+  ...DroneeyBiomeEslint.configs.node,
+  ...DroneeyBiomeEslint.configs.test,
   {
     files: [
-      './packages/typescript/libs/prettier/index.ts',
-      './packages/typescript/libs/commitlint/index.ts',
+      'eslint.config.ts',
+      './packages/typescript/libs/eslint/**/*.ts',
+      './packages/typescript/libs/biome-eslint/**/*.ts',
     ],
     rules: {
-      'import-x/no-default-export': 'off',
-    },
-  },
-  {
-    files: ['eslint.config.ts', './packages/typescript/libs/eslint/**/*.ts'],
-
-    rules: {
-      '@typescript-eslint/no-magic-numbers': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
     },
   },

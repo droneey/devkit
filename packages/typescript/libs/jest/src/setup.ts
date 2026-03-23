@@ -1,4 +1,4 @@
-import { baseConfig, endToEndConfig } from './configs';
+import { baseConfig, endToEndConfig } from './configs/index.ts';
 
 const configs = {
   base: baseConfig,
