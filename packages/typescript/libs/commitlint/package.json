@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-commitlint",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Shared Commitlint configuration for consistent GIT commits across projects.",
   "keywords": [
     "commit",
