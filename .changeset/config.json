@@ -7,7 +7,18 @@
     }
   ],
   "commit": false,
-  "fixed": [],
+  "fixed": [
+    [
+      "@droneey/devkit-ts-biome",
+      "@droneey/devkit-ts-biome-eslint",
+      "@droneey/devkit-ts-commitlint",
+      "@droneey/devkit-ts-eslint",
+      "@droneey/devkit-ts-jest",
+      "@droneey/devkit-ts-lint-staged",
+      "@droneey/devkit-ts-prettier",
+      "@droneey/devkit-ts-tsconfig"
+    ]
+  ],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
