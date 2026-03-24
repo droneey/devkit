@@ -34,7 +34,7 @@
     "@biomejs/biome": "^2.4.8",
     "@commitlint/cli": "^20.5.0",
     "@droneey/devkit-ts-biome": "workspace:*",
-    "@droneey/devkit-ts-biome-eslint": "workspace:*",
+    "@droneey/devkit-ts-eslint-biome": "workspace:*",
     "@droneey/devkit-ts-commitlint": "workspace:*",
     "@droneey/devkit-ts-eslint": "workspace:*",
     "@droneey/devkit-ts-prettier": "workspace:*",

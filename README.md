@@ -31,7 +31,7 @@ Base setup for any TypeScript project. Framework-specific sections below extend 
 | `@droneey/devkit-ts-prettier`    | Prettier config             |
 | `@droneey/devkit-ts-tsconfig`    | TSConfig variants           |
 | `@droneey/devkit-ts-commitlint`  | Conventional commits config |
-| `@droneey/devkit-ts-lint-staged` | Lint-staged config          |
+| `@droneey/devkit-ts-lint-staged-eslint` | Lint-staged config          |
 | `@droneey/devkit-ts-jest`        | Jest configs                |
 
 ```bash
@@ -40,7 +40,7 @@ npm install -D \
   @droneey/devkit-ts-prettier \
   @droneey/devkit-ts-tsconfig \
   @droneey/devkit-ts-commitlint \
-  @droneey/devkit-ts-lint-staged \
+  @droneey/devkit-ts-lint-staged-eslint \
   @droneey/devkit-ts-jest
 ```
 
@@ -115,7 +115,7 @@ export default config;
 
 ```ts
 // lint-staged.config.ts
-import { configs } from '@droneey/devkit-ts-lint-staged';
+import { configs } from '@droneey/devkit-ts-lint-staged-eslint';
 export default configs.base;
 ```
 

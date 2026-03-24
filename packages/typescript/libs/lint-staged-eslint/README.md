@@ -5,14 +5,14 @@ Shared lint-staged configuration for running linters on staged files.
 ## Install
 
 ```bash
-npm install -D @droneey/devkit-ts-lint-staged lint-staged
+npm install -D @droneey/devkit-ts-lint-staged-eslint lint-staged
 ```
 
 ## Usage
 
 ```ts
 // lint-staged.config.ts
-import { configs } from '@droneey/devkit-ts-lint-staged';
+import { configs } from '@droneey/devkit-ts-lint-staged-eslint';
 
 export default configs.base;
 ```

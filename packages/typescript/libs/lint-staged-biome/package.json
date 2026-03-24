@@ -1,16 +1,18 @@
 {
-  "name": "@droneey/devkit-ts-lint-staged",
+  "name": "@droneey/devkit-ts-lint-staged-biome",
   "version": "1.1.1",
-  "description": "Shared lint-staged configuration for running linters on staged files.",
+  "description": "Shared lint-staged configuration for Biome + ESLint projects.",
   "keywords": [
+    "biome",
     "config",
+    "eslint",
     "git",
     "lint-staged",
     "lint-staged-config",
     "pre-commit",
     "shared"
   ],
-  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/lint-staged#readme",
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/lint-staged-biome#readme",
   "bugs": {
     "url": "https://github.com/droneey/devkit/issues"
   },
@@ -22,7 +24,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/droneey/devkit.git",
-    "directory": "packages/typescript/libs/lint-staged"
+    "directory": "packages/typescript/libs/lint-staged-biome"
   },
   "type": "module",
   "main": "index.ts",

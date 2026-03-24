@@ -1,4 +1,4 @@
-# @droneey/devkit-ts-lint-staged
+# @droneey/devkit-ts-lint-staged-eslint
 
 ## 1.1.0
 

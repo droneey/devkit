@@ -8,9 +8,9 @@
         "@biomejs/biome": "^2.4.8",
         "@commitlint/cli": "^20.5.0",
         "@droneey/devkit-ts-biome": "workspace:*",
-        "@droneey/devkit-ts-biome-eslint": "workspace:*",
         "@droneey/devkit-ts-commitlint": "workspace:*",
         "@droneey/devkit-ts-eslint": "workspace:*",
+        "@droneey/devkit-ts-eslint-biome": "workspace:*",
         "@droneey/devkit-ts-prettier": "workspace:*",
         "@droneey/devkit-ts-tsconfig": "workspace:*",
         "@eslint/js": "^10.0.1",
@@ -34,27 +34,6 @@
       "peerDependencies": {
         "@biomejs/biome": ">=1.9.0",
       },
-    },
-    "packages/typescript/libs/biome-eslint": {
-      "name": "@droneey/devkit-ts-biome-eslint",
-      "version": "1.1.1",
-      "devDependencies": {
-        "@eslint/compat": "^2.0.3",
-        "@types/bun": "^1.3.11",
-        "eslint": "^10.1.0",
-        "eslint-plugin-react-native": "^5.0.0",
-        "globals": "^17.4.0",
-        "rimraf": "^6.1.3",
-        "typescript-eslint": "^8.57.1",
-      },
-      "peerDependencies": {
-        "eslint": "^10.0.0",
-        "eslint-plugin-react-native": "^5.0.0",
-        "typescript": "^5",
-      },
-      "optionalPeers": [
-        "eslint-plugin-react-native",
-      ],
     },
     "packages/typescript/libs/commitlint": {
       "name": "@droneey/devkit-ts-commitlint",
@@ -108,6 +87,27 @@
         "eslint-plugin-react-native",
       ],
     },
+    "packages/typescript/libs/eslint-biome": {
+      "name": "@droneey/devkit-ts-eslint-biome",
+      "version": "1.1.1",
+      "devDependencies": {
+        "@eslint/compat": "^2.0.3",
+        "@types/bun": "^1.3.11",
+        "eslint": "^10.1.0",
+        "eslint-plugin-react-native": "^5.0.0",
+        "globals": "^17.4.0",
+        "rimraf": "^6.1.3",
+        "typescript-eslint": "^8.57.1",
+      },
+      "peerDependencies": {
+        "eslint": "^10.0.0",
+        "eslint-plugin-react-native": "^5.0.0",
+        "typescript": "^5",
+      },
+      "optionalPeers": [
+        "eslint-plugin-react-native",
+      ],
+    },
     "packages/typescript/libs/jest": {
       "name": "@droneey/devkit-ts-jest",
       "version": "1.1.1",
@@ -121,8 +121,20 @@
         "typescript": "^5",
       },
     },
-    "packages/typescript/libs/lint-staged": {
-      "name": "@droneey/devkit-ts-lint-staged",
+    "packages/typescript/libs/lint-staged-biome": {
+      "name": "@droneey/devkit-ts-lint-staged-biome",
+      "version": "1.1.1",
+      "devDependencies": {
+        "@types/bun": "^1.3.11",
+        "rimraf": "^6.1.3",
+      },
+      "peerDependencies": {
+        "lint-staged": ">=16.0.0",
+        "typescript": "^5",
+      },
+    },
+    "packages/typescript/libs/lint-staged-eslint": {
+      "name": "@droneey/devkit-ts-lint-staged-eslint-eslint",
       "version": "1.1.1",
       "devDependencies": {
         "@types/bun": "^1.3.11",
@@ -281,15 +293,17 @@
 
     "@droneey/devkit-ts-biome": ["@droneey/devkit-ts-biome@workspace:packages/typescript/libs/biome"],
 
-    "@droneey/devkit-ts-biome-eslint": ["@droneey/devkit-ts-biome-eslint@workspace:packages/typescript/libs/biome-eslint"],
-
     "@droneey/devkit-ts-commitlint": ["@droneey/devkit-ts-commitlint@workspace:packages/typescript/libs/commitlint"],
 
     "@droneey/devkit-ts-eslint": ["@droneey/devkit-ts-eslint@workspace:packages/typescript/libs/eslint"],
 
+    "@droneey/devkit-ts-eslint-biome": ["@droneey/devkit-ts-eslint-biome@workspace:packages/typescript/libs/eslint-biome"],
+
     "@droneey/devkit-ts-jest": ["@droneey/devkit-ts-jest@workspace:packages/typescript/libs/jest"],
 
-    "@droneey/devkit-ts-lint-staged": ["@droneey/devkit-ts-lint-staged@workspace:packages/typescript/libs/lint-staged"],
+    "@droneey/devkit-ts-lint-staged-biome": ["@droneey/devkit-ts-lint-staged-biome@workspace:packages/typescript/libs/lint-staged-biome"],
+
+    "@droneey/devkit-ts-lint-staged-eslint-eslint": ["@droneey/devkit-ts-lint-staged-eslint-eslint@workspace:packages/typescript/libs/lint-staged-eslint"],
 
     "@droneey/devkit-ts-prettier": ["@droneey/devkit-ts-prettier@workspace:packages/typescript/libs/prettier"],
 

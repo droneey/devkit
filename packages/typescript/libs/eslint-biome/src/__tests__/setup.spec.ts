@@ -5,7 +5,7 @@ import { configs } from '../setup.ts';
 const flatConfigs = (arr: unknown[]): Record<string, unknown>[] =>
   arr.flat(10) as Record<string, unknown>[];
 
-describe('@droneey/devkit-ts-biome-eslint', () => {
+describe('@droneey/devkit-ts-eslint-biome', () => {
   test('exports all config layers', () => {
     expect(configs.base).toBeDefined();
     expect(configs.node).toBeDefined();
