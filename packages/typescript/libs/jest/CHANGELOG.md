@@ -1,5 +1,11 @@
 # @droneey/devkit-ts-jest
 
+## 1.1.1
+
+### Patch Changes
+
+- [#10](https://github.com/droneey/devkit/pull/10) [`764fa75`](https://github.com/droneey/devkit/commit/764fa75db242ef9895b066f98fb7c6dfa4fb0cf0) Thanks [@kurovskyiii](https://github.com/kurovskyiii)! - fix: Fix Jest module import issues
+
 ## 1.1.0
 
 ### Minor Changes
