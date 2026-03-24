@@ -20,7 +20,7 @@
   "module": "index.ts",
   "scripts": {
     "clean": "rm -rf node_modules packages/typescript/libs/*/node_modules bun.lock",
-    "lint": "eslint --fix && biome check --write",
+    "lint:fix": "eslint --fix && biome check --write",
     "lint:check": "eslint && biome check",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
