@@ -1,4 +1,4 @@
-name: CI
+name: Check
 
 on:
   pull_request:
@@ -11,5 +11,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bun run lint:check
+      - run: bun lint:check
       - run: bun test

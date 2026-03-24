@@ -24,7 +24,6 @@
     "lint:check": "eslint && biome check",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
-    "version": "bun --bun x changeset",
     "prepare": "husky",
     "test": "bun test"
   },
@@ -33,8 +32,6 @@
   ],
   "devDependencies": {
     "@biomejs/biome": "^2.4.8",
-    "@changesets/changelog-github": "^0.6.0",
-    "@changesets/cli": "^2.30.0",
     "@commitlint/cli": "^20.5.0",
     "@droneey/devkit-ts-biome": "workspace:*",
     "@droneey/devkit-ts-biome-eslint": "workspace:*",
