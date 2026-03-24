@@ -1,49 +1,58 @@
 # @droneey/devkit-ts-jest
 
-Shared Jest configuration with base and end-to-end presets.
+Shared [Jest](https://jestjs.io) presets for unit and end-to-end testing with TypeScript.
 
-## Install
+## Installation
 
 ```bash
-npm install -D @droneey/devkit-ts-jest jest ts-jest
+bun add -d @droneey/devkit-ts-jest jest ts-jest
 ```
 
-## Usage
-
-### Unit Tests
-
-In `package.json` — no config file needed:
+Add to your `package.json`:
 
 ```json
 {
   "jest": {
-    "preset": "@droneey/devkit-ts-jest",
-    "rootDir": "src",
-    "moduleNameMapper": { "^#/(.*)$": "<rootDir>/$1" },
-    "setupFilesAfterSetup": ["<rootDir>/../jest.setup.ts"]
+    "preset": "@droneey/devkit-ts-jest"
   }
 }
 ```
 
+## Configuration
+
+### Unit Tests
+
+The default preset (`@droneey/devkit-ts-jest`):
+
+| Option | Value |
+|---|---|
+| Test pattern | `*.spec.ts` |
+| Transform | `ts-jest` |
+| Module extensions | `js`, `json`, `ts`, `tsx` |
+| Environment | `node` |
+
 ### End-to-End Tests
 
+Create `jest-e2e.config.ts`:
+
 ```ts
-// jest-e2e.config.ts
 export default {
   preset: '@droneey/devkit-ts-jest/e2e',
-  moduleNameMapper: { '^#/(.*)$': '<rootDir>/src/$1' },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };
 ```
 
-## Presets
+| Option | Value |
+|---|---|
+| Test pattern | `*.e2e-spec.ts` |
+| Root dir | `src` |
+| Timeout | 30 seconds |
 
-| Preset                        | Test Pattern    | Timeout |
-| ----------------------------- | --------------- | ------- |
-| `@droneey/devkit-ts-jest`     | `*.spec.ts`     | default |
-| `@droneey/devkit-ts-jest/e2e` | `*.e2e-spec.ts` | 30s     |
+## Related Packages
 
-Both presets use `ts-jest` for TypeScript transformation.
+| Package | Description |
+|---|---|
+| [@droneey/devkit-ts-eslint](https://www.npmjs.com/package/@droneey/devkit-ts-eslint) | ESLint configuration |
+| [@droneey/devkit-ts-tsconfig](https://www.npmjs.com/package/@droneey/devkit-ts-tsconfig) | TypeScript configuration |
 
 ## License
 

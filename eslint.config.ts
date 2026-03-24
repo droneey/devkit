@@ -1,4 +1,4 @@
-import * as DroneeyBiomeEslint from '@droneey/devkit-ts-biome-eslint';
+import * as DroneeyBiomeEslint from '@droneey/devkit-ts-eslint-biome';
 
 const config = [
   {
@@ -22,7 +22,7 @@ const config = [
     files: [
       'eslint.config.ts',
       './packages/typescript/libs/eslint/**/*.ts',
-      './packages/typescript/libs/biome-eslint/**/*.ts',
+      './packages/typescript/libs/eslint-biome/**/*.ts',
     ],
     rules: {
       '@typescript-eslint/no-unsafe-assignment': 'off',

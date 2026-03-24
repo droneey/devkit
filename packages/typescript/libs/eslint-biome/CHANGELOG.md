@@ -1,4 +1,4 @@
-# @droneey/devkit-ts-biome-eslint
+# @droneey/devkit-ts-eslint-biome
 
 ## 1.1.0
 

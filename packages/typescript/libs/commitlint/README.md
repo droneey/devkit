@@ -1,39 +1,64 @@
 # @droneey/devkit-ts-commitlint
 
-Shared Commitlint configuration for consistent Git commits across projects.
+Shared [Commitlint](https://commitlint.js.org) configuration for enforcing consistent commit messages across projects.
 
-## Install
+## Installation
 
 ```bash
-npm install -D @droneey/devkit-ts-commitlint @commitlint/cli
+bun add -d @droneey/devkit-ts-commitlint @commitlint/cli husky
 ```
 
-## Usage
+Create `commitlint.config.ts` in your project root:
 
 ```ts
-// commitlint.config.ts
-const config = {
-  extends: ['@droneey/devkit-ts-commitlint'],
-};
+import commitlintConfig from '@droneey/devkit-ts-commitlint';
 
-export default config;
+export default commitlintConfig;
 ```
 
-## Commit Format
+Add the commit-msg hook in `.husky/commit-msg`:
+
+```bash
+bun --bun x --no -- commitlint --edit "$1"
+```
+
+## Configuration
+
+### Commit Format
 
 ```
 type: Subject in sentence case
+
+Optional body.
 ```
 
 ### Allowed Types
 
-`feat` `fix` `perf` `refactor` `style` `test` `docs` `build` `ci` `chore`
+| Type | Description |
+|---|---|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `perf` | Performance improvement |
+| `refactor` | Code refactoring |
+| `style` | Code style change |
+| `test` | Adding or updating tests |
+| `docs` | Documentation |
+| `build` | Build system or dependencies |
+| `ci` | CI/CD configuration |
+| `chore` | Maintenance tasks |
 
 ### Rules
 
-- Subject must be sentence-case
-- Body and footer must be empty (enforced)
-- Extends `@commitlint/config-conventional`
+- Subject must be in sentence-case.
+- Body and footer must be empty (enforced).
+- Type must be one of the allowed types above.
+
+## Related Packages
+
+| Package | Description |
+|---|---|
+| [@droneey/devkit-ts-eslint](https://www.npmjs.com/package/@droneey/devkit-ts-eslint) | ESLint configuration |
+| [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) | Biome configuration |
 
 ## License
 

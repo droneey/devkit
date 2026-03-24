@@ -12,4 +12,12 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun lint:check
-      - run: bun test
+      - name: Run tests with coverage
+        run: |
+          OUTPUT=$(bun test --coverage 2>&1)
+          echo "$OUTPUT"
+          LINES=$(echo "$OUTPUT" | grep "All files" | grep -oE '[0-9]+\.[0-9]+' | tail -1)
+          if [ "$LINES" != "100.00" ]; then
+            echo "::error::Line coverage is $LINES%, expected 100%"
+            exit 1
+          fi

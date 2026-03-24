@@ -1,26 +1,55 @@
 # @droneey/devkit-ts-biome
 
-Shared Biome configuration for formatting, linting, and code organization.
+Shared [Biome](https://biomejs.dev) configuration with formatting, linting, and import sorting for TypeScript projects.
 
-## Install
+## Installation
 
 ```bash
-npm install -D @droneey/devkit-ts-biome @biomejs/biome
+bun add -d @droneey/devkit-ts-biome @biomejs/biome
 ```
 
-## Usage
-
-Create a `biome.json` in your project root:
+Create `biome.json` in your project root:
 
 ```json
 {
+  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
   "extends": ["@droneey/devkit-ts-biome/base"]
 }
 ```
 
-### Framework configs
+## Configuration
 
-Add framework-specific rules alongside the base config:
+### Base
+
+The base config includes:
+
+- **Formatter** -- 80 char line width, 2 spaces, single quotes, semicolons, trailing commas, LF line endings.
+- **Linter** -- 100+ rules across correctness, complexity, style, suspicious, performance, and security categories.
+- **Assist** -- import sorting, key sorting, interface member sorting.
+
+### Environments
+
+| Config | Description |
+|---|---|
+| `@droneey/devkit-ts-biome/node` | Node.js environment |
+| `@droneey/devkit-ts-biome/browser` | Browser environment |
+
+```json
+{
+  "extends": [
+    "@droneey/devkit-ts-biome/base",
+    "@droneey/devkit-ts-biome/node"
+  ]
+}
+```
+
+### Frameworks
+
+| Config | Description |
+|---|---|
+| `@droneey/devkit-ts-biome/react` | React component rules, hooks, JSX a11y |
+| `@droneey/devkit-ts-biome/react-native` | React Native specific rules |
+| `@droneey/devkit-ts-biome/nestjs` | NestJS patterns |
 
 ```json
 {
@@ -31,15 +60,9 @@ Add framework-specific rules alongside the base config:
 }
 ```
 
-Available framework configs:
+### Test
 
-- `@droneey/devkit-ts-biome/react` - React, hooks, JSX a11y, Next.js rules
-- `@droneey/devkit-ts-biome/nestjs` - NestJS-specific overrides
-- `@droneey/devkit-ts-biome/react-native` - React Native rules
-
-### Test config
-
-Relax strict rules for test files:
+Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`).
 
 ```json
 {
@@ -50,62 +73,12 @@ Relax strict rules for test files:
 }
 ```
 
-## What's Included
+## Related Packages
 
-### Formatter
-
-Replaces Prettier with consistent settings:
-
-- Single quotes, JSX single quotes
-- 2-space indent (spaces, not tabs)
-- Semicolons always
-- Trailing commas everywhere
-- LF line endings
-- 80 character line width
-- One attribute per line
-
-### Assist actions
-
-- **Import sorting** - alphabetical within groups
-- **Interface member sorting** - sorted by key
-- **Duplicate CSS class removal**
-
-### Linter
-
-All recommended rules enabled at `error` level, plus 80+ additional rules across:
-
-- **Suspicious** - `noVar`, `noAlert`, `noConsole`, `noEvolvingTypes`, `noFloatingPromises`, `noSkippedTests`
-- **Style** - `noDefaultExport`, `noCommonJs`, `noNamespace`, `noMagicNumbers`, `useNamingConvention`, `useBlockStatements`, `useFilenamingConvention` (kebab-case)
-- **Complexity** - `noForEach`, `noVoid`, `noExcessiveCognitiveComplexity` (max 8), `noExcessiveLinesPerFunction` (max 75), `useMaxParams`
-- **Correctness** - `useImportExtensions`, `noUndeclaredDependencies`, `noGlobalDirnameFilename`
-- **Performance** - `noDelete`, `noAccumulatingSpread`, `noAwaitInLoops`, `noReExportAll`
-- **Security** - `noSecrets`
-- **Nursery** - `noShadow`, `noUnnecessaryConditions`, `useExhaustiveSwitchCases`, `useNullishCoalescing`, `useErrorCause`, and more
-
-### Disabled rules
-
-- `useLiteralKeys` - conflicts with TypeScript's `noPropertyAccessFromIndexSignature`
-
-## VS Code setup
-
-Add to `.vscode/settings.json`:
-
-```json
-{
-  "editor.codeActionsOnSave": {
-    "source.organizeImports.biome": "explicit",
-    "source.fixAll.biome": "explicit"
-  },
-  "[javascript][typescript][javascriptreact][typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[json][jsonc]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  }
-}
-```
-
-Recommended extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
+| Package | Description |
+|---|---|
+| [@droneey/devkit-ts-eslint-biome](https://www.npmjs.com/package/@droneey/devkit-ts-eslint-biome) | ESLint type-checked rules for Biome projects |
+| [@droneey/devkit-ts-lint-staged-biome](https://www.npmjs.com/package/@droneey/devkit-ts-lint-staged-biome) | lint-staged for Biome + ESLint projects |
 
 ## License
 

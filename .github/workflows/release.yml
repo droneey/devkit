@@ -46,54 +46,47 @@ jobs:
           TAG="${{ github.ref_name }}"
           PREV_TAG=$(git tag --sort=-v:refname | grep '^v' | sed -n '2p')
 
-          if [ -z "$PREV_TAG" ]; then
-            RANGE="HEAD"
-          else
+          BODY=""
+
+          # Package list
+          BODY="${BODY}## Packages"$'\n\n'
+          for pkg in packages/typescript/libs/*/package.json; do
+            name=$(jq -r '.name' "$pkg")
+            version=$(jq -r '.version' "$pkg")
+            BODY="${BODY}- \`${name}@${version}\`"$'\n'
+          done
+
+          # Changelog only if previous tag exists
+          if [ -n "$PREV_TAG" ]; then
             RANGE="${PREV_TAG}..${TAG}"
-          fi
 
-          {
-            echo "body<<CHANGELOG_EOF"
-            echo "## Packages"
-            echo ""
-            for pkg in packages/typescript/libs/*/package.json; do
-              name=$(jq -r '.name' "$pkg")
-              version=$(jq -r '.version' "$pkg")
-              echo "- \`${name}@${version}\`"
-            done
-            echo ""
-            echo "## What's Changed"
-            echo ""
+            FEATURES=$(git log "$RANGE" --pretty=format:"- %s" --grep="^feat" --no-merges)
+            FIXES=$(git log "$RANGE" --pretty=format:"- %s" --grep="^fix" --no-merges)
 
-            # Group by type
-            FEATURES=$(git log "$RANGE" --pretty=format:"%s" --grep="^feat" | sed 's/^/- /')
-            FIXES=$(git log "$RANGE" --pretty=format:"%s" --grep="^fix" | sed 's/^/- /')
-            OTHER=$(git log "$RANGE" --pretty=format:"%s" --invert-grep --grep="^feat" --grep="^fix" --grep="^chore: Release" --grep="^chore: Version" | sed 's/^/- /')
+            BODY="${BODY}"$'\n'"## What's Changed"$'\n\n'
 
             if [ -n "$FEATURES" ]; then
-              echo "### Features"
-              echo "$FEATURES"
-              echo ""
+              BODY="${BODY}### Features"$'\n'"${FEATURES}"$'\n\n'
             fi
             if [ -n "$FIXES" ]; then
-              echo "### Fixes"
-              echo "$FIXES"
-              echo ""
-            fi
-            if [ -n "$OTHER" ]; then
-              echo "### Other"
-              echo "$OTHER"
-              echo ""
+              BODY="${BODY}### Fixes"$'\n'"${FIXES}"$'\n\n'
             fi
 
-            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${TAG}"
-            echo "CHANGELOG_EOF"
-          } >> "$GITHUB_OUTPUT"
+            BODY="${BODY}**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${TAG}"
+          else
+            BODY="${BODY}"$'\n'"Initial release."
+          fi
+
+          echo "body<<CHANGELOG_EOF" >> "$GITHUB_OUTPUT"
+          echo "$BODY" >> "$GITHUB_OUTPUT"
+          echo "CHANGELOG_EOF" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         run: |
-          gh release create "${{ github.ref_name }}" \
-            --title "${{ github.ref_name }}" \
-            --notes "${{ steps.changelog.outputs.body }}"
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --notes "$BODY"
         env:
+          TAG: ${{ github.ref_name }}
+          BODY: ${{ steps.changelog.outputs.body }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

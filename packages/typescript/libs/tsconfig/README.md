@@ -2,13 +2,13 @@
 
 Shared TypeScript configuration variants for different project types.
 
-## Install
+## Installation
 
 ```bash
-npm install -D @droneey/devkit-ts-tsconfig
+bun add -d @droneey/devkit-ts-tsconfig typescript
 ```
 
-## Usage
+Add to your `tsconfig.json`:
 
 ```json
 {
@@ -16,23 +16,50 @@ npm install -D @droneey/devkit-ts-tsconfig
 }
 ```
 
-## Available Variants
+## Configuration
 
-| Variant             | Use Case                                |
-| ------------------- | --------------------------------------- |
-| `base.json`         | Modern ESM (Bun, Vite)                  |
-| `node-cjs.json`     | NestJS, Express (CommonJS + decorators) |
-| `node-esm.json`     | Pure ESM Node.js                        |
-| `browser.json`      | React, Vue (DOM + JSX)                  |
-| `react-native.json` | React Native                            |
+### Variants
 
-## Base Config Highlights
+| Config | Extends | Description |
+|---|---|---|
+| `configs/base.json` | -- | Strict TypeScript with ESM, all strict checks enabled |
+| `configs/node-esm.json` | `base` | Node.js with ESM modules |
+| `configs/node-cjs.json` | `base` | Node.js with CommonJS modules |
+| `configs/browser.json` | `base` | Browser with DOM types |
+| `configs/react-native.json` | `base` | React Native with JSX |
 
-- `strict: true`
-- `module: ESNext` / `moduleResolution: bundler`
-- `noUncheckedIndexedAccess: true`
-- `verbatimModuleSyntax: true`
-- `skipLibCheck: true`
+### Base Config
+
+- `strict: true` with all strict flags enabled.
+- `target: ES2023`, `module: ESNext`.
+- `verbatimModuleSyntax: true` -- enforces type-only imports.
+- `noUncheckedSideEffectImports: true` -- checks all imports.
+- `skipLibCheck: true` -- faster builds.
+
+### Usage Examples
+
+Node.js ESM project:
+
+```json
+{
+  "extends": "@droneey/devkit-ts-tsconfig/configs/node-esm.json"
+}
+```
+
+React Native project:
+
+```json
+{
+  "extends": "@droneey/devkit-ts-tsconfig/configs/react-native.json"
+}
+```
+
+## Related Packages
+
+| Package | Description |
+|---|---|
+| [@droneey/devkit-ts-eslint](https://www.npmjs.com/package/@droneey/devkit-ts-eslint) | ESLint configuration |
+| [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) | Biome configuration |
 
 ## License
 

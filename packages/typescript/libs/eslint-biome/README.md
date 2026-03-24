@@ -1,0 +1,76 @@
+# @droneey/devkit-ts-eslint-biome
+
+Lean ESLint configuration for Biome projects. Contains only TypeScript type-checked rules that Biome cannot implement.
+
+## Installation
+
+```bash
+bun add -d @droneey/devkit-ts-eslint-biome eslint typescript-eslint
+```
+
+Create `eslint.config.ts` in your project root:
+
+```ts
+import * as devkit from '@droneey/devkit-ts-eslint-biome';
+
+export default [
+  ...devkit.configs.base,
+  ...devkit.configs.node,
+  ...devkit.configs.test,
+];
+```
+
+## Configuration
+
+### Base
+
+Type-checked rules requiring `project: true`:
+
+- `no-floating-promises` -- catches unhandled async calls.
+- `no-unnecessary-condition` -- catches dead code via type analysis.
+- `switch-exhaustiveness-check` -- catches missing switch cases.
+- `no-unsafe-type-assertion` -- catches unsafe `as` casts.
+- `naming-convention` -- enforces camelCase/PascalCase with type-aware selectors.
+- `consistent-type-exports` / `consistent-type-imports` -- enforces type-only imports.
+
+### Environments
+
+| Config | Description |
+|---|---|
+| `configs.node` | Node.js globals |
+| `configs.browser` | Browser globals |
+
+### Frameworks
+
+| Config | Description | Peer Dependencies |
+|---|---|---|
+| `configs.nestjs` | NestJS DI patterns, relaxed naming | -- |
+| `configs.react` | Disables naming-convention for JSX | -- |
+| `configs.reactNative` | React Native plugin rules | `eslint-plugin-react-native` |
+
+```ts
+export default [
+  ...devkit.configs.base,
+  ...devkit.configs.node,
+  ...devkit.configs.nestjs,
+  ...devkit.configs.test,
+];
+```
+
+### Test
+
+Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`, `*.spec.tsx`, `*.test.tsx`):
+
+- Disables `naming-convention`, `no-explicit-any`, `no-unsafe-*`, `no-magic-numbers`.
+- Allows flexible typing for mocks and fixtures.
+
+## Related Packages
+
+| Package | Description |
+|---|---|
+| [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) | Biome configuration (formatter + linter) |
+| [@droneey/devkit-ts-lint-staged-biome](https://www.npmjs.com/package/@droneey/devkit-ts-lint-staged-biome) | lint-staged for Biome + ESLint projects |
+
+## License
+
+MIT

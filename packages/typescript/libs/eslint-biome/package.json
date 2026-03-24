@@ -1,5 +1,5 @@
 {
-  "name": "@droneey/devkit-ts-biome-eslint",
+  "name": "@droneey/devkit-ts-eslint-biome",
   "version": "1.1.2",
   "description": "Lean ESLint config for Biome projects — type-checked rules only.",
   "keywords": [
@@ -11,7 +11,7 @@
     "type-checked",
     "typescript"
   ],
-  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/biome-eslint#readme",
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/eslint-biome#readme",
   "bugs": {
     "url": "https://github.com/droneey/devkit/issues"
   },
@@ -23,7 +23,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/droneey/devkit.git",
-    "directory": "packages/typescript/libs/biome-eslint"
+    "directory": "packages/typescript/libs/eslint-biome"
   },
   "type": "module",
   "main": "index.ts",
