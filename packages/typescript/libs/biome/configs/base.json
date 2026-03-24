@@ -215,7 +215,11 @@
         "*.config.ts",
         "*.config.js",
         "*.config.mjs",
-        "*.config.cjs"
+        "*.config.cjs",
+        ".*rc.ts",
+        ".*rc.js",
+        ".*rc.mjs",
+        ".*rc.cjs"
       ],
       "linter": {
         "rules": {

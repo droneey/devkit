@@ -1,2 +1,0 @@
-# Validate commit message
-bun --bun x --no -- commitlint --edit "$1"

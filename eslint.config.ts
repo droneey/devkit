@@ -3,7 +3,7 @@ import * as DroneeyBiomeEslint from '@droneey/devkit-ts-eslint-biome';
 const config = [
   {
     ignores: [
-      '.syncpackrc.ts',
+      '.syncpackrc.*',
       '**/templates/**',
       '**/jest-preset.js',
     ],

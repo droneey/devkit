@@ -1,6 +1,5 @@
-import type { RcFile } from 'syncpack';
-
-const config: RcFile = {
+/** @type {import('syncpack').RcFile} */
+const config = {
   sortFirst: [
     'name',
     'version',
