@@ -22,7 +22,7 @@ describe('@droneey/devkit-ts-eslint-biome', () => {
 
   test('base config includes type-checked rules', () => {
     const allRules = flatConfigs(configs.base)
-      .filter((c) => c['rules'])
+      .filter((c) => c['rules'] != null)
       .flatMap((c) => Object.keys(c['rules'] as Record<string, unknown>));
 
     expect(allRules).toContain('@typescript-eslint/no-floating-promises');
@@ -34,7 +34,7 @@ describe('@droneey/devkit-ts-eslint-biome', () => {
 
   test('base config does NOT include any plugins (Biome handles everything except type-checked rules)', () => {
     const allPlugins = flatConfigs(configs.base)
-      .filter((c) => c['plugins'])
+      .filter((c) => c['plugins'] != null)
       .flatMap((c) => Object.keys(c['plugins'] as Record<string, unknown>));
 
     expect(allPlugins).not.toContain('perfectionist');
