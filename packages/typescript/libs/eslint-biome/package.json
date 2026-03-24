@@ -1,5 +1,5 @@
 {
-  "name": "@droneey/devkit-ts-biome-eslint",
+  "name": "@droneey/devkit-ts-eslint-biome",
   "version": "1.1.2",
   "description": "Lean ESLint config for Biome projects — type-checked rules only.",
   "keywords": [
