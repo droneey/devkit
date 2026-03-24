@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-prettier",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Shared Prettier configuration for consistent code formatting across projects.",
   "keywords": [
     "codestyle",
