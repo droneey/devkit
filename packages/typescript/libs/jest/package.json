@@ -23,9 +23,6 @@
     "url": "https://github.com/droneey/devkit.git",
     "directory": "packages/typescript/libs/jest"
   },
-  "type": "module",
-  "main": "index.ts",
-  "module": "index.ts",
   "files": [
     "jest-preset.js",
     "e2e"
