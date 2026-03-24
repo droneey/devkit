@@ -16,7 +16,8 @@ const typescriptConfig = [
       parser: eslintTs.parser,
 
       parserOptions: {
-        project: true,
+        projectService: true,
+        tsconfigRootDir: process.cwd(),
       },
     },
     rules: {
@@ -31,6 +32,17 @@ const typescriptConfig = [
       '@typescript-eslint/prefer-literal-enum-member': 'off',
       '@typescript-eslint/require-array-sort-compare': 'off',
       '@typescript-eslint/unified-signatures': 'off',
+
+      '@typescript-eslint/strict-boolean-expressions': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
 
       // Type-checked rules — Biome can't do these
       '@typescript-eslint/no-confusing-void-expression': 'error',

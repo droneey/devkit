@@ -12,6 +12,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun lint:check
+      - run: bun lint:packages
       - name: Run tests with coverage
         run: |
           OUTPUT=$(bun test --coverage 2>&1)

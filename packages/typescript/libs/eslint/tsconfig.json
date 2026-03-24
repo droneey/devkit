@@ -1,3 +1,0 @@
-{
-  "extends": "@droneey/devkit-ts-tsconfig/configs/base.json"
-}
