@@ -21,7 +21,6 @@ const config = [
   {
     files: [
       'eslint.config.ts',
-      './packages/typescript/libs/eslint/**/*.ts',
       './packages/typescript/libs/eslint-biome/**/*.ts',
     ],
     rules: {

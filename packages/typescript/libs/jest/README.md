@@ -51,7 +51,7 @@ export default {
 
 | Package | Description |
 |---|---|
-| [@droneey/devkit-ts-eslint](https://www.npmjs.com/package/@droneey/devkit-ts-eslint) | ESLint configuration |
+| [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) | Biome configuration (formatter + linter) |
 | [@droneey/devkit-ts-tsconfig](https://www.npmjs.com/package/@droneey/devkit-ts-tsconfig) | TypeScript configuration |
 
 ## License

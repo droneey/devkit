@@ -78,7 +78,8 @@ Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`).
 | Package | Description |
 |---|---|
 | [@droneey/devkit-ts-eslint-biome](https://www.npmjs.com/package/@droneey/devkit-ts-eslint-biome) | ESLint type-checked rules for Biome projects |
-| [@droneey/devkit-ts-lint-staged-biome](https://www.npmjs.com/package/@droneey/devkit-ts-lint-staged-biome) | lint-staged for Biome + ESLint projects |
+| [@droneey/devkit-ts-commitlint](https://www.npmjs.com/package/@droneey/devkit-ts-commitlint) | Commit message enforcement |
+| [@droneey/devkit-ts-tsconfig](https://www.npmjs.com/package/@droneey/devkit-ts-tsconfig) | TypeScript configuration |
 
 ## License
 
