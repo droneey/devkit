@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GH_PAT_TOKEN }}
           fetch-depth: 2
 
       - name: Determine bump type from merge commit
