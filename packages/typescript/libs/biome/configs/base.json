@@ -208,5 +208,28 @@
         "useNullishCoalescing": "error"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "*.config.ts",
+        "*.config.js",
+        "*.config.mjs",
+        "*.config.cjs"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          },
+          "nursery": {
+            "useExplicitType": "off"
+          },
+          "security": {
+            "noSecrets": "off"
+          }
+        }
+      }
+    }
+  ]
 }

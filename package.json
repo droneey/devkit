@@ -19,9 +19,10 @@
   "type": "module",
   "module": "index.ts",
   "scripts": {
+    "check": "bun lint:check && bun lint:packages && bun test",
     "clean": "rm -rf node_modules packages/typescript/libs/*/node_modules bun.lock",
-    "lint:fix": "eslint --fix && biome check --write",
     "lint:check": "eslint && biome check",
+    "lint:fix": "eslint --fix && biome check --write",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
     "prepare": "husky",

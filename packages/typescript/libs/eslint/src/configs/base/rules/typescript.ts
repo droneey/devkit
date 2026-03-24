@@ -23,10 +23,21 @@ const typescriptConfig = [
       parser: eslintTs.parser,
 
       parserOptions: {
-        project: true,
+        projectService: true,
+        tsconfigRootDir: process.cwd(),
       },
     },
     rules: {
+      '@typescript-eslint/strict-boolean-expressions': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
       '@typescript-eslint/default-param-last': 'error',
       '@typescript-eslint/explicit-function-return-type': 'error',
       '@typescript-eslint/no-confusing-void-expression': 'error',
