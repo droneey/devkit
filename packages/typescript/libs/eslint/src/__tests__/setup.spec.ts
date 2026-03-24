@@ -34,9 +34,7 @@ describe('eslint configs', () => {
   });
 
   test('base config includes rules', () => {
-    const configWithRules = configs.base.find(
-      (c: Record<string, unknown>) => c.rules,
-    );
+    const configWithRules = configs.base.find((c) => 'rules' in c);
     expect(configWithRules).toBeDefined();
   });
 });
