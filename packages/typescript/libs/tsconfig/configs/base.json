@@ -7,22 +7,18 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "moduleDetection": "force",
-
     "noEmit": true,
-
     "allowJs": true,
     "checkJs": true,
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
-
     "strict": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
