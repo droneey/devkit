@@ -1,5 +1,11 @@
 # @droneey/devkit-ts-eslint
 
+## 1.1.1
+
+### Patch Changes
+
+- [#11](https://github.com/droneey/devkit/pull/11) [`85d086a`](https://github.com/droneey/devkit/commit/85d086ac117c0bdd5bf07214352f31df45981c79) Thanks [@kurovskyiii](https://github.com/kurovskyiii)! - refactor: Structure
+
 ## 1.1.0
 
 ### Minor Changes
