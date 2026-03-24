@@ -2,20 +2,19 @@ name: Release
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+    tags:
+      - 'v*'
 
 jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: oven-sh/setup-bun@v2
 
       - run: bun install --frozen-lockfile
@@ -29,30 +28,72 @@ jobs:
             fi
           done
 
-      - name: Check for changesets
-        id: changesets
-        run: |
-          if bun --bun x changeset status 2>&1 | grep -q "No changesets present"; then
-            echo "has_changesets=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_changesets=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Version packages
-        if: steps.changesets.outputs.has_changesets == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          bun --bun x changeset version
-          git add .
-          git diff --cached --quiet || git commit -m "chore: Version packages" --no-verify && git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Publish to npm
-        if: steps.changesets.outputs.has_changesets == 'true'
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          bun --bun x changeset publish
+          for pkg in packages/typescript/libs/*/; do
+            if [ -f "$pkg/package.json" ] && [ "$(jq -r '.private // false' "$pkg/package.json")" != "true" ]; then
+              echo "Publishing $(jq -r '.name' "$pkg/package.json")"
+              cd "$pkg" && npm publish --access public || true && cd -
+            fi
+          done
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          TAG="${{ github.ref_name }}"
+          PREV_TAG=$(git tag --sort=-v:refname | grep '^v' | sed -n '2p')
+
+          if [ -z "$PREV_TAG" ]; then
+            RANGE="HEAD"
+          else
+            RANGE="${PREV_TAG}..${TAG}"
+          fi
+
+          {
+            echo "body<<CHANGELOG_EOF"
+            echo "## Packages"
+            echo ""
+            for pkg in packages/typescript/libs/*/package.json; do
+              name=$(jq -r '.name' "$pkg")
+              version=$(jq -r '.version' "$pkg")
+              echo "- \`${name}@${version}\`"
+            done
+            echo ""
+            echo "## What's Changed"
+            echo ""
+
+            # Group by type
+            FEATURES=$(git log "$RANGE" --pretty=format:"%s" --grep="^feat" | sed 's/^/- /')
+            FIXES=$(git log "$RANGE" --pretty=format:"%s" --grep="^fix" | sed 's/^/- /')
+            OTHER=$(git log "$RANGE" --pretty=format:"%s" --invert-grep --grep="^feat" --grep="^fix" --grep="^chore: Release" --grep="^chore: Version" | sed 's/^/- /')
+
+            if [ -n "$FEATURES" ]; then
+              echo "### Features"
+              echo "$FEATURES"
+              echo ""
+            fi
+            if [ -n "$FIXES" ]; then
+              echo "### Fixes"
+              echo "$FIXES"
+              echo ""
+            fi
+            if [ -n "$OTHER" ]; then
+              echo "### Other"
+              echo "$OTHER"
+              echo ""
+            fi
+
+            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${TAG}"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "${{ github.ref_name }}" \
+            --notes "${{ steps.changelog.outputs.body }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
