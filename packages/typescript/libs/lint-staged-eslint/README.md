@@ -1,28 +1,49 @@
-# @droneey/devkit-ts-lint-staged
+# @droneey/devkit-ts-lint-staged-eslint
 
-Shared lint-staged configuration for running linters on staged files.
+Shared [lint-staged](https://github.com/lint-staged/lint-staged) configuration for ESLint + Prettier projects. Runs Prettier for formatting and ESLint for linting on staged files.
 
-## Install
+## Installation
 
 ```bash
-npm install -D @droneey/devkit-ts-lint-staged-eslint lint-staged
+bun add -d @droneey/devkit-ts-lint-staged-eslint lint-staged husky
 ```
 
-## Usage
+Add to your `package.json`:
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,md,yaml,yml}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix"
+    ]
+  }
+}
+```
+
+Or import programmatically in `lint-staged.config.ts`:
 
 ```ts
-// lint-staged.config.ts
 import { configs } from '@droneey/devkit-ts-lint-staged-eslint';
 
 export default configs.base;
 ```
 
-## Base Config
+## Configuration
 
-| Pattern                              | Commands           |
-| ------------------------------------ | ------------------ |
+| Staged Files | Command |
+|---|---|
 | `*.{ts,tsx,js,jsx,json,md,yaml,yml}` | `prettier --write` |
-| `*.{ts,tsx}`                         | `eslint --fix`     |
+| `*.{ts,tsx}` | `eslint --fix` |
+
+## Related Packages
+
+| Package | Description |
+|---|---|
+| [@droneey/devkit-ts-eslint](https://www.npmjs.com/package/@droneey/devkit-ts-eslint) | ESLint configuration |
+| [@droneey/devkit-ts-prettier](https://www.npmjs.com/package/@droneey/devkit-ts-prettier) | Prettier configuration |
 
 ## License
 

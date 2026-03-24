@@ -1,18 +1,6 @@
 # @droneey/devkit-ts-eslint-biome
 
-Lean ESLint configuration for projects using **Biome** as the primary linter and formatter. Contains only the rules that Biome cannot implement — primarily TypeScript type-checked rules that require `project: true`.
-
-## Why both Biome and ESLint?
-
-Biome handles formatting, import sorting, and most linting rules. But it cannot run TypeScript's type checker, which means rules like these are impossible for Biome:
-
-- `no-floating-promises` — catches unhandled async calls
-- `no-unnecessary-condition` — catches dead code via type analysis
-- `switch-exhaustiveness-check` — catches missing switch cases
-- `no-unsafe-type-assertion` — catches unsafe `as` casts
-- `naming-convention` — enforces camelCase/PascalCase with type-aware selectors
-
-This package provides only these type-checked rules, with zero overlap with Biome.
+Lean ESLint configuration for Biome projects. Contains only TypeScript type-checked rules that Biome cannot implement.
 
 ## Installation
 
@@ -20,58 +8,68 @@ This package provides only these type-checked rules, with zero overlap with Biom
 bun add -d @droneey/devkit-ts-eslint-biome eslint typescript-eslint
 ```
 
-## Setup
-
-Create `eslint.config.ts`:
+Create `eslint.config.ts` in your project root:
 
 ```ts
 import * as devkit from '@droneey/devkit-ts-eslint-biome';
 
 export default [
   ...devkit.configs.base,
-  ...devkit.configs.node,    // or .browser
+  ...devkit.configs.node,
   ...devkit.configs.test,
 ];
 ```
 
-## Available configs
+## Configuration
+
+### Base
+
+Type-checked rules requiring `project: true`:
+
+- `no-floating-promises` -- catches unhandled async calls.
+- `no-unnecessary-condition` -- catches dead code via type analysis.
+- `switch-exhaustiveness-check` -- catches missing switch cases.
+- `no-unsafe-type-assertion` -- catches unsafe `as` casts.
+- `naming-convention` -- enforces camelCase/PascalCase with type-aware selectors.
+- `consistent-type-exports` / `consistent-type-imports` -- enforces type-only imports.
+
+### Environments
 
 | Config | Description |
 |---|---|
-| `configs.base` | Type-checked TypeScript rules with `project: true` |
 | `configs.node` | Node.js globals |
 | `configs.browser` | Browser globals |
-| `configs.test` | Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`) |
-| `configs.nestjs` | NestJS-specific overrides (DI patterns, naming) |
-| `configs.react` | Disables naming-convention for JSX files |
-| `configs.reactNative` | React Native plugin rules |
 
-## VS Code setup
+### Frameworks
 
-Use both extensions:
-- **Biome** — default formatter + fast linting
-- **ESLint** — type-checked rule squiggles
+| Config | Description | Peer Dependencies |
+|---|---|---|
+| `configs.nestjs` | NestJS DI patterns, relaxed naming | -- |
+| `configs.react` | Disables naming-convention for JSX | -- |
+| `configs.reactNative` | React Native plugin rules | `eslint-plugin-react-native` |
 
-```jsonc
-// .vscode/settings.json
-{
-  "editor.defaultFormatter": "biomejs.biome",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.biome": "explicit",
-    "source.organizeImports.biome": "explicit"
-  }
-}
+```ts
+export default [
+  ...devkit.configs.base,
+  ...devkit.configs.node,
+  ...devkit.configs.nestjs,
+  ...devkit.configs.test,
+];
 ```
 
-## Performance note
+### Test
 
-Type-checked rules require TypeScript to parse your entire project (`project: true`). This is slower than Biome but catches bugs no other tool can find. ESLint runs only on `*.ts`/`*.tsx` files — Biome handles everything else at full speed.
+Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`, `*.spec.tsx`, `*.test.tsx`):
 
-## Related packages
+- Disables `naming-convention`, `no-explicit-any`, `no-unsafe-*`, `no-magic-numbers`.
+- Allows flexible typing for mocks and fixtures.
 
-- [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) — Biome configuration (formatter + linter)
-- [@droneey/devkit-ts-lint-staged-biome](https://www.npmjs.com/package/@droneey/devkit-ts-lint-staged-biome) — lint-staged for Biome + ESLint projects
-- [@droneey/devkit-ts-eslint](https://www.npmjs.com/package/@droneey/devkit-ts-eslint) — Full ESLint config for legacy (non-Biome) projects
+## Related Packages
+
+| Package | Description |
+|---|---|
+| [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) | Biome configuration (formatter + linter) |
+| [@droneey/devkit-ts-lint-staged-biome](https://www.npmjs.com/package/@droneey/devkit-ts-lint-staged-biome) | lint-staged for Biome + ESLint projects |
 
 ## License
 

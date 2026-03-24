@@ -1,70 +1,76 @@
 # @droneey/devkit-ts-eslint
 
-Shared ESLint configuration with composable layers for base, environments, and frameworks.
+Shared ESLint configuration with composable layers for base, environments, and frameworks. Full-featured setup with Prettier, TypeScript, unicorn, perfectionist, import, and secrets plugins.
 
-## Install
-
-```bash
-npm install -D @droneey/devkit-ts-eslint eslint
-```
-
-## Usage
-
-Spread the layers you need:
-
-```ts
-// eslint.config.ts
-import * as devkitEslint from '@droneey/devkit-ts-eslint';
-
-const config = [
-  ...devkitEslint.configs.base,
-  ...devkitEslint.configs.node,
-  ...devkitEslint.configs.test,
-];
-
-export default config;
-```
-
-## Available Layers
-
-| Layer         | Purpose                                                                     |
-| ------------- | --------------------------------------------------------------------------- |
-| `base`        | Core JS/TS rules, import sorting, unicorn, perfectionist, secrets, prettier |
-| `node`        | Node.js globals                                                             |
-| `browser`     | Browser globals                                                             |
-| `test`        | Relaxes strict typing for `.spec.ts` / `.test.ts` files                     |
-| `nestjs`      | Relaxes class rules, DI patterns, bumps thresholds                          |
-| `react`       | React, react-hooks, jsx-a11y rules                                          |
-| `reactNative` | React Native specific rules                                                 |
-
-### Framework Peer Dependencies
-
-React and React Native layers require additional plugins:
+## Installation
 
 ```bash
-# React
-npm install -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
-
-# React Native (in addition to React)
-npm install -D eslint-plugin-react-native
+bun add -d @droneey/devkit-ts-eslint eslint typescript-eslint
 ```
 
-## Performance
-
-The `base` layer enables type-checked rules (`project: true`) such as `no-floating-promises`, `no-unnecessary-condition`, and `switch-exhaustiveness-check`. These require TypeScript to parse every file during linting, which is significantly slower than syntax-only rules.
-
-This is an intentional tradeoff — type-checked rules catch bugs that are impossible to detect otherwise. If linting speed is critical (e.g. on-save in large codebases), you can disable type-checking per project:
+Create `eslint.config.ts` in your project root:
 
 ```ts
-const config = [
-  ...devkitEslint.configs.base,
-  {
-    languageOptions: {
-      parserOptions: { project: false },
-    },
-  },
+import * as devkit from '@droneey/devkit-ts-eslint';
+
+export default [
+  ...devkit.configs.base,
+  ...devkit.configs.node,
+  ...devkit.configs.test,
 ];
 ```
+
+## Configuration
+
+### Base
+
+Includes all plugins and rules:
+
+- **JavaScript** -- 70+ core rules (curly, eqeqeq, no-var, prefer-const, etc.).
+- **TypeScript** -- 40+ type-checked rules with `project: true`.
+- **Unicorn** -- 60+ modern JS best practices.
+- **Perfectionist** -- 19 sorting rules (imports, classes, interfaces, objects, etc.).
+- **Import** -- import ordering, no default exports, no CommonJS.
+- **Secrets** -- detects hardcoded API keys and tokens.
+- **Prettier** -- disables formatting rules that conflict with Prettier.
+
+### Environments
+
+| Config | Description |
+|---|---|
+| `configs.node` | Node.js globals |
+| `configs.browser` | Browser globals |
+
+### Frameworks
+
+| Config | Description | Peer Dependencies |
+|---|---|---|
+| `configs.nestjs` | NestJS DI patterns, relaxed naming | -- |
+| `configs.react` | React, hooks, JSX a11y rules | `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y` |
+| `configs.reactNative` | React Native plugin rules | `eslint-plugin-react-native` |
+
+```ts
+export default [
+  ...devkit.configs.base,
+  ...devkit.configs.node,
+  ...devkit.configs.nestjs,
+  ...devkit.configs.test,
+];
+```
+
+### Test
+
+Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`, `*.spec.tsx`, `*.test.tsx`):
+
+- Disables `naming-convention`, `no-explicit-any`, `no-unsafe-*`, `no-magic-numbers`, `no-secrets`.
+- Allows flexible typing for mocks and fixtures.
+
+## Related Packages
+
+| Package | Description |
+|---|---|
+| [@droneey/devkit-ts-prettier](https://www.npmjs.com/package/@droneey/devkit-ts-prettier) | Prettier configuration |
+| [@droneey/devkit-ts-lint-staged-eslint](https://www.npmjs.com/package/@droneey/devkit-ts-lint-staged-eslint) | lint-staged for ESLint + Prettier projects |
 
 ## License
 
