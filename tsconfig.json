@@ -1,5 +1,5 @@
 {
-  "extends": "@droneey/devkit-ts-tsconfig/configs/base.json",
+  "extends": "@droneey/devkit-ts-tsconfig/base",
   "exclude": [
     "**/templates/**"
   ]

@@ -1,7 +1,7 @@
 {
   "name": "@droneey/devkit-ts-tsconfig",
   "version": "1.2.0",
-  "description": "Shared TypeScript configuration with variants for node-cjs, node-esm, browser, and react-native.",
+  "description": "Shared TypeScript configuration with variants for node-cjs, node-esm, browser, and mobile.",
   "keywords": [
     "config",
     "shared",
@@ -23,6 +23,13 @@
     "type": "git",
     "url": "https://github.com/droneey/devkit.git",
     "directory": "packages/typescript/libs/tsconfig"
+  },
+  "exports": {
+    "./base": "./configs/base.json",
+    "./node-esm": "./configs/node-esm.json",
+    "./node-cjs": "./configs/node-cjs.json",
+    "./browser": "./configs/browser.json",
+    "./mobile": "./configs/mobile.json"
   },
   "files": [
     "configs/*"
