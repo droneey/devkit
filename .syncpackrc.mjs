@@ -44,11 +44,7 @@ const config = {
     {
       label: 'Ignore root-only dependencies',
       dependencies: [
-        '@commitlint/cli',
-        'husky',
-        'lint-staged',
         'syncpack',
-        'validate-branch-name',
       ],
       isIgnored: true,
     },
