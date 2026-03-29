@@ -63,7 +63,17 @@
             "useFragmentSyntax": "error",
             "useConsistentCurlyBraces": "error",
             "useComponentExportOnlyModules": "error",
-            "useSelfClosingElements": "error"
+            "useSelfClosingElements": "error",
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "strictCase": true,
+                "filenameCases": [
+                  "PascalCase",
+                  "kebab-case"
+                ]
+              }
+            }
           },
           "complexity": {
             "noUselessFragments": "error"

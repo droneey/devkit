@@ -9,8 +9,7 @@ Shared development toolkit for consistent tooling across TypeScript projects.
 | `@droneey/devkit-ts-biome` | Biome configuration (formatter + linter) |
 | `@droneey/devkit-ts-eslint-biome` | ESLint type-checked rules for Biome projects |
 | `@droneey/devkit-ts-tsconfig` | TypeScript configuration variants |
-| `@droneey/devkit-ts-commitlint` | Conventional commits enforcement |
-| `@droneey/devkit-ts-jest` | Jest presets |
+| `@droneey/devkit-ts-lefthook` | Lefthook git hooks (biome, eslint, commit validation) |
 
 ---
 
@@ -23,11 +22,10 @@ bun add -d \
   @droneey/devkit-ts-biome \
   @droneey/devkit-ts-eslint-biome \
   @droneey/devkit-ts-tsconfig \
-  @droneey/devkit-ts-commitlint \
+  @droneey/devkit-ts-lefthook \
   @biomejs/biome \
   eslint \
   typescript-eslint \
-  @commitlint/cli \
   lefthook
 ```
 
@@ -63,33 +61,14 @@ export default [
 }
 ```
 
-```ts
-// commitlint.config.ts
-import commitlintConfig from '@droneey/devkit-ts-commitlint';
-
-export default commitlintConfig;
-```
-
 ### Git Hooks (Lefthook)
 
 ```yaml
 # lefthook.yml
-pre-commit:
-  parallel: true
-  jobs:
-    - name: biome
-      glob: "*.{ts,tsx,js,jsx,json,md,yaml,yml}"
-      stage_fixed: true
-      run: bunx biome check --write --no-errors-on-unmatched {staged_files}
-    - name: eslint
-      glob: "*.{ts,tsx}"
-      stage_fixed: true
-      run: bunx eslint --fix {staged_files}
-
-commit-msg:
-  jobs:
-    - name: commitlint
-      run: bun --bun x --no -- commitlint --edit {1}
+extends:
+  - node_modules/@droneey/devkit-ts-lefthook/configs/base.yml
+  - node_modules/@droneey/devkit-ts-lefthook/configs/biome.yml
+  - node_modules/@droneey/devkit-ts-lefthook/configs/eslint.yml
 ```
 
 ```bash

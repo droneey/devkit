@@ -31,7 +31,7 @@ Type-checked rules requiring `project: true`:
 - `switch-exhaustiveness-check` -- catches missing switch cases.
 - `no-unsafe-type-assertion` -- catches unsafe `as` casts.
 - `naming-convention` -- enforces camelCase/PascalCase with type-aware selectors.
-- `consistent-type-exports` / `consistent-type-imports` -- enforces type-only imports.
+- `consistent-type-exports` -- enforces type-only exports.
 
 ### Environments
 
@@ -61,7 +61,7 @@ export default [
 
 Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`, `*.spec.tsx`, `*.test.tsx`):
 
-- Disables `naming-convention`, `no-explicit-any`, `no-unsafe-*`, `no-magic-numbers`.
+- Disables `naming-convention`, `explicit-module-boundary-types`, `no-explicit-any`, `no-unsafe-*`.
 - Allows flexible typing for mocks and fixtures.
 
 ## Related Packages
@@ -69,8 +69,8 @@ Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`, `*.spec.tsx`, `*.
 | Package | Description |
 |---|---|
 | [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) | Biome configuration (formatter + linter) |
-| [@droneey/devkit-ts-commitlint](https://www.npmjs.com/package/@droneey/devkit-ts-commitlint) | Commit message enforcement |
 | [@droneey/devkit-ts-tsconfig](https://www.npmjs.com/package/@droneey/devkit-ts-tsconfig) | TypeScript configuration |
+| [@droneey/devkit-ts-lefthook](https://www.npmjs.com/package/@droneey/devkit-ts-lefthook) | Git hooks (biome, eslint, commit validation) |
 
 ## License
 
