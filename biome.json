@@ -2,6 +2,7 @@
   "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
   "extends": [
     "@droneey/devkit-ts-biome/base",
+    "@droneey/devkit-ts-biome/node",
     "@droneey/devkit-ts-biome/test"
   ],
   "overrides": [
@@ -34,8 +35,7 @@
     {
       "includes": [
         "eslint.config.ts",
-        "commitlint.config.ts",
-        ".syncpackrc.ts"
+        ".syncpackrc.mjs"
       ],
       "linter": {
         "rules": {
@@ -65,18 +65,6 @@
         "rules": {
           "style": {
             "useNamingConvention": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": [
-        "**/commitlint/index.ts"
-      ],
-      "linter": {
-        "rules": {
-          "style": {
-            "noDefaultExport": "off"
           }
         }
       }
