@@ -35,7 +35,7 @@
     }
   },
   "scripts": {
-    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist && cp index.d.ts dist/index.d.ts",
+    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts ./src/configs/frameworks/react-native.ts --outdir dist --splitting && cp index.d.ts dist/index.d.ts",
     "prepublishOnly": "bun run build"
   },
   "files": [

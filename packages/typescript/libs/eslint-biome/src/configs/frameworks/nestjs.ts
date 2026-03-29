@@ -3,7 +3,7 @@ import {
   privateMemberConvention,
 } from '../shared/index.ts';
 
-const nestjsConfig = [
+const nestjsConfig = (): object[] => [
   {
     files: [
       '**/*.ts',

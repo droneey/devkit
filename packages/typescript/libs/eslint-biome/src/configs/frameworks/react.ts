@@ -1,4 +1,4 @@
-const reactConfig = [
+const reactConfig = (): object[] => [
   {
     files: [
       '**/*.tsx',

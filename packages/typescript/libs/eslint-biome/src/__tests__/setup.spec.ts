@@ -6,22 +6,22 @@ const flatConfigs = (arr: unknown[]): Record<string, unknown>[] =>
   arr.flat(10) as Record<string, unknown>[];
 
 describe('@droneey/devkit-ts-eslint-biome', () => {
-  test('exports all config layers', () => {
-    expect(configs.base).toBeDefined();
-    expect(configs.node).toBeDefined();
-    expect(configs.browser).toBeDefined();
-    expect(configs.test).toBeDefined();
-    expect(configs.nestjs).toBeDefined();
-    expect(configs.react).toBeDefined();
-    expect(configs.reactNative).toBeDefined();
+  test('exports all config layers as functions', () => {
+    expect(typeof configs.base).toBe('function');
+    expect(typeof configs.node).toBe('function');
+    expect(typeof configs.browser).toBe('function');
+    expect(typeof configs.test).toBe('function');
+    expect(typeof configs.nestjs).toBe('function');
+    expect(typeof configs.react).toBe('function');
+    expect(typeof configs.reactNative).toBe('function');
   });
 
-  test('base config is an array', () => {
-    expect(Array.isArray(configs.base)).toBe(true);
+  test('base config returns an array', () => {
+    expect(Array.isArray(configs.base())).toBe(true);
   });
 
   test('base config includes type-checked rules', () => {
-    const allRules = flatConfigs(configs.base)
+    const allRules = flatConfigs(configs.base())
       .filter((c) => c['rules'] != null)
       .flatMap((c) => Object.keys(c['rules'] as Record<string, unknown>));
 
@@ -32,8 +32,16 @@ describe('@droneey/devkit-ts-eslint-biome', () => {
     );
   });
 
+  test('all configs return arrays', () => {
+    expect(Array.isArray(configs.node())).toBe(true);
+    expect(Array.isArray(configs.browser())).toBe(true);
+    expect(Array.isArray(configs.test())).toBe(true);
+    expect(Array.isArray(configs.nestjs())).toBe(true);
+    expect(Array.isArray(configs.react())).toBe(true);
+  });
+
   test('base config does NOT include any plugins (Biome handles everything except type-checked rules)', () => {
-    const allPlugins = flatConfigs(configs.base)
+    const allPlugins = flatConfigs(configs.base())
       .filter((c) => c['plugins'] != null)
       .flatMap((c) => Object.keys(c['plugins'] as Record<string, unknown>));
 

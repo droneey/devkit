@@ -5,20 +5,38 @@ import { includeIgnoreFile } from '@eslint/compat';
 
 import { typescriptConfig } from './rules/index.ts';
 
-const gitignorePath = path.resolve(process.cwd(), '.gitignore');
+const findGitignore = (): string | null => {
+  let dir = process.cwd();
 
-const baseConfig = [
-  ...(fs.existsSync(gitignorePath)
-    ? [
-        includeIgnoreFile(gitignorePath),
-      ]
-    : []),
-  {
-    linterOptions: {
-      reportUnusedDisableDirectives: 'error',
+  while (dir !== path.dirname(dir)) {
+    const candidate = path.join(dir, '.gitignore');
+
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+
+    dir = path.dirname(dir);
+  }
+
+  return null;
+};
+
+const baseConfig = (): object[] => {
+  const gitignorePath = findGitignore();
+
+  return [
+    ...(gitignorePath === null
+      ? []
+      : [
+          includeIgnoreFile(gitignorePath),
+        ]),
+    {
+      linterOptions: {
+        reportUnusedDisableDirectives: 'error',
+      },
     },
-  },
-  ...typescriptConfig,
-];
+    ...typescriptConfig,
+  ];
+};
 
 export { baseConfig };

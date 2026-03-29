@@ -1,6 +1,6 @@
 import globals from 'globals';
 
-const browserConfig = [
+const browserConfig = (): object[] => [
   {
     languageOptions: {
       globals: {

@@ -14,13 +14,15 @@ Create `eslint.config.ts` in your project root:
 import * as devkit from '@droneey/devkit-ts-eslint-biome';
 
 export default [
-  ...devkit.configs.base, // Must be first — loads .gitignore as global ignores
-  ...devkit.configs.node,
-  ...devkit.configs.test,
+  ...devkit.configs.base(), // Loads .gitignore automatically
+  ...devkit.configs.node(),
+  ...devkit.configs.test(),
 ];
 ```
 
 ## Configuration
+
+Each config is a factory function that returns an ESLint flat config array.
 
 ### Base
 
@@ -37,23 +39,23 @@ Type-checked rules requiring `project: true`:
 
 | Config | Description |
 |---|---|
-| `configs.node` | Node.js globals |
-| `configs.browser` | Browser globals |
+| `configs.node()` | Node.js globals |
+| `configs.browser()` | Browser globals |
 
 ### Frameworks
 
 | Config | Description | Peer Dependencies |
 |---|---|---|
-| `configs.nestjs` | NestJS DI patterns, relaxed naming | -- |
-| `configs.react` | Disables naming-convention for JSX | -- |
-| `configs.reactNative` | React Native plugin rules | `eslint-plugin-react-native` |
+| `configs.nestjs()` | NestJS DI patterns, relaxed naming | -- |
+| `configs.react()` | Disables naming-convention for JSX | -- |
+| `configs.reactNative()` | React Native plugin rules | `eslint-plugin-react-native` |
 
 ```ts
 export default [
-  ...devkit.configs.base,
-  ...devkit.configs.node,
-  ...devkit.configs.nestjs,
-  ...devkit.configs.test,
+  ...devkit.configs.base(),
+  ...devkit.configs.node(),
+  ...devkit.configs.nestjs(),
+  ...devkit.configs.test(),
 ];
 ```
 
