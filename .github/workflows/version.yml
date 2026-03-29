@@ -10,7 +10,6 @@ concurrency:
 
 jobs:
   version:
-    name: Bump & Tag
     runs-on: ubuntu-latest
     if: "!startsWith(github.event.head_commit.message, 'chore: Release v')"
     permissions:

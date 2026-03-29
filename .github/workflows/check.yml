@@ -6,7 +6,6 @@ on:
 
 jobs:
   check:
-    name: Lint, Build & Test
     runs-on: ubuntu-latest
     permissions:
       contents: read
