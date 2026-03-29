@@ -26,21 +26,12 @@
     "directory": "packages/typescript/libs/eslint-biome"
   },
   "type": "module",
-  "main": "./index.ts",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./index.ts"
-    }
-  },
-  "publishConfig": {
-    "main": "./dist/index.js",
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
