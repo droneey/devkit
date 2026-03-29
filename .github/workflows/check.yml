@@ -24,6 +24,13 @@ jobs:
           done
       - run: bun lint:check
       - run: bun lint:packages
+      - name: Build packages
+        run: |
+          for pkg in packages/typescript/libs/*/; do
+            if [ -f "$pkg/package.json" ] && grep -q '"build"' "$pkg/package.json"; then
+              (cd "$pkg" && bun run build)
+            fi
+          done
       - name: Run tests with coverage
         run: |
           OUTPUT=$(bun test --coverage 2>&1)
