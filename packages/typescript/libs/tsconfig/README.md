@@ -31,7 +31,7 @@ Add to your `tsconfig.json`:
 ### Base Config
 
 - `strict: true` with all strict flags enabled.
-- `target: ES2023`, `module: ESNext`.
+- `target: ESNext`, `module: ESNext`.
 - `verbatimModuleSyntax: true` -- enforces type-only imports.
 - `noUncheckedSideEffectImports: true` -- checks all imports.
 - `skipLibCheck: true` -- faster builds.
@@ -60,7 +60,7 @@ React Native project:
 |---|---|
 | [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) | Biome configuration (formatter + linter) |
 | [@droneey/devkit-ts-eslint-biome](https://www.npmjs.com/package/@droneey/devkit-ts-eslint-biome) | ESLint type-checked rules |
-| [@droneey/devkit-ts-commitlint](https://www.npmjs.com/package/@droneey/devkit-ts-commitlint) | Commit message enforcement |
+| [@droneey/devkit-ts-lefthook](https://www.npmjs.com/package/@droneey/devkit-ts-lefthook) | Git hooks (biome, eslint, commit validation) |
 
 ## License
 

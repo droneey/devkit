@@ -1,0 +1,33 @@
+{
+  "name": "@droneey/devkit-ts-lefthook",
+  "version": "1.1.4",
+  "description": "Shared Lefthook configuration with composable git hooks for linting, formatting, and commit validation.",
+  "keywords": [
+    "biome",
+    "config",
+    "eslint",
+    "git-hooks",
+    "lefthook",
+    "shared"
+  ],
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/lefthook#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git",
+    "directory": "packages/typescript/libs/lefthook"
+  },
+  "files": [
+    "configs/*"
+  ],
+  "peerDependencies": {
+    "lefthook": ">=1.0.0"
+  }
+}

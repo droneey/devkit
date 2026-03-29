@@ -1,5 +1,3 @@
-import globals from 'globals';
-
 const testConfig = [
   {
     files: [
@@ -8,11 +6,6 @@ const testConfig = [
       '**/*.spec.tsx',
       '**/*.test.tsx',
     ],
-    languageOptions: {
-      globals: {
-        ...globals.jest,
-      },
-    },
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/naming-convention': 'off',

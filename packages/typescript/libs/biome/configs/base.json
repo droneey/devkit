@@ -106,7 +106,6 @@
         "useConsistentArrowReturn": "error",
         "useConsistentTypeDefinitions": "error",
         "useTemplate": "warn",
-        "useNodejsImportProtocol": "warn",
         "useArrayLiterals": "warn",
         "useExponentiationOperator": "warn",
         "noShoutyConstants": "error",
@@ -159,7 +158,6 @@
       "correctness": {
         "noGlobalDirnameFilename": "error",
         "noUndeclaredDependencies": "error",
-        "useImportExtensions": "error",
         "useJsonImportAttributes": "error"
       },
       "security": {
