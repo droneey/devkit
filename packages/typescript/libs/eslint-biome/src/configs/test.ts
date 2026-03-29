@@ -1,4 +1,4 @@
-const testConfig = [
+const testConfig = (): object[] => [
   {
     files: [
       '**/*.spec.ts',

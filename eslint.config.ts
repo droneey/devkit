@@ -1,7 +1,7 @@
 import * as DroneeyBiomeEslint from '@droneey/devkit-ts-eslint-biome';
 
 const config = [
-  ...DroneeyBiomeEslint.configs.base,
+  ...DroneeyBiomeEslint.configs.base(),
   {
     ignores: [
       '.syncpackrc.*',
@@ -17,8 +17,8 @@ const config = [
       },
     },
   },
-  ...DroneeyBiomeEslint.configs.node,
-  ...DroneeyBiomeEslint.configs.test,
+  ...DroneeyBiomeEslint.configs.node(),
+  ...DroneeyBiomeEslint.configs.test(),
   {
     files: [
       'eslint.config.ts',

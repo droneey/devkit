@@ -1,6 +1,6 @@
 import globals from 'globals';
 
-const nodeConfig = [
+const nodeConfig = (): object[] => [
   {
     languageOptions: {
       globals: {
