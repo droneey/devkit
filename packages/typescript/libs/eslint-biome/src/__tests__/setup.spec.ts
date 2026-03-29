@@ -20,6 +20,23 @@ describe('@droneey/devkit-ts-eslint-biome', () => {
     expect(Array.isArray(configs.base())).toBe(true);
   });
 
+  test('base config finds .gitignore from nested directory', () => {
+    const originalCwd = process.cwd.bind(process);
+    process.cwd = () =>
+      `${originalCwd()}/packages/typescript/libs/eslint-biome`;
+    const result = configs.base();
+    process.cwd = originalCwd;
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  test('base config works without .gitignore', () => {
+    const originalCwd = process.cwd.bind(process);
+    process.cwd = () => '/';
+    const result = configs.base();
+    process.cwd = originalCwd;
+    expect(result.length).toBeGreaterThan(0);
+  });
+
   test('base config includes type-checked rules', () => {
     const allRules = flatConfigs(configs.base())
       .filter((c) => c['rules'] != null)
@@ -38,6 +55,7 @@ describe('@droneey/devkit-ts-eslint-biome', () => {
     expect(Array.isArray(configs.test())).toBe(true);
     expect(Array.isArray(configs.nestjs())).toBe(true);
     expect(Array.isArray(configs.react())).toBe(true);
+    expect(Array.isArray(configs.reactNative())).toBe(true);
   });
 
   test('base config does NOT include any plugins (Biome handles everything except type-checked rules)', () => {
