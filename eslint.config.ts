@@ -6,6 +6,7 @@ const config = [
       '.syncpackrc.*',
       '**/templates/**',
       '**/jest-preset.js',
+      '**/index.d.ts',
     ],
   },
   {

@@ -23,11 +23,24 @@
     "url": "https://github.com/droneey/devkit.git",
     "directory": "packages/typescript/libs/jest"
   },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./jest-preset.js",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./preset": "./jest-preset.js",
     "./e2e": "./e2e/jest-preset.js"
   },
+  "scripts": {
+    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist && cp index.d.ts dist/index.d.ts"
+  },
   "files": [
+    "dist/*",
     "jest-preset.js",
     "e2e"
   ],

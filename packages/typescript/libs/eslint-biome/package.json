@@ -26,20 +26,18 @@
     "directory": "packages/typescript/libs/eslint-biome"
   },
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./index.ts"
-    }
-  },
-  "publishConfig": {
-    "exports": {
-      ".": {
-        "import": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       }
     }
   },
   "scripts": {
-    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist"
+    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist && cp index.d.ts dist/index.d.ts"
   },
   "files": [
     "dist/*"

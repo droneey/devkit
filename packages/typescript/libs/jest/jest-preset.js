@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   collectCoverageFrom: [
     '**/*.(t|j)s',
   ],

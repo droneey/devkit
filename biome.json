@@ -52,7 +52,7 @@
       "linter": {
         "rules": {
           "style": {
-            "noCommonJs": "off"
+            "noDefaultExport": "off"
           }
         }
       }
