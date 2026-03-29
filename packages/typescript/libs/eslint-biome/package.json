@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-eslint-biome",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Lean ESLint config for Biome projects — type-checked rules only.",
   "keywords": [
     "biome",
@@ -26,12 +26,21 @@
     "directory": "packages/typescript/libs/eslint-biome"
   },
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./index.ts",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "default": "./index.ts"
+    }
+  },
+  "publishConfig": {
+    "main": "./dist/index.js",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
   },
   "scripts": {
