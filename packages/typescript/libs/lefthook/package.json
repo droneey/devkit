@@ -24,6 +24,11 @@
     "url": "https://github.com/droneey/devkit.git",
     "directory": "packages/typescript/libs/lefthook"
   },
+  "exports": {
+    "./base": "./configs/base.yml",
+    "./biome": "./configs/biome.yml",
+    "./eslint": "./configs/eslint.yml"
+  },
   "files": [
     "configs/*"
   ],
