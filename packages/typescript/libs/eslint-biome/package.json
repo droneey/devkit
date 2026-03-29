@@ -26,37 +26,37 @@
     "directory": "packages/typescript/libs/eslint-biome"
   },
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./index.ts"
-    }
-  },
-  "publishConfig": {
-    "exports": {
-      ".": {
-        "import": "./dist/index.js"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
-    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist"
+    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist && cp index.d.ts dist/index.d.ts",
+    "prepublishOnly": "bun run build"
   },
   "files": [
     "dist/*"
   ],
   "devDependencies": {
-    "@eslint/compat": "^2.0.3",
     "@types/bun": "^1.3.11",
     "eslint": "^10.1.0",
     "eslint-plugin-react-native": "^5.0.0",
-    "globals": "^17.4.0",
     "rimraf": "^6.1.3",
     "typescript-eslint": "^8.57.1"
+  },
+  "dependencies": {
+    "@eslint/compat": "^2.0.3",
+    "globals": "^17.4.0"
   },
   "peerDependencies": {
     "eslint": "^10.0.0",
     "eslint-plugin-react-native": "^5.0.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.0.0"
   },
   "peerDependenciesMeta": {
     "eslint-plugin-react-native": {

@@ -52,14 +52,14 @@
       "linter": {
         "rules": {
           "style": {
-            "noCommonJs": "off"
+            "noDefaultExport": "off"
           }
         }
       }
     },
     {
       "includes": [
-        "**/libs/eslint/**"
+        "**/libs/eslint-biome/**"
       ],
       "linter": {
         "rules": {

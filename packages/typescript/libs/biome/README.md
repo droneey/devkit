@@ -25,7 +25,7 @@ The base config includes:
 
 - **Formatter** -- 80 char line width, 2 spaces, single quotes, semicolons, trailing commas, LF line endings.
 - **Linter** -- 100+ rules across correctness, complexity, style, suspicious, performance, and security categories.
-- **Assist** -- import sorting, key sorting, interface member sorting.
+- **Assist** -- import sorting, duplicate class detection, interface member sorting.
 
 ### Environments
 

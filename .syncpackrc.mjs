@@ -15,6 +15,7 @@ const config = {
     'main',
     'module',
     'types',
+    'exports',
     'scripts',
     'workspaces',
     'files',

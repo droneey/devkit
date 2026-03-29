@@ -18,13 +18,15 @@ jobs:
       - uses: oven-sh/setup-bun@v2
 
       - run: bun install --frozen-lockfile
+      - name: Verify
+        run: bun lint:check && bun lint:packages && bun test
 
       - name: Build packages
         run: |
           for pkg in packages/typescript/libs/*/; do
             if [ -f "$pkg/package.json" ] && grep -q '"build"' "$pkg/package.json"; then
               echo "Building $pkg"
-              cd "$pkg" && bun run build && cd -
+              (cd "$pkg" && bun run build)
             fi
           done
 
@@ -33,8 +35,17 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           for pkg in packages/typescript/libs/*/; do
             if [ -f "$pkg/package.json" ] && [ "$(jq -r '.private // false' "$pkg/package.json")" != "true" ]; then
-              echo "Publishing $(jq -r '.name' "$pkg/package.json")"
-              cd "$pkg" && npm publish --access public || true && cd -
+              PKG_NAME=$(jq -r '.name' "$pkg/package.json")
+              echo "Publishing $PKG_NAME"
+              OUTPUT=$(cd "$pkg" && npm publish --access public 2>&1) || {
+                if echo "$OUTPUT" | grep -q "You cannot publish over the previously published versions"; then
+                  echo "Already published $PKG_NAME, skipping."
+                else
+                  echo "::error::Failed to publish $PKG_NAME"
+                  echo "$OUTPUT"
+                  exit 1
+                fi
+              }
             fi
           done
         env:
