@@ -15,8 +15,6 @@ jobs:
         with:
           bun-version: latest
       - run: bun install --frozen-lockfile
-      - run: bun lint:check
-      - run: bun lint:packages
       - name: Build packages
         run: |
           for pkg in packages/typescript/libs/*/; do
@@ -24,6 +22,8 @@ jobs:
               (cd "$pkg" && bun run build)
             fi
           done
+      - run: bun lint:check
+      - run: bun lint:packages
       - name: Run tests with coverage
         run: |
           OUTPUT=$(bun test --coverage 2>&1)
