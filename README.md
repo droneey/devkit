@@ -57,7 +57,7 @@ export default [
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/configs/base.json"
+  "extends": "@droneey/devkit-ts-tsconfig/base"
 }
 ```
 
@@ -113,7 +113,7 @@ export default [
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/configs/node-cjs.json"
+  "extends": "@droneey/devkit-ts-tsconfig/node-cjs"
 }
 ```
 
@@ -146,7 +146,7 @@ export default [
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/configs/browser.json"
+  "extends": "@droneey/devkit-ts-tsconfig/browser"
 }
 ```
 
@@ -180,7 +180,7 @@ export default [
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/configs/react-native.json"
+  "extends": "@droneey/devkit-ts-tsconfig/mobile"
 }
 ```
 
