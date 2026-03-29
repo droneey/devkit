@@ -7,17 +7,32 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
       - run: bun install --frozen-lockfile
       - run: bun lint:check
       - run: bun lint:packages
+      - name: Build packages
+        run: |
+          for pkg in packages/typescript/libs/*/; do
+            if [ -f "$pkg/package.json" ] && grep -q '"build"' "$pkg/package.json"; then
+              (cd "$pkg" && bun run build)
+            fi
+          done
       - name: Run tests with coverage
         run: |
           OUTPUT=$(bun test --coverage 2>&1)
           echo "$OUTPUT"
           LINES=$(echo "$OUTPUT" | grep "All files" | grep -oE '[0-9]+\.[0-9]+' | tail -1)
+          if [ -z "$LINES" ]; then
+            echo "::error::Could not parse coverage from output"
+            exit 1
+          fi
           if [ "$LINES" != "100.00" ]; then
             echo "::error::Line coverage is $LINES%, expected 100%"
             exit 1

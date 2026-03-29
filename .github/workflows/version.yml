@@ -26,7 +26,7 @@ jobs:
         run: |
           # Extract branch name from squash merge commit message
           # Format: "feat: Something (#42)" — get the PR branch from the merge
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          COMMIT_MSG="$HEAD_COMMIT_MSG"
 
           # Try to get branch from the PR that was merged
           PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -1 | tr -d '#')
@@ -55,13 +55,14 @@ jobs:
             *) echo "type=" >> "$GITHUB_OUTPUT" ;;
           esac
         env:
+          HEAD_COMMIT_MSG: ${{ github.event.head_commit.message }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version and tag
         if: steps.bump.outputs.type
         run: |
           BUMP="${{ steps.bump.outputs.type }}"
-          CURRENT=$(jq -r '.version' packages/typescript/libs/biome/package.json)
+          CURRENT=$(jq -r '.version' packages/typescript/libs/*/package.json | head -1)
           IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
 
           if [ "$BUMP" = "minor" ]; then

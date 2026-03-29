@@ -59,7 +59,7 @@
     },
     {
       "includes": [
-        "**/libs/eslint/**"
+        "**/libs/eslint-biome/**"
       ],
       "linter": {
         "rules": {
