@@ -14,7 +14,7 @@ Create `eslint.config.ts` in your project root:
 import * as devkit from '@droneey/devkit-ts-eslint-biome';
 
 export default [
-  ...devkit.configs.base,
+  ...devkit.configs.base, // Must be first — loads .gitignore as global ignores
   ...devkit.configs.node,
   ...devkit.configs.test,
 ];

@@ -1,4 +1,4 @@
-name: Release
+name: 🚀 Release
 
 on:
   push:
@@ -10,27 +10,30 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - name: 📥 Checkout
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: oven-sh/setup-bun@v2
 
-      - run: bun install --frozen-lockfile
-      - name: Verify
-        run: bun lint:check && bun lint:packages && bun test
+      - name: 🍞 Setup Bun
+        uses: oven-sh/setup-bun@v2
 
-      - name: Build packages
+      - name: 📦 Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: 🔨 Build packages
         run: |
           for pkg in packages/typescript/libs/*/; do
             if [ -f "$pkg/package.json" ] && grep -q '"build"' "$pkg/package.json"; then
-              echo "Building $pkg"
               (cd "$pkg" && bun run build)
             fi
           done
 
-      - name: Publish to npm
+      - name: ✅ Verify
+        run: bun lint:check && bun lint:packages && bun test
+
+      - name: 📤 Publish to npm
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           for pkg in packages/typescript/libs/*/; do
@@ -51,7 +54,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Generate changelog
+      - name: 📝 Generate changelog
         id: changelog
         run: |
           TAG="${{ github.ref_name }}"
@@ -59,7 +62,6 @@ jobs:
 
           BODY=""
 
-          # Package list
           BODY="${BODY}## Packages"$'\n\n'
           for pkg in packages/typescript/libs/*/package.json; do
             name=$(jq -r '.name' "$pkg")
@@ -67,7 +69,6 @@ jobs:
             BODY="${BODY}- \`${name}@${version}\`"$'\n'
           done
 
-          # Changelog only if previous tag exists
           if [ -n "$PREV_TAG" ]; then
             RANGE="${PREV_TAG}..${TAG}"
 
@@ -92,7 +93,7 @@ jobs:
           echo "$BODY" >> "$GITHUB_OUTPUT"
           echo "CHANGELOG_EOF" >> "$GITHUB_OUTPUT"
 
-      - name: Create GitHub Release
+      - name: 🎉 Create GitHub Release
         run: |
           gh release create "$TAG" \
             --title "$TAG" \
