@@ -23,11 +23,11 @@
             "noChildrenProp": "error",
             "useJsxKeyInIterable": "error",
             "noNestedComponentDefinitions": "error",
-            "noNextAsyncClientComponent": "error",
-            "noLeakedRender": "error"
+            "noNextAsyncClientComponent": "error"
           },
           "nursery": {
-            "noJsxPropsBind": "error"
+            "noJsxPropsBind": "error",
+            "noLeakedRender": "error"
           },
           "a11y": {
             "useButtonType": "error",
