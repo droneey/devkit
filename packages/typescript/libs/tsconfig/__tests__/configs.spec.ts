@@ -34,8 +34,8 @@ describe('tsconfig configs', () => {
     expect(config.extends).toBe('./base.json');
   });
 
-  test('react-native.json extends base', () => {
-    const config = readConfig('react-native.json');
+  test('mobile.json extends base', () => {
+    const config = readConfig('mobile.json');
     expect(config.extends).toBe('./base.json');
   });
 });

@@ -12,7 +12,7 @@ Add to your `tsconfig.json`:
 
 ```json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/configs/base.json"
+  "extends": "@droneey/devkit-ts-tsconfig/base"
 }
 ```
 
@@ -22,11 +22,11 @@ Add to your `tsconfig.json`:
 
 | Config | Extends | Description |
 |---|---|---|
-| `configs/base.json` | -- | Strict TypeScript with ESM, all strict checks enabled |
-| `configs/node-esm.json` | `base` | Node.js with ESM modules |
-| `configs/node-cjs.json` | `base` | Node.js with CommonJS modules |
-| `configs/browser.json` | `base` | Browser with DOM types |
-| `configs/react-native.json` | `base` | React Native with JSX |
+| `base` | -- | Strict TypeScript with ESM, all strict checks enabled |
+| `node-esm` | `base` | Node.js with ESM modules |
+| `node-cjs` | `base` | Node.js with CommonJS modules |
+| `browser` | `base` | Browser with DOM types |
+| `mobile` | `base` | React Native with JSX |
 
 ### Base Config
 
@@ -42,7 +42,7 @@ Node.js ESM project:
 
 ```json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/configs/node-esm.json"
+  "extends": "@droneey/devkit-ts-tsconfig/node-esm"
 }
 ```
 
@@ -50,7 +50,7 @@ React Native project:
 
 ```json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/configs/react-native.json"
+  "extends": "@droneey/devkit-ts-tsconfig/mobile"
 }
 ```
 
