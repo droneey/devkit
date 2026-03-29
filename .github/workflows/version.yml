@@ -1,4 +1,4 @@
-name: Version
+name: 🏷️ Version
 
 on:
   push:
@@ -10,31 +10,28 @@ concurrency:
 
 jobs:
   version:
+    name: Bump & Tag
     runs-on: ubuntu-latest
-    # Skip version commits from this workflow
     if: "!startsWith(github.event.head_commit.message, 'chore: Release v')"
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
+      - name: 📥 Checkout
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_PAT_TOKEN }}
           fetch-depth: 2
 
-      - name: Determine bump type from merge commit
+      - name: 🔎 Determine bump type
         id: bump
         run: |
-          # Extract branch name from squash merge commit message
-          # Format: "feat: Something (#42)" — get the PR branch from the merge
           COMMIT_MSG="$HEAD_COMMIT_MSG"
 
-          # Try to get branch from the PR that was merged
           PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -1 | tr -d '#')
           if [ -n "$PR_NUMBER" ]; then
             BRANCH=$(gh pr view "$PR_NUMBER" --json headRefName -q '.headRefName' 2>/dev/null || echo "")
           fi
 
-          # Fallback: parse from commit message prefix
           if [ -z "$BRANCH" ]; then
             if echo "$COMMIT_MSG" | grep -qE "^feat"; then
               echo "type=minor" >> "$GITHUB_OUTPUT"
@@ -58,7 +55,7 @@ jobs:
           HEAD_COMMIT_MSG: ${{ github.event.head_commit.message }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Bump version and tag
+      - name: 🏷️ Bump version and tag
         if: steps.bump.outputs.type
         run: |
           BUMP="${{ steps.bump.outputs.type }}"
@@ -75,12 +72,10 @@ jobs:
           NEW_VERSION="$MAJOR.$MINOR.$PATCH"
           echo "Bumping $CURRENT → $NEW_VERSION ($BUMP)"
 
-          # Update all package.json files
           for pkg in packages/typescript/libs/*/package.json; do
             jq --arg v "$NEW_VERSION" '.version = $v' "$pkg" > "$pkg.tmp" && mv "$pkg.tmp" "$pkg"
           done
 
-          # Commit and tag
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add packages/typescript/libs/*/package.json
