@@ -237,14 +237,14 @@
   "overrides": [
     {
       "includes": [
-        "*.config.ts",
-        "*.config.js",
-        "*.config.mjs",
-        "*.config.cjs",
-        ".*rc.ts",
-        ".*rc.js",
-        ".*rc.mjs",
-        ".*rc.cjs"
+        "**/*.config.ts",
+        "**/*.config.js",
+        "**/*.config.mjs",
+        "**/*.config.cjs",
+        "**/.*rc.ts",
+        "**/.*rc.js",
+        "**/.*rc.mjs",
+        "**/.*rc.cjs"
       ],
       "linter": {
         "rules": {
@@ -262,7 +262,7 @@
     },
     {
       "includes": [
-        "*.d.ts"
+        "**/*.d.ts"
       ],
       "linter": {
         "rules": {
