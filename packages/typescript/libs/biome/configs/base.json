@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -30,13 +30,39 @@
     "actions": {
       "source": {
         "organizeImports": {
-          "level": "on"
+          "level": "on",
+          "options": {
+            "identifierOrder": "natural",
+            "groups": [
+              ":URL:",
+              ":BLANK_LINE:",
+              ":NODE:",
+              ":BLANK_LINE:",
+              ":BUN:",
+              ":BLANK_LINE:",
+              [
+                "react",
+                "react/**",
+                "react-*"
+              ],
+              ":BLANK_LINE:",
+              "@tanstack/**",
+              ":BLANK_LINE:",
+              ":PACKAGE:",
+              ":BLANK_LINE:",
+              ":ALIAS:",
+              ":BLANK_LINE:",
+              ":PATH:"
+            ]
+          }
         },
         "noDuplicateClasses": {
-          "level": "on"
+          "level": "on",
+          "options": {}
         },
         "useSortedInterfaceMembers": {
-          "level": "on"
+          "level": "on",
+          "options": {}
         }
       }
     }
@@ -94,6 +120,7 @@
         "useThrowNewError": "error",
         "useUnifiedTypeSignatures": "error",
         "useNodeAssertStrict": "error",
+        "useExportType": "error",
         "useExportsLast": "error",
         "useForOf": "error",
         "useGroupedAccessorPairs": "error",
@@ -229,6 +256,21 @@
           },
           "security": {
             "noSecrets": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "*.d.ts"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          },
+          "style": {
+            "noDefaultExport": "off"
           }
         }
       }

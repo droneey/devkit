@@ -1,7 +1,0 @@
-pre-commit:
-  parallel: true
-  jobs:
-    - name: eslint
-      glob: "*.{ts,tsx}"
-      stage_fixed: true
-      run: bunx eslint --fix {staged_files}

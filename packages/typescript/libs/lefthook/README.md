@@ -14,7 +14,6 @@ Create `lefthook.yml` in your project root:
 extends:
   - node_modules/@droneey/devkit-ts-lefthook/configs/base.yml
   - node_modules/@droneey/devkit-ts-lefthook/configs/biome.yml
-  - node_modules/@droneey/devkit-ts-lefthook/configs/eslint.yml
 ```
 
 ```bash
@@ -38,12 +37,6 @@ Language-agnostic hooks:
 |---|---|---|
 | `pre-commit` | `biome` | Runs `biome check --write` on staged `ts,tsx,js,jsx,json,md,yaml,yml` files |
 
-### ESLint
-
-| Hook | Job | Description |
-|---|---|---|
-| `pre-commit` | `eslint` | Runs `eslint --fix` on staged `ts,tsx` files |
-
 ## Overriding
 
 Override any named job in your `lefthook.yml`:
@@ -64,7 +57,6 @@ pre-commit:
 | Package | Description |
 |---|---|
 | [@droneey/devkit-ts-biome](https://www.npmjs.com/package/@droneey/devkit-ts-biome) | Biome configuration (formatter + linter) |
-| [@droneey/devkit-ts-eslint-biome](https://www.npmjs.com/package/@droneey/devkit-ts-eslint-biome) | ESLint type-checked rules for Biome projects |
 | [@droneey/devkit-ts-tsconfig](https://www.npmjs.com/package/@droneey/devkit-ts-tsconfig) | TypeScript configuration |
 
 ## License

@@ -12,7 +12,7 @@ Create `biome.json` in your project root:
 
 ```json
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
   "extends": ["@droneey/devkit-ts-biome/base"]
 }
 ```
@@ -77,9 +77,8 @@ Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`).
 
 | Package | Description |
 |---|---|
-| [@droneey/devkit-ts-eslint-biome](https://www.npmjs.com/package/@droneey/devkit-ts-eslint-biome) | ESLint type-checked rules for Biome projects |
 | [@droneey/devkit-ts-tsconfig](https://www.npmjs.com/package/@droneey/devkit-ts-tsconfig) | TypeScript configuration |
-| [@droneey/devkit-ts-lefthook](https://www.npmjs.com/package/@droneey/devkit-ts-lefthook) | Git hooks (biome, eslint, commit validation) |
+| [@droneey/devkit-ts-lefthook](https://www.npmjs.com/package/@droneey/devkit-ts-lefthook) | Git hooks (biome, commit validation) |
 
 ## License
 
