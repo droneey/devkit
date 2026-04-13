@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
   "overrides": [
     {
       "includes": [
@@ -10,7 +10,8 @@
         "actions": {
           "source": {
             "useSortedAttributes": {
-              "level": "on"
+              "level": "on",
+              "options": {}
             }
           }
         }
@@ -26,7 +27,7 @@
             "noNextAsyncClientComponent": "error"
           },
           "nursery": {
-            "noJsxPropsBind": "error",
+            "noJsxPropsBind": "off",
             "noLeakedRender": "error"
           },
           "a11y": {

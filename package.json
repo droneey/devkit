@@ -20,8 +20,8 @@
   "scripts": {
     "check": "bun lint:check && bun lint:packages && bun test",
     "clean": "rm -rf node_modules packages/typescript/libs/*/node_modules bun.lock",
-    "lint:check": "eslint --max-warnings 0 && biome check",
-    "lint:fix": "eslint --fix && biome check --write",
+    "lint:check": "biome check",
+    "lint:fix": "biome check --write",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
     "prepare": "lefthook install",
@@ -31,19 +31,13 @@
     "packages/typescript/libs/*"
   ],
   "devDependencies": {
-    "@biomejs/biome": "^2.4.8",
-    "@eslint/compat": "^2.0.3",
+    "@biomejs/biome": "^2.4.11",
     "@droneey/devkit-ts-biome": "workspace:*",
-    "@droneey/devkit-ts-eslint-biome": "workspace:*",
     "@droneey/devkit-ts-lefthook": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
-    "@eslint/js": "^10.0.1",
     "@types/bun": "^1.3.11",
-    "eslint": "^10.1.0",
-    "globals": "^17.4.0",
     "lefthook": "^2.1.4",
-    "syncpack": "^14.2.0",
-    "typescript-eslint": "^8.57.1"
+    "syncpack": "^14.2.0"
   },
   "peerDependencies": {
     "typescript": "^5"

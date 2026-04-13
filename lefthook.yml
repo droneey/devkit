@@ -1,10 +1,3 @@
 extends:
   - node_modules/@droneey/devkit-ts-lefthook/configs/base.yml
   - node_modules/@droneey/devkit-ts-lefthook/configs/biome.yml
-  - node_modules/@droneey/devkit-ts-lefthook/configs/eslint.yml
-
-# ! IDE warning about missing "run" is a false positive.
-pre-commit:
-  jobs:
-    - name: eslint
-      exclude: '**/templates/**'

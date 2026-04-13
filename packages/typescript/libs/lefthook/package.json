@@ -5,7 +5,6 @@
   "keywords": [
     "biome",
     "config",
-    "eslint",
     "git-hooks",
     "lefthook",
     "shared"
@@ -26,8 +25,7 @@
   },
   "exports": {
     "./base": "./configs/base.yml",
-    "./biome": "./configs/biome.yml",
-    "./eslint": "./configs/eslint.yml"
+    "./biome": "./configs/biome.yml"
   },
   "files": [
     "configs/*"
