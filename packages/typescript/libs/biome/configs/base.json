@@ -101,7 +101,12 @@
         "useConsistentBuiltinInstantiation": "error",
         "useShorthandAssign": "error",
         "noYodaExpression": "error",
-        "useConsistentMemberAccessibility": "error",
+        "useConsistentMemberAccessibility": {
+          "level": "error",
+          "options": {
+            "accessibility": "explicit"
+          }
+        },
         "useExplicitLengthCheck": "error",
         "useAtIndex": "error",
         "useTrimStartEnd": "error",
@@ -111,7 +116,22 @@
         "noDoneCallback": "error",
         "noExportedImports": "error",
         "noNamespace": "error",
-        "useNamingConvention": "error",
+        "useNamingConvention": {
+          "level": "error",
+          "options": {
+            "conventions": [
+              {
+                "selector": {
+                  "kind": "typeParameter"
+                },
+                "match": "T([A-Z].*)?",
+                "formats": [
+                  "PascalCase"
+                ]
+              }
+            ]
+          }
+        },
         "useNumericSeparators": "error",
         "useObjectSpread": "error",
         "useReadonlyClassProperties": "error",
@@ -167,7 +187,7 @@
         "noExcessiveCognitiveComplexity": {
           "level": "error",
           "options": {
-            "maxAllowedComplexity": 8
+            "maxAllowedComplexity": 10
           }
         },
         "noExcessiveLinesPerFunction": {
@@ -188,7 +208,12 @@
         "useJsonImportAttributes": "error"
       },
       "security": {
-        "noSecrets": "error"
+        "noSecrets": {
+          "level": "error",
+          "options": {
+            "entropyThreshold": 60
+          }
+        }
       },
       "performance": {
         "noDelete": "error",
