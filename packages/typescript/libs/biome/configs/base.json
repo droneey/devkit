@@ -41,6 +41,11 @@
               ":BUN:",
               ":BLANK_LINE:",
               [
+                "@nest*",
+                "nest*"
+              ],
+              ":BLANK_LINE:",
+              [
                 "react",
                 "react/**",
                 "react-*"
