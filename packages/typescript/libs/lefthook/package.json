@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-lefthook",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "Shared Lefthook configuration with composable git hooks for linting, formatting, and commit validation.",
   "keywords": [
     "biome",

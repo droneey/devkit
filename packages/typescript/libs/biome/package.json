@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-biome",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "Shared Biome configuration for formatting and linting.",
   "keywords": [
     "biome",
