@@ -27,23 +27,9 @@ describe('tsconfig base', () => {
 });
 
 describe('tsconfig variants', () => {
-  test('node-cjs.json uses CommonJS module and node resolution', () => {
-    const config = readConfig('node-cjs.json');
+  test('node.json extends base.json', () => {
+    const config = readConfig('node.json');
     expect(config.extends).toBe('./base.json');
-
-    const options = getOptions('node-cjs.json');
-    expect(options.module).toBe('commonjs');
-    expect(options.moduleResolution).toBe('node');
-    expect(options.esModuleInterop).toBe(true);
-  });
-
-  test('node-esm.json uses NodeNext module and resolution', () => {
-    const config = readConfig('node-esm.json');
-    expect(config.extends).toBe('./base.json');
-
-    const options = getOptions('node-esm.json');
-    expect(options.module).toBe('NodeNext');
-    expect(options.moduleResolution).toBe('NodeNext');
   });
 
   test('browser.json includes DOM types and JSX', () => {

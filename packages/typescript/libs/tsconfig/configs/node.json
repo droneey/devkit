@@ -1,15 +1,12 @@
 {
   "extends": "./base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
     "verbatimModuleSyntax": false,
     "allowImportingTsExtensions": false,
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
-    "sourceMap": true,
     "incremental": true
   }
 }

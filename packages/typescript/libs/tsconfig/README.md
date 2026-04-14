@@ -23,8 +23,7 @@ Add to your `tsconfig.json`:
 | Config | Extends | Description |
 |---|---|---|
 | `base` | -- | Strict TypeScript with ESM, all strict checks enabled |
-| `node-esm` | `base` | Node.js with ESM modules |
-| `node-cjs` | `base` | Node.js with CommonJS modules |
+| `node` | `base` | Node.js with ESM modules |
 | `browser` | `base` | Browser with DOM types |
 | `mobile` | `base` | React Native with JSX |
 

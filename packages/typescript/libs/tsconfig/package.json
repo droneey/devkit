@@ -26,10 +26,16 @@
   },
   "exports": {
     "./base": "./configs/base.json",
-    "./node-esm": "./configs/node-esm.json",
-    "./node-cjs": "./configs/node-cjs.json",
+    "./node": "./configs/node.json",
     "./browser": "./configs/browser.json",
     "./mobile": "./configs/mobile.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "configs/*"
+      ]
+    }
   },
   "files": [
     "configs/*"
