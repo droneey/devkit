@@ -1,5 +1,4 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
   "overrides": [
     {
       "includes": [
@@ -28,7 +27,8 @@
           },
           "nursery": {
             "noJsxPropsBind": "off",
-            "noLeakedRender": "error"
+            "noLeakedRender": "error",
+            "noComponentHookFactories": "error"
           },
           "a11y": {
             "useButtonType": "error",

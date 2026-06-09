@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "private": true,
   "description": "Shared development toolkit for consistent tooling across projects.",
   "homepage": "https://github.com/droneey/devkit#readme",
@@ -18,20 +18,20 @@
   },
   "type": "module",
   "scripts": {
-    "check": "bun lint:check && bun lint:packages && bun test",
+    "prepare": "lefthook install",
     "clean": "rm -rf node_modules packages/typescript/libs/*/node_modules bun.lock",
+    "test": "bun test",
     "lint:check": "biome check",
     "lint:fix": "biome check --write",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
-    "prepare": "lefthook install",
-    "test": "bun test"
+    "check": "bun lint:check && bun lint:packages && bun test"
   },
   "workspaces": [
     "packages/typescript/libs/*"
   ],
   "devDependencies": {
-    "@biomejs/biome": "^2.4.11",
+    "@biomejs/biome": "^2.4.16",
     "@droneey/devkit-ts-biome": "workspace:*",
     "@droneey/devkit-ts-lefthook": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
