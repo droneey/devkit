@@ -1,11 +1,11 @@
-name: 🚀 Release
+name: 🚀 Deploy
 
 on:
   release:
     types: [released]
 
 jobs:
-  release:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read

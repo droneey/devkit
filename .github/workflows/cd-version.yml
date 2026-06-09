@@ -27,16 +27,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
-            --jq '.[0].head.ref' 2>/dev/null || echo "")
+          BRANCH=""
+          for attempt in $(seq 1 12); do
+            BRANCH=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+              --jq '.[0].head.ref' 2>/dev/null || echo "")
+            [ -n "$BRANCH" ] && break
+            echo "PR association not ready (attempt $attempt/12) - retrying in 5s..."
+            sleep 5
+          done
 
           if [ -z "$BRANCH" ]; then
-            BRANCH=$(gh pr list --state merged --search "hash:$GITHUB_SHA" \
-              --json headRefName --jq '.[0].headRefName' 2>/dev/null || echo "")
-          fi
-
-          if [ -z "$BRANCH" ]; then
-            echo "No PR found for $GITHUB_SHA — skipping bump"
+            echo "No PR found for $GITHUB_SHA after retries - direct push or non-PR commit; skipping bump"
             echo "type=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
