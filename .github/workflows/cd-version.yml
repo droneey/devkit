@@ -14,51 +14,48 @@ jobs:
     if: "!startsWith(github.event.head_commit.message, 'chore: Release v')"
     permissions:
       contents: write
+      pull-requests: read
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v6
         with:
-          token: ${{ secrets.GH_PAT_TOKEN }}
+          token: ${{ secrets.GH_ORG_TOKEN }}
           fetch-depth: 2
 
       - name: 🔎 Determine bump type
         id: bump
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          COMMIT_MSG="$HEAD_COMMIT_MSG"
+          BRANCH=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+            --jq '.[0].head.ref' 2>/dev/null || echo "")
 
-          PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -1 | tr -d '#')
-          if [ -n "$PR_NUMBER" ]; then
-            BRANCH=$(gh pr view "$PR_NUMBER" --json headRefName -q '.headRefName' 2>/dev/null || echo "")
+          if [ -z "$BRANCH" ]; then
+            BRANCH=$(gh pr list --state merged --search "hash:$GITHUB_SHA" \
+              --json headRefName --jq '.[0].headRefName' 2>/dev/null || echo "")
           fi
 
           if [ -z "$BRANCH" ]; then
-            if echo "$COMMIT_MSG" | grep -qE "^feat"; then
-              echo "type=minor" >> "$GITHUB_OUTPUT"
-              exit 0
-            elif echo "$COMMIT_MSG" | grep -qE "^fix|^hotfix"; then
-              echo "type=patch" >> "$GITHUB_OUTPUT"
-              exit 0
-            else
-              echo "type=" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
+            echo "No PR found for $GITHUB_SHA — skipping bump"
+            echo "type=" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
-          PREFIX=$(echo "$BRANCH" | cut -d/ -f1)
+          PREFIX="${BRANCH%%/*}"
+          echo "Source branch: $BRANCH (prefix: $PREFIX)"
+
           case "$PREFIX" in
             feature) echo "type=minor" >> "$GITHUB_OUTPUT" ;;
             fix|hotfix) echo "type=patch" >> "$GITHUB_OUTPUT" ;;
             *) echo "type=" >> "$GITHUB_OUTPUT" ;;
           esac
-        env:
-          HEAD_COMMIT_MSG: ${{ github.event.head_commit.message }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🏷️ Bump version and tag
         if: steps.bump.outputs.type
+        env:
+          BUMP: ${{ steps.bump.outputs.type }}
         run: |
-          BUMP="${{ steps.bump.outputs.type }}"
-          CURRENT=$(jq -r '.version' packages/typescript/libs/*/package.json | head -1)
+          CURRENT=$(jq -r '.version' package.json)
           IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
 
           if [ "$BUMP" = "minor" ]; then
@@ -71,13 +68,14 @@ jobs:
           NEW_VERSION="$MAJOR.$MINOR.$PATCH"
           echo "Bumping $CURRENT → $NEW_VERSION ($BUMP)"
 
+          jq --arg v "$NEW_VERSION" '.version = $v' package.json > package.json.tmp && mv package.json.tmp package.json
           for pkg in packages/typescript/libs/*/package.json; do
             jq --arg v "$NEW_VERSION" '.version = $v' "$pkg" > "$pkg.tmp" && mv "$pkg.tmp" "$pkg"
           done
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add packages/typescript/libs/*/package.json
+          git add package.json packages/typescript/libs/*/package.json
           git commit -m "chore: Release v$NEW_VERSION" --no-verify
           git tag "v$NEW_VERSION"
           git push && git push origin "v$NEW_VERSION"

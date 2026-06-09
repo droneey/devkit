@@ -1,5 +1,4 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -93,6 +92,12 @@
         "noVar": "error"
       },
       "style": {
+        "useImportType": {
+          "level": "error",
+          "options": {
+            "style": "separatedType"
+          }
+        },
         "noParameterAssign": "error",
         "noNestedTernary": "error",
         "useThrowOnlyError": "error",
@@ -260,7 +265,13 @@
         "useExpect": "error",
         "useFind": "error",
         "useGlobalThis": "error",
-        "useNullishCoalescing": "error"
+        "useNullishCoalescing": "error",
+        "useStringStartsEndsWith": "error",
+        "useRegexpTest": "error",
+        "noUselessTypeConversion": "error",
+        "noEmptyObjectKeys": "error",
+        "useDisposables": "error",
+        "noLoopFunc": "warn"
       }
     }
   },

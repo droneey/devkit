@@ -22,16 +22,9 @@ const configFiles = [
 ];
 
 describe('biome configs', () => {
-  test.each(configFiles)('%s is valid JSON with a $schema', (file) => {
+  test.each(configFiles)('%s is valid JSON', (file) => {
     const config = readConfig(file);
-    expect(config.$schema).toBeString();
-    expect(config.$schema).toContain('biomejs.dev');
-  });
-
-  test('all configs use the same schema version', () => {
-    const schemas = configFiles.map((f) => readConfig(f).$schema);
-    const unique = new Set(schemas);
-    expect(unique.size).toBe(1);
+    expect(config).toBeObject();
   });
 
   test('base.json has formatter, linter, and assist sections', () => {

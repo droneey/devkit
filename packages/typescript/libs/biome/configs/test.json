@@ -1,5 +1,4 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
   "overrides": [
     {
       "includes": [
@@ -23,7 +22,8 @@
             "noStaticOnlyClass": "off"
           },
           "nursery": {
-            "useExplicitType": "off"
+            "useExplicitType": "off",
+            "noIdenticalTestTitle": "error"
           }
         }
       }
