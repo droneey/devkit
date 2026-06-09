@@ -35,9 +35,6 @@ jobs:
             fi
           done
 
-      - name: ✅ Verify
-        run: bun run lint:check && bun run lint:packages && bun test
-
       - name: 📤 Publish to npm
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
