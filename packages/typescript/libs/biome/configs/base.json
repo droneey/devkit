@@ -315,6 +315,18 @@
           }
         }
       }
+    },
+    {
+      "includes": [
+        "**/bun.lock"
+      ],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noEmptyObjectKeys": "off"
+          }
+        }
+      }
     }
   ]
 }
