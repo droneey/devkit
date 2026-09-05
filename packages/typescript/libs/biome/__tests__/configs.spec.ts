@@ -34,10 +34,11 @@ describe('biome configs', () => {
     expect(config.assist).toBeDefined();
   });
 
-  test('base.json has recommended rules enabled', () => {
+  test('base.json enables the recommended rule preset', () => {
     const linter = readConfig('base.json').linter as Record<string, unknown>;
     const rules = linter.rules as Record<string, unknown>;
-    expect(rules.recommended).toBe(true);
+    expect(rules.preset).toBe('recommended');
+    expect(rules.recommended).toBeUndefined();
   });
 
   test.each([
