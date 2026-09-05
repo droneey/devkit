@@ -11,11 +11,14 @@ concurrency:
 jobs:
   version:
     if: "!startsWith(github.event.head_commit.message, 'chore: Release v')"
-    uses: droneey/.github/.github/workflows/cd-version.yml@v1.4.0
+    uses: droneey/.github/.github/workflows/cd-version.yml@v2.0.0
     permissions:
       contents: write
       pull-requests: read
     with:
-      packages: "package.json packages/typescript/libs/*/package.json"
+      version-command: |
+        for f in package.json packages/typescript/libs/*/package.json; do
+          jq --arg v "$VERSION" '.version = $v' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+        done
     secrets:
       token: ${{ secrets.GH_TOKEN }}
