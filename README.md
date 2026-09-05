@@ -162,7 +162,7 @@ bun run check
 
 ## 📐 Conventions
 
-Branches are `feature/*`, `fix/*` or `hotfix/*`, and the prefix decides the version bump. Commits are one-line Conventional Commits, `type: Subject`. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Branches are `feature/*`, `fix/*` or `hotfix/*`, and the prefix decides the version bump. Commits are one-line Conventional Commits, `type: Subject`. See [CONTRIBUTING.md](https://github.com/droneey/.github/blob/main/CONTRIBUTING.md).
 
 ## 📚 Docs
 
