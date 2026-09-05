@@ -18,4 +18,4 @@ jobs:
     with:
       packages: "package.json packages/typescript/libs/*/package.json"
     secrets:
-      token: ${{ secrets.GH_ORG_TOKEN }}
+      token: ${{ secrets.GH_TOKEN }}

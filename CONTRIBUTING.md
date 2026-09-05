@@ -15,7 +15,7 @@ bun install
 bun run check
 ```
 
-`check` is the three gates the pull request runs: `lint:check` (Biome formats and lints), `lint:packages` (syncpack keeps the manifests in step) and `test`. Fix what Biome can fix for you with `bun run lint:fix` and `bun run lint:packages:fix`.
+`check` is the three gates the pull request runs: `lint:check` (Biome formats and lints), `lint:packages` (syncpack keeps the manifests in step) and `test:unit`. Fix what Biome can fix for you with `bun run lint:fix` and `bun run lint:packages:fix`.
 
 Every workflow has to parse before it is pushed:
 
