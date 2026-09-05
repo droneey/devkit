@@ -61,14 +61,17 @@ describe('biome configs', () => {
         '**/*.ts',
       ],
     ],
-  ] as const)('%s targets the correct file patterns', (file, expectedPatterns) => {
-    const config = readConfig(file);
-    const overrides = config.overrides as Record<string, unknown>[];
-    expect(overrides.length).toBeGreaterThan(0);
+  ] as const)(
+    '%s targets the correct file patterns',
+    (file, expectedPatterns) => {
+      const config = readConfig(file);
+      const overrides = config.overrides as Record<string, unknown>[];
+      expect(overrides.length).toBeGreaterThan(0);
 
-    const includes = overrides[0]!.includes as string[];
-    for (const pattern of expectedPatterns) {
-      expect(includes).toContain(pattern);
-    }
-  });
+      const includes = overrides[0]!.includes as string[];
+      for (const pattern of expectedPatterns) {
+        expect(includes).toContain(pattern);
+      }
+    },
+  );
 });

@@ -26,8 +26,6 @@
             "noNextAsyncClientComponent": "error"
           },
           "nursery": {
-            "noJsxPropsBind": "off",
-            "noLeakedRender": "error",
             "noComponentHookFactories": "error"
           },
           "a11y": {
@@ -57,7 +55,8 @@
           "suspicious": {
             "noArrayIndexKey": "warn",
             "noDuplicateJsxProps": "error",
-            "noReactForwardRef": "error"
+            "noReactForwardRef": "error",
+            "noLeakedRender": "error"
           },
           "style": {
             "noImplicitBoolean": "error",
@@ -82,6 +81,9 @@
           "security": {
             "noDangerouslySetInnerHtml": "error",
             "noBlankTarget": "error"
+          },
+          "performance": {
+            "noJsxPropsBind": "off"
           }
         }
       }

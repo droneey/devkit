@@ -89,7 +89,15 @@
         "noMisplacedAssertion": "error",
         "noSkippedTests": "error",
         "noUnassignedVariables": "error",
-        "noVar": "error"
+        "noVar": "error",
+        "noReturnAssign": "error",
+        "noProto": "warn",
+        "noDuplicateEnumValues": "error",
+        "noForIn": "error",
+        "noNestedPromises": "error",
+        "noShadow": "error",
+        "noUnnecessaryConditions": "error",
+        "useArraySortCompare": "error"
       },
       "style": {
         "useImportType": {
@@ -175,7 +183,19 @@
               "kebab-case"
             ]
           }
-        }
+        },
+        "noMultiAssign": "error",
+        "noExcessiveClassesPerFile": "error",
+        "noExcessiveLinesPerFile": {
+          "level": "warn",
+          "options": {
+            "maxLines": 300
+          }
+        },
+        "useConsistentEnumValueType": "error",
+        "useConsistentMethodSignatures": "error",
+        "useErrorCause": "error",
+        "useGlobalThis": "error"
       },
       "a11y": {
         "noNoninteractiveElementInteractions": "error"
@@ -210,7 +230,9 @@
         "noForEach": "error",
         "useSimplifiedLogicExpression": "error",
         "useWhile": "error",
-        "useMaxParams": "error"
+        "useMaxParams": "error",
+        "noUselessReturn": "error",
+        "noRedundantDefaultExport": "error"
       },
       "correctness": {
         "noGlobalDirnameFilename": "error",
@@ -233,38 +255,14 @@
         "noReExportAll": "error"
       },
       "nursery": {
-        "noMultiAssign": "error",
-        "noMultiStr": "error",
-        "noReturnAssign": "error",
-        "noUselessReturn": "error",
-        "noProto": "warn",
         "noFloatingPromises": "error",
         "useExplicitType": "error",
-        "noDuplicateEnumValues": "error",
-        "noExcessiveClassesPerFile": "error",
-        "noExcessiveLinesPerFile": {
-          "level": "warn",
-          "options": {
-            "maxLines": 300
-          }
-        },
-        "noForIn": "error",
         "noConditionalExpect": "error",
         "noMisusedPromises": "error",
-        "noNestedPromises": "error",
-        "noRedundantDefaultExport": "error",
-        "noShadow": "error",
-        "noUnnecessaryConditions": "error",
         "useArraySome": "error",
-        "useArraySortCompare": "error",
         "useAwaitThenable": "error",
-        "useConsistentEnumValueType": "error",
-        "useConsistentMethodSignatures": "error",
-        "useErrorCause": "error",
         "useExhaustiveSwitchCases": "error",
         "useExpect": "error",
-        "useFind": "error",
-        "useGlobalThis": "error",
         "useNullishCoalescing": "error",
         "useStringStartsEndsWith": "error",
         "useRegexpTest": "error",
