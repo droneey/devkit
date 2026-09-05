@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "private": true,
   "description": "Shared development toolkit for consistent tooling across projects.",
   "homepage": "https://github.com/droneey/devkit#readme",
