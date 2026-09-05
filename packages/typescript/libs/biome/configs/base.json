@@ -195,7 +195,8 @@
         "useConsistentEnumValueType": "error",
         "useConsistentMethodSignatures": "error",
         "useErrorCause": "error",
-        "useGlobalThis": "error"
+        "useGlobalThis": "error",
+        "noMultilineString": "error"
       },
       "a11y": {
         "noNoninteractiveElementInteractions": "error"
@@ -232,7 +233,8 @@
         "useWhile": "error",
         "useMaxParams": "error",
         "noUselessReturn": "error",
-        "noRedundantDefaultExport": "error"
+        "noRedundantDefaultExport": "error",
+        "useArrayFind": "error"
       },
       "correctness": {
         "noGlobalDirnameFilename": "error",
