@@ -6,60 +6,8 @@ on:
 
 jobs:
   pre-release:
-    runs-on: ubuntu-latest
+    uses: droneey/workflows/.github/workflows/cd-pre-release.yml@v1
     permissions:
       contents: write
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: 📝 Generate changelog
-        id: changelog
-        env:
-          TAG: ${{ github.ref_name }}
-          REPO: ${{ github.repository }}
-        run: |
-          PREV_TAG=$(git tag --sort=-v:refname | grep '^v' | sed -n '2p')
-
-          BODY="## Packages"$'\n\n'
-          for pkg in packages/typescript/libs/*/package.json; do
-            name=$(jq -r '.name' "$pkg")
-            version=$(jq -r '.version' "$pkg")
-            BODY="${BODY}- \`${name}@${version}\`"$'\n'
-          done
-
-          if [ -n "$PREV_TAG" ]; then
-            RANGE="${PREV_TAG}..${TAG}"
-            FEATURES=$(git log "$RANGE" --pretty=format:"- %s" --grep="^feat" --no-merges)
-            FIXES=$(git log "$RANGE" --pretty=format:"- %s" --grep="^fix" --no-merges)
-
-            BODY="${BODY}"$'\n'"## What's Changed"$'\n\n'
-            if [ -n "$FEATURES" ]; then
-              BODY="${BODY}### Features"$'\n'"${FEATURES}"$'\n\n'
-            fi
-            if [ -n "$FIXES" ]; then
-              BODY="${BODY}### Fixes"$'\n'"${FIXES}"$'\n\n'
-            fi
-            BODY="${BODY}**Full Changelog**: https://github.com/${REPO}/compare/${PREV_TAG}...${TAG}"
-          else
-            BODY="${BODY}"$'\n'"Initial release."
-          fi
-
-          {
-            echo "body<<CHANGELOG_EOF"
-            echo "$BODY"
-            echo "CHANGELOG_EOF"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: 🔖 Create GitHub pre-release
-        env:
-          TAG: ${{ github.ref_name }}
-          BODY: ${{ steps.changelog.outputs.body }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create "$TAG" \
-            --title "$TAG" \
-            --notes "$BODY" \
-            --prerelease
+    with:
+      packages: "package.json packages/typescript/libs/*/package.json"

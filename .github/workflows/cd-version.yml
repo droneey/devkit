@@ -10,76 +10,12 @@ concurrency:
 
 jobs:
   version:
-    runs-on: ubuntu-latest
     if: "!startsWith(github.event.head_commit.message, 'chore: Release v')"
+    uses: droneey/workflows/.github/workflows/cd-version.yml@v1
     permissions:
       contents: write
       pull-requests: read
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v6
-        with:
-          token: ${{ secrets.GH_ORG_TOKEN }}
-          fetch-depth: 2
-          fetch-tags: true
-
-      - name: 🔎 Determine bump type
-        id: bump
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          BRANCH=""
-          for attempt in $(seq 1 12); do
-            BRANCH=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
-              --jq '.[0].head.ref' 2>/dev/null || echo "")
-            [ -n "$BRANCH" ] && break
-            echo "PR association not ready (attempt $attempt/12) - retrying in 5s..."
-            sleep 5
-          done
-
-          if [ -z "$BRANCH" ]; then
-            echo "No PR found for $GITHUB_SHA after retries - direct push or non-PR commit; skipping bump"
-            echo "type=" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          PREFIX="${BRANCH%%/*}"
-          echo "Source branch: $BRANCH (prefix: $PREFIX)"
-
-          case "$PREFIX" in
-            feature) echo "type=minor" >> "$GITHUB_OUTPUT" ;;
-            fix|hotfix) echo "type=patch" >> "$GITHUB_OUTPUT" ;;
-            *) echo "type=" >> "$GITHUB_OUTPUT" ;;
-          esac
-
-      - name: 🏷️ Bump version and tag
-        if: steps.bump.outputs.type
-        env:
-          BUMP: ${{ steps.bump.outputs.type }}
-        run: |
-          LATEST=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
-          CURRENT="${LATEST#v}"
-          [ -z "$CURRENT" ] && CURRENT="0.0.0"
-          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
-
-          if [ "$BUMP" = "minor" ]; then
-            MINOR=$((MINOR + 1))
-            PATCH=0
-          elif [ "$BUMP" = "patch" ]; then
-            PATCH=$((PATCH + 1))
-          fi
-
-          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
-          echo "Bumping $CURRENT → $NEW_VERSION ($BUMP)"
-
-          jq --arg v "$NEW_VERSION" '.version = $v' package.json > package.json.tmp && mv package.json.tmp package.json
-          for pkg in packages/typescript/libs/*/package.json; do
-            jq --arg v "$NEW_VERSION" '.version = $v' "$pkg" > "$pkg.tmp" && mv "$pkg.tmp" "$pkg"
-          done
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json packages/typescript/libs/*/package.json
-          git commit -m "chore: Release v$NEW_VERSION" --no-verify
-          git tag "v$NEW_VERSION"
-          git push && git push origin "v$NEW_VERSION"
+    with:
+      packages: "package.json packages/typescript/libs/*/package.json"
+    secrets:
+      token: ${{ secrets.GH_ORG_TOKEN }}
