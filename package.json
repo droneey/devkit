@@ -31,7 +31,7 @@
     "packages/typescript/libs/*"
   ],
   "devDependencies": {
-    "@biomejs/biome": "^2.4.16",
+    "@biomejs/biome": "^2.5.12",
     "@droneey/devkit-ts-biome": "workspace:*",
     "@droneey/devkit-ts-lefthook": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
@@ -40,6 +40,6 @@
     "syncpack": "^14.2.0"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5 || ^7"
   }
 }
