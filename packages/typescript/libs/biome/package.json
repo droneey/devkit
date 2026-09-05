@@ -36,6 +36,6 @@
     "configs/*"
   ],
   "peerDependencies": {
-    "@biomejs/biome": ">=2.4.13"
+    "@biomejs/biome": ">=2.5.0"
   }
 }

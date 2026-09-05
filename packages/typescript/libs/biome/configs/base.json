@@ -73,7 +73,7 @@
   },
   "linter": {
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
 
       "suspicious": {
         "noEmptyBlockStatements": "error",
@@ -89,7 +89,15 @@
         "noMisplacedAssertion": "error",
         "noSkippedTests": "error",
         "noUnassignedVariables": "error",
-        "noVar": "error"
+        "noVar": "error",
+        "noReturnAssign": "error",
+        "noProto": "warn",
+        "noDuplicateEnumValues": "error",
+        "noForIn": "error",
+        "noNestedPromises": "error",
+        "noShadow": "error",
+        "noUnnecessaryConditions": "error",
+        "useArraySortCompare": "error"
       },
       "style": {
         "useImportType": {
@@ -175,7 +183,21 @@
               "kebab-case"
             ]
           }
-        }
+        },
+        "noMultiAssign": "error",
+        "noExcessiveClassesPerFile": "error",
+        "noExcessiveLinesPerFile": {
+          "level": "warn",
+          "options": {
+            "maxLines": 300
+          }
+        },
+        "useConsistentEnumValueType": "error",
+        "useConsistentMethodSignatures": "error",
+        "useErrorCause": "error",
+        "useGlobalThis": "error",
+        "noMultilineString": "error",
+        "useSpreadOverApply": "error"
       },
       "a11y": {
         "noNoninteractiveElementInteractions": "error"
@@ -210,12 +232,16 @@
         "noForEach": "error",
         "useSimplifiedLogicExpression": "error",
         "useWhile": "error",
-        "useMaxParams": "error"
+        "useMaxParams": "error",
+        "noUselessReturn": "error",
+        "noRedundantDefaultExport": "error",
+        "useArrayFind": "error"
       },
       "correctness": {
         "noGlobalDirnameFilename": "error",
         "noUndeclaredDependencies": "error",
-        "useJsonImportAttributes": "error"
+        "useJsonImportAttributes": "error",
+        "noUnusedInstantiation": "error"
       },
       "security": {
         "noSecrets": {
@@ -233,45 +259,34 @@
         "noReExportAll": "error"
       },
       "nursery": {
-        "noMultiAssign": "error",
-        "noMultiStr": "error",
-        "noReturnAssign": "error",
-        "noUselessReturn": "error",
-        "noProto": "warn",
         "noFloatingPromises": "error",
         "useExplicitType": "error",
-        "noDuplicateEnumValues": "error",
-        "noExcessiveClassesPerFile": "error",
-        "noExcessiveLinesPerFile": {
-          "level": "warn",
-          "options": {
-            "maxLines": 300
-          }
-        },
-        "noForIn": "error",
         "noConditionalExpect": "error",
         "noMisusedPromises": "error",
-        "noNestedPromises": "error",
-        "noRedundantDefaultExport": "error",
-        "noShadow": "error",
-        "noUnnecessaryConditions": "error",
         "useArraySome": "error",
-        "useArraySortCompare": "error",
         "useAwaitThenable": "error",
-        "useConsistentEnumValueType": "error",
-        "useConsistentMethodSignatures": "error",
-        "useErrorCause": "error",
         "useExhaustiveSwitchCases": "error",
         "useExpect": "error",
-        "useFind": "error",
-        "useGlobalThis": "error",
         "useNullishCoalescing": "error",
         "useStringStartsEndsWith": "error",
         "useRegexpTest": "error",
         "noUselessTypeConversion": "error",
         "noEmptyObjectKeys": "error",
         "useDisposables": "error",
-        "noLoopFunc": "warn"
+        "noLoopFunc": "warn",
+        "noNegationInEqualityCheck": "error",
+        "noThisOutsideOfClass": "error",
+        "useIncludes": "error",
+        "useModernMathApis": "error",
+        "useFlatMathMinMax": "error",
+        "noTailwindArbitraryValue": "error",
+        "noInvalidFileInputAccept": "error",
+        "useControlLabel": "error",
+        "noUndeclaredClasses": "error",
+        "noUnusedClasses": "error",
+        "noUndeclaredCustomProperties": "error",
+        "noInvalidPropertyInitValue": "error",
+        "useNamedLayer": "error"
       }
     }
   },

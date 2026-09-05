@@ -26,9 +26,15 @@
             "noNextAsyncClientComponent": "error"
           },
           "nursery": {
-            "noJsxPropsBind": "off",
-            "noLeakedRender": "error",
-            "noComponentHookFactories": "error"
+            "noComponentHookFactories": "error",
+            "useReactCompiler": "error",
+            "useReactNamingConvention": "error",
+            "useReactFunctionComponentDefinition": {
+              "level": "error",
+              "options": {
+                "namedComponents": "arrowFunction"
+              }
+            }
           },
           "a11y": {
             "useButtonType": "error",
@@ -57,7 +63,8 @@
           "suspicious": {
             "noArrayIndexKey": "warn",
             "noDuplicateJsxProps": "error",
-            "noReactForwardRef": "error"
+            "noReactForwardRef": "error",
+            "noLeakedRender": "error"
           },
           "style": {
             "noImplicitBoolean": "error",
@@ -82,6 +89,9 @@
           "security": {
             "noDangerouslySetInnerHtml": "error",
             "noBlankTarget": "error"
+          },
+          "performance": {
+            "noJsxPropsBind": "off"
           }
         }
       }

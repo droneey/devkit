@@ -34,10 +34,11 @@ describe('biome configs', () => {
     expect(config.assist).toBeDefined();
   });
 
-  test('base.json has recommended rules enabled', () => {
+  test('base.json enables the recommended rule preset', () => {
     const linter = readConfig('base.json').linter as Record<string, unknown>;
     const rules = linter.rules as Record<string, unknown>;
-    expect(rules.recommended).toBe(true);
+    expect(rules.preset).toBe('recommended');
+    expect(rules.recommended).toBeUndefined();
   });
 
   test.each([
@@ -61,14 +62,17 @@ describe('biome configs', () => {
         '**/*.ts',
       ],
     ],
-  ] as const)('%s targets the correct file patterns', (file, expectedPatterns) => {
-    const config = readConfig(file);
-    const overrides = config.overrides as Record<string, unknown>[];
-    expect(overrides.length).toBeGreaterThan(0);
+  ] as const)(
+    '%s targets the correct file patterns',
+    (file, expectedPatterns) => {
+      const config = readConfig(file);
+      const overrides = config.overrides as Record<string, unknown>[];
+      expect(overrides.length).toBeGreaterThan(0);
 
-    const includes = overrides[0]!.includes as string[];
-    for (const pattern of expectedPatterns) {
-      expect(includes).toContain(pattern);
-    }
-  });
+      const includes = overrides[0]!.includes as string[];
+      for (const pattern of expectedPatterns) {
+        expect(includes).toContain(pattern);
+      }
+    },
+  );
 });

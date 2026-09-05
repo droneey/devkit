@@ -12,7 +12,7 @@ Create `biome.json` in your project root:
 
 ```json
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
   "extends": ["@droneey/devkit-ts-biome/base"]
 }
 ```

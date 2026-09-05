@@ -20,26 +20,26 @@
   "scripts": {
     "prepare": "lefthook install",
     "clean": "rm -rf node_modules packages/typescript/libs/*/node_modules bun.lock",
-    "test": "bun test",
+    "test:unit": "bun test",
     "lint:check": "biome check",
     "lint:fix": "biome check --write",
     "lint:packages": "syncpack lint",
     "lint:packages:fix": "syncpack fix",
-    "check": "bun lint:check && bun lint:packages && bun test"
+    "check": "bun lint:check && bun lint:packages && bun test:unit"
   },
   "workspaces": [
     "packages/typescript/libs/*"
   ],
   "devDependencies": {
-    "@biomejs/biome": "^2.4.16",
+    "@biomejs/biome": "^2.5.12",
     "@droneey/devkit-ts-biome": "workspace:*",
     "@droneey/devkit-ts-lefthook": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
-    "@types/bun": "^1.3.11",
+    "@types/bun": "^1.4.1",
     "lefthook": "^2.1.4",
     "syncpack": "^14.2.0"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5 || ^7"
   }
 }

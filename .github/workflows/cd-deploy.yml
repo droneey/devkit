@@ -6,52 +6,12 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    uses: droneey/.github/.github/workflows/cd-deploy-npm.yml@v1
     permissions:
       contents: read
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.release.tag_name }}
-          fetch-depth: 0
-
-      - name: 🟢 Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: 📦 Setup Bun
-        uses: oven-sh/setup-bun@v2
-
-      - name: 📦 Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: 🔨 Build packages
-        run: |
-          for pkg in packages/typescript/libs/*/; do
-            if [ -f "$pkg/package.json" ] && grep -q '"build"' "$pkg/package.json"; then
-              (cd "$pkg" && bun run build)
-            fi
-          done
-
-      - name: 📤 Publish to npm
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          for pkg in packages/typescript/libs/*/; do
-            if [ -f "$pkg/package.json" ] && [ "$(jq -r '.private // false' "$pkg/package.json")" != "true" ]; then
-              PKG_NAME=$(jq -r '.name' "$pkg/package.json")
-              echo "Publishing $PKG_NAME"
-              OUTPUT=$(cd "$pkg" && npm publish --access public 2>&1) || {
-                if echo "$OUTPUT" | grep -q "You cannot publish over the previously published versions"; then
-                  echo "Already published $PKG_NAME, skipping."
-                else
-                  echo "::error::Failed to publish $PKG_NAME"
-                  echo "$OUTPUT"
-                  exit 1
-                fi
-              }
-            fi
-          done
+      id-token: write
+    with:
+      packages: "packages/typescript/libs/*/package.json"
+      node-version: "24"
+    secrets:
+      npm_token: ${{ secrets.NPM_TOKEN }}
