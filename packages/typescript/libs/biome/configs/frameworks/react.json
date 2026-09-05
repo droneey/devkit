@@ -32,7 +32,7 @@
             "useReactFunctionComponentDefinition": {
               "level": "error",
               "options": {
-                "namedComponents": "arrowFunction"
+                "namedComponents": "functionDeclaration"
               }
             }
           },
