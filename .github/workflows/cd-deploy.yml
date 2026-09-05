@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    uses: droneey/workflows/.github/workflows/cd-deploy-npm.yml@v1
+    uses: droneey/.github/.github/workflows/cd-deploy-npm.yml@v1
     permissions:
       contents: read
       id-token: write

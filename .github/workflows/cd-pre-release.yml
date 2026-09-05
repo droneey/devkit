@@ -6,7 +6,7 @@ on:
 
 jobs:
   pre-release:
-    uses: droneey/workflows/.github/workflows/cd-pre-release.yml@v1
+    uses: droneey/.github/.github/workflows/cd-pre-release.yml@v1
     permissions:
       contents: write
     with:

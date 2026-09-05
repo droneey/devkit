@@ -145,11 +145,11 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 | Workflow | Trigger | What it does |
 |---|---|---|
 | `ci-check` | pull request to `main` | Lints, checks the manifests, builds and tests with full line coverage |
-| `cd-version` | push to `main` | Bumps every `package.json` and tags the release - `droneey/workflows` |
-| `cd-pre-release` | tag `v*` | Opens the pre-release to promote by hand - `droneey/workflows` |
-| `cd-deploy` | release published | Builds and publishes the packages to npm - `droneey/workflows` |
+| `cd-version` | push to `main` | Bumps every `package.json` and tags the release - `droneey/.github` |
+| `cd-pre-release` | tag `v*` | Opens the pre-release to promote by hand - `droneey/.github` |
+| `cd-deploy` | release published | Builds and publishes the packages to npm - `droneey/.github` |
 
-The last three are thin callers of the shared hub at [`droneey/workflows`](https://github.com/droneey/workflows), pinned to `@v1`; only `ci-check` is local.
+The last three are thin callers of the shared hub at [`droneey/.github`](https://github.com/droneey/.github), pinned to `@v1`; only `ci-check` is local.
 
 ## 🛠️ Development
 
