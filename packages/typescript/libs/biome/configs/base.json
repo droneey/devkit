@@ -196,7 +196,8 @@
         "useConsistentMethodSignatures": "error",
         "useErrorCause": "error",
         "useGlobalThis": "error",
-        "noMultilineString": "error"
+        "noMultilineString": "error",
+        "useSpreadOverApply": "error"
       },
       "a11y": {
         "noNoninteractiveElementInteractions": "error"
@@ -239,7 +240,8 @@
       "correctness": {
         "noGlobalDirnameFilename": "error",
         "noUndeclaredDependencies": "error",
-        "useJsonImportAttributes": "error"
+        "useJsonImportAttributes": "error",
+        "noUnusedInstantiation": "error"
       },
       "security": {
         "noSecrets": {
@@ -271,7 +273,20 @@
         "noUselessTypeConversion": "error",
         "noEmptyObjectKeys": "error",
         "useDisposables": "error",
-        "noLoopFunc": "warn"
+        "noLoopFunc": "warn",
+        "noNegationInEqualityCheck": "error",
+        "noThisOutsideOfClass": "error",
+        "useIncludes": "error",
+        "useModernMathApis": "error",
+        "useFlatMathMinMax": "error",
+        "noTailwindArbitraryValue": "error",
+        "noInvalidFileInputAccept": "error",
+        "useControlLabel": "error",
+        "noUndeclaredClasses": "error",
+        "noUnusedClasses": "error",
+        "noUndeclaredCustomProperties": "error",
+        "noInvalidPropertyInitValue": "error",
+        "useNamedLayer": "error"
       }
     }
   },
