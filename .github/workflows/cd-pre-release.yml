@@ -6,9 +6,8 @@ on:
 
 jobs:
   pre-release:
-    uses: droneey/.github/.github/workflows/cd-release.yml@v1.4.0
+    uses: droneey/.github/.github/workflows/cd-release.yml@v2.0.0
     permissions:
       contents: write
     with:
-      packages: package.json packages/typescript/libs/*/package.json
       prerelease: true
