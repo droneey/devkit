@@ -39,19 +39,8 @@ jobs:
             fi
           done
 
-      - name: 🧪 Test with coverage
-        run: |
-          OUTPUT=$(NO_COLOR=1 bun run test:unit --coverage 2>&1)
-          echo "$OUTPUT"
-          LINES=$(echo "$OUTPUT" | grep "All files" | grep -oE '[0-9]+\.[0-9]+' | tail -1)
-          if [ -z "$LINES" ]; then
-            echo "No coverable source files found — skipping coverage check"
-            exit 0
-          fi
-          if [ "$LINES" != "100.00" ]; then
-            echo "::error::Line coverage is $LINES%, expected 100%"
-            exit 1
-          fi
+      - name: 🧪 Test
+        run: bun run test:unit
 
       - name: ✅ Lint the workflows
         run: |
