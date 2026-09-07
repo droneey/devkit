@@ -20,7 +20,7 @@ bun add -d \
 ```json
 // biome.json
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": [
     "@droneey/devkit-ts-biome/base",
     "@droneey/devkit-ts-biome/node",
