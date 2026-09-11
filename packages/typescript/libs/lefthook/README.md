@@ -62,3 +62,16 @@ pre-commit:
 ## License
 
 MIT
+
+## Without npm
+
+The base hooks are language-agnostic and live in `packages/common/lefthook/base.yml` of the devkit repository; this package ships a copy for TypeScript projects. A repository without npm pulls the same hooks through lefthook's remotes, pinned to a devkit release:
+
+```yaml
+# lefthook.yml
+remotes:
+  - git_url: https://github.com/droneey/devkit
+    ref: v1.10.0
+    configs:
+      - packages/common/lefthook/base.yml
+```

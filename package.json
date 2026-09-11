@@ -23,9 +23,9 @@
     "test:unit": "bun test",
     "lint:check": "biome check",
     "lint:fix": "biome check --write",
-    "lint:packages": "syncpack lint",
-    "lint:packages:fix": "syncpack fix",
-    "check": "bun lint:check && bun lint:packages && bun test:unit"
+    "packages:check": "syncpack lint && syncpack format --check",
+    "packages:fix": "syncpack fix && syncpack format",
+    "check": "bun lint:check && bun packages:check && bun test:unit"
   },
   "workspaces": [
     "packages/typescript/libs/*"
@@ -34,6 +34,7 @@
     "@biomejs/biome": "^2.5.12",
     "@droneey/devkit-ts-biome": "workspace:*",
     "@droneey/devkit-ts-lefthook": "workspace:*",
+    "@droneey/devkit-ts-syncpack": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
     "@types/bun": "^1.4.1",
     "lefthook": "^2.1.12",

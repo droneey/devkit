@@ -1,29 +1,8 @@
+import { config } from '@droneey/devkit-ts-syncpack';
+
 /** @type {import('syncpack').RcFile} */
-const config = {
-  sortFirst: [
-    'name',
-    'version',
-    'private',
-    'description',
-    'keywords',
-    'homepage',
-    'bugs',
-    'license',
-    'author',
-    'repository',
-    'type',
-    'main',
-    'module',
-    'types',
-    'exports',
-    'scripts',
-    'workspaces',
-    'files',
-    'dependencies',
-    'devDependencies',
-    'peerDependencies',
-    'peerDependenciesMeta',
-  ],
+export default {
+  ...config,
   versionGroups: [
     {
       label: 'Workspace packages use workspace protocol',
@@ -50,17 +29,4 @@ const config = {
       isIgnored: true,
     },
   ],
-  semverGroups: [
-    {
-      label: 'Use caret ranges for all dependencies',
-      range: '^',
-      dependencyTypes: [
-        'dev',
-        'prod',
-        'peer',
-      ],
-    },
-  ],
 };
-
-export default config;

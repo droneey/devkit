@@ -11,8 +11,10 @@ bun add -d \
   @droneey/devkit-ts-biome \
   @droneey/devkit-ts-tsconfig \
   @droneey/devkit-ts-lefthook \
+  @droneey/devkit-ts-syncpack \
   @biomejs/biome \
-  lefthook
+  lefthook \
+  syncpack
 ```
 
 ### Configuration files
@@ -48,6 +50,38 @@ extends:
 ```bash
 bunx lefthook install
 ```
+
+A repository without npm pulls the same branch and commit rules through lefthook's remotes, pinned to a release:
+
+```yaml
+# lefthook.yml
+remotes:
+  - git_url: https://github.com/droneey/devkit
+    ref: v1.10.0
+    configs:
+      - packages/common/lefthook/base.yml
+```
+
+### Package manifests (Syncpack)
+
+```js
+// .syncpackrc.mjs
+export { config as default } from '@droneey/devkit-ts-syncpack';
+```
+
+```json
+// package.json
+{
+  "scripts": {
+    "packages:check": "syncpack lint && syncpack format --check",
+    "packages:fix": "syncpack fix && syncpack format"
+  }
+}
+```
+
+### Tests (Bun)
+
+Copy `packages/typescript/templates/bun/bunfig.toml`: coverage on, a gate of 100 percent for functions and lines, tests, fakes, entrypoints and composition roots excluded by glob, so the file is identical in every repository.
 
 ### VS Code
 
@@ -139,6 +173,7 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 | `@droneey/devkit-ts-biome` | Biome configuration (formatter + linter) |
 | `@droneey/devkit-ts-tsconfig` | TypeScript configuration variants |
 | `@droneey/devkit-ts-lefthook` | Lefthook git hooks (biome, commit validation) |
+| `@droneey/devkit-ts-syncpack` | Syncpack configuration (package.json order and ranges) |
 
 ## ⚙️ Workflows
 
