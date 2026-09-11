@@ -23,10 +23,15 @@
     "directory": "packages/typescript/libs/syncpack"
   },
   "type": "module",
+  "types": "./index.d.ts",
   "exports": {
-    ".": "./index.mjs"
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.mjs"
+    }
   },
   "files": [
+    "index.d.ts",
     "index.mjs"
   ],
   "peerDependencies": {
