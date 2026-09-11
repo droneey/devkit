@@ -6,12 +6,10 @@ on:
 
 jobs:
   deploy:
-    uses: droneey/.github/.github/workflows/cd-deploy-npm.yml@v2.0.0
+    uses: droneey/.github/.github/workflows/cd-deploy-npm.yml@v2.2.1
     permissions:
       contents: read
       id-token: write
     with:
       packages: "packages/typescript/libs/*/package.json"
       node-version: "24"
-    secrets:
-      npm_token: ${{ secrets.NPM_TOKEN }}
