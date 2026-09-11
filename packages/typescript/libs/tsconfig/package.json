@@ -30,17 +30,17 @@
     "./browser": "./configs/browser.json",
     "./mobile": "./configs/mobile.json"
   },
+  "files": [
+    "configs/*"
+  ],
+  "peerDependencies": {
+    "typescript": "^5 || ^7"
+  },
   "typesVersions": {
     "*": {
       "*": [
         "configs/*"
       ]
     }
-  },
-  "files": [
-    "configs/*"
-  ],
-  "peerDependencies": {
-    "typescript": "^5 || ^7"
   }
 }

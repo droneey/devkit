@@ -34,15 +34,15 @@
     "./preset": "./jest-preset.js",
     "./e2e": "./e2e/jest-preset.js"
   },
-  "scripts": {
-    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist && cp index.d.ts dist/index.d.ts",
-    "prepublishOnly": "bun run build"
-  },
   "files": [
     "dist/*",
     "jest-preset.js",
     "e2e"
   ],
+  "scripts": {
+    "build": "rimraf dist && bun build --target=node --packages=external ./index.ts --outdir dist && cp index.d.ts dist/index.d.ts",
+    "prepublishOnly": "bun run build"
+  },
   "devDependencies": {
     "@types/bun": "^1.4.1",
     "rimraf": "^6.1.3"

@@ -1,0 +1,35 @@
+{
+  "name": "@droneey/devkit-ts-syncpack",
+  "version": "1.9.4",
+  "description": "Shared Syncpack configuration: the order of the fields in package.json and the version ranges of the dependencies.",
+  "keywords": [
+    "config",
+    "package-json",
+    "shared",
+    "syncpack"
+  ],
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/syncpack#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git",
+    "directory": "packages/typescript/libs/syncpack"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": [
+    "index.mjs"
+  ],
+  "peerDependencies": {
+    "syncpack": ">=15.0.0"
+  }
+}

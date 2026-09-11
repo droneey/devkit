@@ -1,0 +1,53 @@
+/** @type {import('syncpack').RcFile} */
+const config = {
+  formatBugs: false,
+  formatRepository: false,
+  sortAz: [
+    'bin',
+    'contributors',
+    'dependencies',
+    'devDependencies',
+    'keywords',
+    'peerDependencies',
+    'resolutions',
+  ],
+  sortFirst: [
+    'name',
+    'version',
+    'private',
+    'description',
+    'keywords',
+    'homepage',
+    'bugs',
+    'license',
+    'author',
+    'repository',
+    'type',
+    'packageManager',
+    'bin',
+    'main',
+    'module',
+    'types',
+    'exports',
+    'imports',
+    'files',
+    'scripts',
+    'workspaces',
+    'dependencies',
+    'devDependencies',
+    'peerDependencies',
+    'peerDependenciesMeta',
+  ],
+  semverGroups: [
+    {
+      label: 'Use caret ranges for the dependencies of the project',
+      range: '^',
+      dependencyTypes: [
+        'dev',
+        'prod',
+      ],
+    },
+  ],
+};
+
+export { config };

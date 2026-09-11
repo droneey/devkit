@@ -8,6 +8,7 @@
         "@biomejs/biome": "^2.5.12",
         "@droneey/devkit-ts-biome": "workspace:*",
         "@droneey/devkit-ts-lefthook": "workspace:*",
+        "@droneey/devkit-ts-syncpack": "workspace:*",
         "@droneey/devkit-ts-tsconfig": "workspace:*",
         "@types/bun": "^1.4.1",
         "lefthook": "^2.1.12",
@@ -19,14 +20,14 @@
     },
     "packages/typescript/libs/biome": {
       "name": "@droneey/devkit-ts-biome",
-      "version": "1.9.0",
+      "version": "1.9.4",
       "peerDependencies": {
         "@biomejs/biome": ">=2.5.0",
       },
     },
     "packages/typescript/libs/jest": {
       "name": "@droneey/devkit-ts-jest",
-      "version": "1.9.0",
+      "version": "1.9.4",
       "devDependencies": {
         "@types/bun": "^1.4.1",
         "rimraf": "^6.1.3",
@@ -39,14 +40,21 @@
     },
     "packages/typescript/libs/lefthook": {
       "name": "@droneey/devkit-ts-lefthook",
-      "version": "1.9.0",
+      "version": "1.9.4",
       "peerDependencies": {
         "lefthook": ">=1.0.0",
       },
     },
+    "packages/typescript/libs/syncpack": {
+      "name": "@droneey/devkit-ts-syncpack",
+      "version": "1.9.4",
+      "peerDependencies": {
+        "syncpack": ">=15.0.0",
+      },
+    },
     "packages/typescript/libs/tsconfig": {
       "name": "@droneey/devkit-ts-tsconfig",
-      "version": "1.9.0",
+      "version": "1.9.4",
       "peerDependencies": {
         "typescript": "^5 || ^7",
       },
@@ -146,6 +154,8 @@
     "@droneey/devkit-ts-jest": ["@droneey/devkit-ts-jest@workspace:packages/typescript/libs/jest"],
 
     "@droneey/devkit-ts-lefthook": ["@droneey/devkit-ts-lefthook@workspace:packages/typescript/libs/lefthook"],
+
+    "@droneey/devkit-ts-syncpack": ["@droneey/devkit-ts-syncpack@workspace:packages/typescript/libs/syncpack"],
 
     "@droneey/devkit-ts-tsconfig": ["@droneey/devkit-ts-tsconfig@workspace:packages/typescript/libs/tsconfig"],
 
