@@ -1,7 +1,7 @@
 {
   "name": "@droneey/devkit-ts-lefthook",
   "version": "1.9.4",
-  "description": "Shared Lefthook configuration with composable git hooks for linting, formatting, and commit validation.",
+  "description": "Shared Lefthook configuration: the common git hooks for branch and commit validation, plus the Biome hook for TypeScript projects.",
   "keywords": [
     "biome",
     "config",
@@ -30,6 +30,9 @@
   "files": [
     "configs/*"
   ],
+  "scripts": {
+    "build": "cp ../../../common/lefthook/base.yml configs/base.yml"
+  },
   "peerDependencies": {
     "lefthook": ">=1.0.0"
   }
