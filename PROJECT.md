@@ -29,7 +29,7 @@ A fleet of repositories each carrying its own copy of every tool's configuration
 - **Package manifests** — the Syncpack configuration: field order, ranges, formatting.
 - **Tests** — the Jest presets for the repositories that test with Jest, and the Bun test template for the rest.
 - **Templates** — the files no tool can extend: the editor configuration, the ignore lists, the lint of YAML, the scripts, the test runner configuration, the framework setup files.
-- **Docker Compose** — a written convention on the order of keys, without a package. TODO: whether it stays a document or becomes a template.
+- **Docker Compose** — a written convention on the order of keys in a compose file; a document, not a package.
 
 ## Core entities & relationships
 
