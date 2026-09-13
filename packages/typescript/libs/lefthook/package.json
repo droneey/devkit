@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-lefthook",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "description": "Shared Lefthook configuration: the common git hooks for branch and commit validation, plus the Biome hook for TypeScript projects.",
   "keywords": [
     "biome",
