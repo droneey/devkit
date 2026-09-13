@@ -17,3 +17,10 @@
 - **Context.** The stack declares the configured tool as a peer with a floor (`>=`). The tsconfig package declares `typescript` as `^5 || ^7` and the jest package as `^5`: ranges of majors, set in the first commit of the kit. Six, the bridge release before the native seven, is outside the tsconfig range.
 - **Decision.** The ranges stay as they are; the departure is recorded here rather than widened away.
 - **Why.** A floor is a promise about every future major of a compiler whose next major changes the defaults; a range of majors promises only the ones the configuration is written for.
+
+## ADR-0003 — `check` type-checks the packages
+**Date:** 2026-09-13 · **Status:** Accepted · **Deviates:** `bun-workspaces` stack §6
+
+- **Context.** The stack's `check` runs the linter, the manifests and the tests, and no type checker, although the `workflow` chapter counts the type checker among what `check` runs. With nothing type-checking the repository, two errors in the syncpack spec went unnoticed under the strict preset the kit itself ships.
+- **Decision.** `check` gains `type:check` (`tsc --noEmit`) between `packages:check` and `test:unit`, the order the command-line stack uses. The two errors came from the syncpack config being annotated as the whole `RcFile`, where every field is optional; `@satisfies` checks it against `RcFile` while keeping the shape it actually has, so the compiler and the linter read the same value, without a cast.
+- **Why.** A kit that ships the strict TypeScript preset holds its own code to it; the stricter step is recorded here until the stack's list catches up with the `workflow` chapter.
