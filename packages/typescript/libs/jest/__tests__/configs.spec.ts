@@ -2,25 +2,69 @@ import { describe, expect, test } from 'bun:test';
 
 import { configs } from '../index.ts';
 
+const TS_JEST_TRANSFORM = {
+  '^.+\\.[tj]sx?$': 'ts-jest',
+};
+
 describe('jest configs', () => {
-  test('exposes base and endToEnd presets', () => {
-    expect(configs.base).toBeDefined();
-    expect(configs.endToEnd).toBeDefined();
+  test('should expose the base and end-to-end presets when a repository imports the package', () => {
+    // Arrange
+    const presets = [
+      'base',
+      'endToEnd',
+    ];
+
+    // Act
+    const exposed = Object.keys(configs);
+
+    // Assert
+    expect(exposed).toStrictEqual(presets);
   });
 
-  test('base preset: node env, .spec.ts regex, ts-jest transform', () => {
-    expect(configs.base.testEnvironment).toBe('node');
-    expect(configs.base.testRegex).toContain('spec');
-    expect(configs.base.moduleFileExtensions).toContain('ts');
-    expect(configs.base.collectCoverageFrom.length).toBeGreaterThan(0);
-    expect(Object.values(configs.base.transform)).toContain('ts-jest');
+  test('should run the unit specs in node through ts-jest when a repository uses the base preset', () => {
+    // Arrange
+    const extensions = [
+      'js',
+      'json',
+      'ts',
+      'tsx',
+    ];
+
+    // Act
+    const preset = configs.base;
+
+    // Assert
+    expect(preset.testEnvironment).toBe('node');
+    expect(preset.testRegex).toBe(String.raw`.*\.spec\.ts$`);
+    expect(preset.moduleFileExtensions).toStrictEqual(extensions);
+    expect(preset.transform).toStrictEqual(TS_JEST_TRANSFORM);
   });
 
-  test('endToEnd preset: node env, .e2e-spec.ts regex, 30s timeout', () => {
-    expect(configs.endToEnd.rootDir).toBe('.');
-    expect(configs.endToEnd.testEnvironment).toBe('node');
-    expect(configs.endToEnd.testRegex).toContain('e2e-spec');
-    expect(configs.endToEnd.testTimeout).toBe(30_000);
-    expect(Object.values(configs.endToEnd.transform)).toContain('ts-jest');
+  test('should collect coverage from every source when a repository uses the base preset', () => {
+    // Arrange
+    const sources = [
+      '**/*.(t|j)s',
+    ];
+
+    // Act
+    const preset = configs.base;
+
+    // Assert
+    expect(preset.collectCoverageFrom).toStrictEqual(sources);
+  });
+
+  test('should run the end-to-end specs in node through ts-jest when a repository uses the end-to-end preset', () => {
+    // Arrange
+    const timeout = 30_000;
+
+    // Act
+    const preset = configs.endToEnd;
+
+    // Assert
+    expect(preset.rootDir).toBe('.');
+    expect(preset.testEnvironment).toBe('node');
+    expect(preset.testRegex).toBe(String.raw`.*\.e2e-spec\.ts$`);
+    expect(preset.testTimeout).toBe(timeout);
+    expect(preset.transform).toStrictEqual(TS_JEST_TRANSFORM);
   });
 });
