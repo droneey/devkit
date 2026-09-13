@@ -38,11 +38,11 @@ Add to your `tsconfig.json`:
 
 ### Usage Examples
 
-Node.js ESM project:
+Node.js project:
 
 ```json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/node-esm"
+  "extends": "@droneey/devkit-ts-tsconfig/node"
 }
 ```
 

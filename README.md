@@ -107,7 +107,10 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/node-cjs"
+  "extends": "@droneey/devkit-ts-tsconfig/node",
+  "compilerOptions": {
+    "strictPropertyInitialization": false
+  }
 }
 ```
 
@@ -119,9 +122,38 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
     "@droneey/devkit-ts-biome/node",
     "@droneey/devkit-ts-biome/nestjs",
     "@droneey/devkit-ts-biome/test"
+  ],
+  "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "**/*.module.ts",
+        "**/*.controller.ts",
+        "**/*.service.ts",
+        "**/*.guard.ts",
+        "**/*.strategy.ts",
+        "**/*.interceptor.ts",
+        "**/*.filter.ts",
+        "**/*.pipe.ts",
+        "**/*.middleware.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useImportType": "off"
+          }
+        }
+      }
+    }
   ]
 }
 ```
+
+`node` already turns on decorators and their metadata. Three settings are Nest's own: DTOs and entities are filled by decorators rather than constructors, so `strictPropertyInitialization` is off; Biome parses parameter decorators such as `@Body()` only with `unsafeParameterDecoratorsEnabled`; and Nest injects by the emitted type metadata, so the files that declare providers keep value imports — `useImportType` would turn them into `import type` and break injection. Add any other file type your project injects, such as CQRS handlers.
 
 #### React
 
