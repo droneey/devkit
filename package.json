@@ -26,7 +26,8 @@
     "packages:check": "syncpack lint && syncpack format --check",
     "packages:fix": "syncpack fix && syncpack format",
     "type:check": "tsc --noEmit",
-    "check": "bun lint:check && bun packages:check && bun type:check && bun test:unit"
+    "architecture:check": "depcruise . --config .dependency-cruiser.mjs",
+    "check": "bun lint:check && bun packages:check && bun type:check && bun test:unit && bun architecture:check"
   },
   "workspaces": [
     "packages/typescript/libs/*"
@@ -38,6 +39,7 @@
     "@droneey/devkit-ts-syncpack": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
     "@types/bun": "^1.4.1",
+    "dependency-cruiser": "^18.2.0",
     "lefthook": "^2.1.12",
     "syncpack": "^15.3.3"
   },

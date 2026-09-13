@@ -300,7 +300,10 @@
         "**/.*rc.ts",
         "**/.*rc.js",
         "**/.*rc.mjs",
-        "**/.*rc.cjs"
+        "**/.*rc.cjs",
+        "**/.dependency-cruiser.js",
+        "**/.dependency-cruiser.mjs",
+        "**/.dependency-cruiser.cjs"
       ],
       "linter": {
         "rules": {

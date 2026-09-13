@@ -179,7 +179,7 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `ci-check` | pull request to `main` | Lints, checks the manifests, builds and tests with full coverage |
+| `ci-check` | pull request to `main` | Runs `check`, then builds the packages |
 | `cd-version` | push to `main` | Bumps every `package.json` and tags the release - `droneey/.github` |
 | `cd-pre-release` | tag `v*` | Opens the pre-release to promote by hand - `droneey/.github` |
 | `cd-deploy` | release published | Builds and publishes the packages to npm - `droneey/.github` |
@@ -193,7 +193,7 @@ bun install
 bun run check
 ```
 
-`check` runs Biome, syncpack and the tests - the same three gates as the pull request.
+`check` runs Biome, Syncpack, the type checker, the tests with full coverage and dependency-cruiser - the same gates as the pull request.
 
 ## 📐 Conventions
 

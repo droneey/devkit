@@ -41,6 +41,34 @@ describe('biome configs', () => {
     expect(rules.recommended).toBeUndefined();
   });
 
+  test('base.json lets the dependency-cruiser configuration default-export', () => {
+    // Arrange
+    const patterns = [
+      '**/.dependency-cruiser.js',
+      '**/.dependency-cruiser.mjs',
+      '**/.dependency-cruiser.cjs',
+    ];
+
+    // Act
+    const config = readConfig('base.json');
+
+    // Assert
+    expect(config.overrides).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          includes: expect.arrayContaining(patterns),
+          linter: {
+            rules: expect.objectContaining({
+              style: {
+                noDefaultExport: 'off',
+              },
+            }),
+          },
+        }),
+      ]),
+    );
+  });
+
   test.each([
     [
       'test.json',
