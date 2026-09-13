@@ -5,11 +5,8 @@ import { describe, expect, test } from 'bun:test';
 
 const CONFIGS_DIR = resolve(import.meta.dirname, '../configs');
 
-const readConfig = (path: string): Record<string, unknown> =>
-  JSON.parse(readFileSync(resolve(CONFIGS_DIR, path), 'utf8')) as Record<
-    string,
-    unknown
-  >;
+const readSource = (name: string): string =>
+  readFileSync(resolve(CONFIGS_DIR, name), 'utf8');
 
 const configFiles = [
   'base.json',
@@ -21,86 +18,109 @@ const configFiles = [
   'frameworks/react-native.json',
 ];
 
+const scopedFiles = [
+  [
+    'test.json',
+    [
+      '**/*.spec.ts',
+      '**/*.test.ts',
+      '**/*.spec.tsx',
+      '**/*.test.tsx',
+    ],
+  ],
+  [
+    'frameworks/react.json',
+    [
+      '**/*.tsx',
+      '**/*.jsx',
+    ],
+  ],
+  [
+    'frameworks/nestjs.json',
+    [
+      '**/*.ts',
+    ],
+  ],
+] as const;
+
 describe('biome configs', () => {
-  test.each(configFiles)('%s is valid JSON', (file) => {
-    const config = readConfig(file);
-    expect(config).toBeObject();
-  });
+  test.each(configFiles)(
+    'should parse as a JSON object when a repository extends %s',
+    (file) => {
+      // Arrange
+      const source = readSource(file);
 
-  test('base.json has formatter, linter, and assist sections', () => {
-    const config = readConfig('base.json');
-    expect(config.formatter).toBeDefined();
-    expect(config.linter).toBeDefined();
-    expect(config.assist).toBeDefined();
-  });
+      // Act
+      const config: unknown = JSON.parse(source);
 
-  test('base.json enables the recommended rule preset', () => {
-    const linter = readConfig('base.json').linter as Record<string, unknown>;
-    const rules = linter.rules as Record<string, unknown>;
-    expect(rules.preset).toBe('recommended');
-    expect(rules.recommended).toBeUndefined();
-  });
+      // Assert
+      expect(config).toBeObject();
+    },
+  );
 
-  test('base.json lets the dependency-cruiser configuration default-export', () => {
+  test('should configure the formatter, the linter and the assist when a repository extends base.json', () => {
     // Arrange
-    const patterns = [
+    const source = readSource('base.json');
+
+    // Act
+    const config: unknown = JSON.parse(source);
+
+    // Assert
+    expect(config).toHaveProperty('formatter');
+    expect(config).toHaveProperty('linter');
+    expect(config).toHaveProperty('assist');
+  });
+
+  test('should enable the recommended rule preset when a repository extends base.json', () => {
+    // Arrange
+    const source = readSource('base.json');
+
+    // Act
+    const config: unknown = JSON.parse(source);
+
+    // Assert
+    expect(config).toHaveProperty('linter.rules.preset', 'recommended');
+    expect(config).not.toHaveProperty('linter.rules.recommended');
+  });
+
+  test('should let the tool configurations default-export when a repository extends base.json', () => {
+    // Arrange
+    const source = readSource('base.json');
+
+    // Act
+    const config: unknown = JSON.parse(source);
+
+    // Assert
+    expect(config).toHaveProperty('overrides.0.includes', [
+      '**/*.config.ts',
+      '**/*.config.js',
+      '**/*.config.mjs',
+      '**/*.config.cjs',
+      '**/.*rc.ts',
+      '**/.*rc.js',
+      '**/.*rc.mjs',
+      '**/.*rc.cjs',
       '**/.dependency-cruiser.js',
       '**/.dependency-cruiser.mjs',
       '**/.dependency-cruiser.cjs',
-    ];
-
-    // Act
-    const config = readConfig('base.json');
-
-    // Assert
-    expect(config.overrides).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          includes: expect.arrayContaining(patterns),
-          linter: {
-            rules: expect.objectContaining({
-              style: {
-                noDefaultExport: 'off',
-              },
-            }),
-          },
-        }),
-      ]),
+    ]);
+    expect(config).toHaveProperty(
+      'overrides.0.linter.rules.style.noDefaultExport',
+      'off',
     );
   });
 
-  test.each([
-    [
-      'test.json',
-      [
-        '**/*.spec.ts',
-        '**/*.test.ts',
-      ],
-    ],
-    [
-      'frameworks/react.json',
-      [
-        '**/*.tsx',
-        '**/*.jsx',
-      ],
-    ],
-    [
-      'frameworks/nestjs.json',
-      [
-        '**/*.ts',
-      ],
-    ],
-  ] as const)(
-    '%s targets the correct file patterns',
-    (file, expectedPatterns) => {
-      const config = readConfig(file);
-      const overrides = config.overrides as Record<string, unknown>[];
-      expect(overrides.length).toBeGreaterThan(0);
+  test.each(scopedFiles)(
+    'should scope its override to its own files when a repository extends %s',
+    (file, includes) => {
+      // Arrange
+      const source = readSource(file);
 
-      const includes = overrides[0]!.includes as string[];
-      for (const pattern of expectedPatterns) {
-        expect(includes).toContain(pattern);
-      }
+      // Act
+      const config: unknown = JSON.parse(source);
+
+      // Assert
+      expect(config).toHaveProperty('overrides.0.includes', includes);
     },
   );
 });
