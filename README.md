@@ -107,7 +107,7 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/node-cjs"
+  "extends": "@droneey/devkit-ts-tsconfig/node"
 }
 ```
 
