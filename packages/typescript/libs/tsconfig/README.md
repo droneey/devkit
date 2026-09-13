@@ -30,6 +30,7 @@ Add to your `tsconfig.json`:
 ### Base Config
 
 - `strict: true` with all strict flags enabled.
+- `exactOptionalPropertyTypes: true` -- an optional property may be absent, but holds `undefined` only when its type says so.
 - `target: ESNext`, `module: ESNext`.
 - `verbatimModuleSyntax: true` -- enforces type-only imports.
 - `noUncheckedSideEffectImports: true` -- checks all imports.
