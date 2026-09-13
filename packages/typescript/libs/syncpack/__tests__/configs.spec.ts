@@ -3,37 +3,56 @@ import { describe, expect, test } from 'bun:test';
 import { config } from '../index.mjs';
 
 describe('syncpack config', () => {
-  test('puts the identity of a package first and its dependencies last', () => {
-    // Assert
-    expect(config.sortFirst.slice(0, 3)).toStrictEqual([
+  test('should put the identity of a package first and its dependencies last when a manifest is formatted', () => {
+    // Arrange
+    const identity = [
       'name',
       'version',
       'private',
-    ]);
-    expect(config.sortFirst.slice(-4)).toStrictEqual([
+    ];
+    const dependencies = [
       'dependencies',
       'devDependencies',
       'peerDependencies',
       'peerDependenciesMeta',
-    ]);
+    ];
+
+    // Act
+    const order = config.sortFirst;
+
+    // Assert
+    expect(order.slice(0, identity.length)).toStrictEqual(identity);
+    expect(order.slice(-dependencies.length)).toStrictEqual(dependencies);
   });
 
-  test('leaves the scripts in the order the author chose', () => {
+  test('should leave the scripts in the order the author chose when a manifest is formatted', () => {
+    // Arrange
+    const field = 'scripts';
+
+    // Act
+    const sorted = config.sortAz;
+
     // Assert
-    expect(config.sortAz).not.toContain('scripts');
+    expect(sorted).not.toContain(field);
   });
 
-  test('asks for caret ranges on the project dependencies only', () => {
+  test('should ask for caret ranges on the project dependencies only when the versions are linted', () => {
+    // Arrange
+    const caretRanges: (typeof config.semverGroups)[number] = {
+      label: 'Use caret ranges for the dependencies of the project',
+      range: '^',
+      dependencyTypes: [
+        'dev',
+        'prod',
+      ],
+    };
+
+    // Act
+    const groups = config.semverGroups;
+
     // Assert
-    expect(config.semverGroups).toStrictEqual([
-      {
-        label: 'Use caret ranges for the dependencies of the project',
-        range: '^',
-        dependencyTypes: [
-          'dev',
-          'prod',
-        ],
-      },
+    expect(groups).toStrictEqual([
+      caretRanges,
     ]);
   });
 });
