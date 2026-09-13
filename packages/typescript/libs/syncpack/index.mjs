@@ -1,4 +1,4 @@
-/** @type {import('syncpack').RcFile} */
+/** @satisfies {import('syncpack').RcFile} */
 const config = {
   formatBugs: false,
   formatRepository: false,

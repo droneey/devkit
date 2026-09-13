@@ -25,7 +25,8 @@
     "lint:fix": "biome check --write",
     "packages:check": "syncpack lint && syncpack format --check",
     "packages:fix": "syncpack fix && syncpack format",
-    "check": "bun lint:check && bun packages:check && bun test:unit"
+    "type:check": "tsc --noEmit",
+    "check": "bun lint:check && bun packages:check && bun type:check && bun test:unit"
   },
   "workspaces": [
     "packages/typescript/libs/*"
