@@ -184,7 +184,7 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 | `cd-pre-release` | tag `v*` | Opens the pre-release to promote by hand - `droneey/.github` |
 | `cd-deploy` | release published | Builds and publishes the packages to npm - `droneey/.github` |
 
-The last three are thin callers of the shared hub at [`droneey/.github`](https://github.com/droneey/.github), pinned to `@v1`; only `ci-check` is local.
+The last three are thin callers of the shared hub at [`droneey/.github`](https://github.com/droneey/.github), each pinned to an exact release of the hub in its `uses:` line; only `ci-check` is local.
 
 ## 🛠️ Development
 
