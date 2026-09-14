@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-syncpack",
-  "version": "1.12.6",
+  "version": "1.12.7",
   "description": "Shared Syncpack configuration: the order of the fields in package.json and the version ranges of the dependencies.",
   "keywords": [
     "config",
