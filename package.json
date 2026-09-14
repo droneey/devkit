@@ -27,7 +27,7 @@
     "packages:fix": "syncpack fix && syncpack format",
     "type:check": "tsc --noEmit",
     "architecture:check": "depcruise . --config .dependency-cruiser.mjs",
-    "check": "bun lint:check && bun packages:check && bun type:check && bun test:unit && bun architecture:check"
+    "check": "bun run lint:check && bun run packages:check && bun run type:check && bun run test:unit && bun run architecture:check"
   },
   "workspaces": [
     "packages/typescript/libs/*"
