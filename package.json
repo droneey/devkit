@@ -39,7 +39,7 @@
     "@droneey/devkit-ts-syncpack": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
     "@types/bun": "^1.4.1",
-    "dependency-cruiser": "^18.2.0",
+    "dependency-cruiser": "^18.3.1",
     "lefthook": "^2.1.12",
     "syncpack": "^15.3.3"
   },
