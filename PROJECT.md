@@ -1,5 +1,5 @@
 ---
-constitution: 0.6.7
+constitution: 0.7.0
 assembly: library-bun
 ---
 
