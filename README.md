@@ -32,9 +32,9 @@ bun add -d \
 ```
 
 ```json
-// tsconfig.json
+// tsconfig.json — a program on Bun
 {
-  "extends": "@droneey/devkit-ts-tsconfig/base"
+  "extends": "@droneey/devkit-ts-tsconfig/bun"
 }
 ```
 
@@ -107,7 +107,10 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/nestjs"
+  "extends": [
+    "@droneey/devkit-ts-tsconfig/node",
+    "@droneey/devkit-ts-tsconfig/nestjs"
+  ]
 }
 ```
 
@@ -128,7 +131,10 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/browser"
+  "extends": [
+    "@droneey/devkit-ts-tsconfig/browser",
+    "@droneey/devkit-ts-tsconfig/react"
+  ]
 }
 ```
 
@@ -149,7 +155,10 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 ```json
 // tsconfig.json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/mobile"
+  "extends": [
+    "@droneey/devkit-ts-tsconfig/base",
+    "@droneey/devkit-ts-tsconfig/react"
+  ]
 }
 ```
 
