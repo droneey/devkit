@@ -26,12 +26,35 @@ Run it in the check as `biome check --error-on-warnings`, so a warning of Biome'
 The base config includes:
 
 - **Formatter** -- 80 char line width, 2 spaces, single quotes, semicolons, trailing commas, LF line endings.
-- **Linter** -- 100+ rules across correctness, complexity, style, suspicious, performance, and security categories, all at `error`: a function body of at most 100 lines, a file of at most 500, cognitive complexity of at most 10, one positional parameter, strict equality with `null` too, no `any`, no non-null assertion, no console output.
+- **Linter** -- 100+ rules across correctness, complexity, style, suspicious, performance, and security categories, all at `error`: a function body of at most 100 lines, a file of at most 500, cognitive complexity of at most 10, strict equality with `null` too, no `any`, no non-null assertion, no console output.
+- **GritQL plugins** -- no bare verb as a function name (`handle`, `process`, `get`…), no `.json<T>()` cast of a response body, type names without an `I` prefix or a `Type`/`Interface` suffix.
 - **Assist** -- import sorting, duplicate class detection, interface member sorting.
 
 ### Tests
 
-`test` applies to `**/__tests__/**` and every `*.spec.ts(x)`: specs have no line limits, and keep `any` and `!` out like any other code.
+`test` applies to `**/__tests__/**` and every `*.spec.ts(x)` and `*.test.ts(x)`: specs have no line limits, keep `any` and `!` out like any other code, and compare with `toStrictEqual`.
+
+### Constitution
+
+`constitution` adds the rules of the [droneey constitution](https://github.com/droneey/constitution) that depend on its folders and conventions. Extend it last, in a repository that follows the constitution:
+
+- one positional parameter;
+- no `null` outside `adapters/` and `models/`;
+- a surface (`index.ts`) only re-exports by name;
+- no empty word as a name (`data`, `result`, `value`…) outside `src/libs/`;
+- a case reads `should … when …`;
+- no `mock.module`: an effect is faked through its port.
+
+```json
+{
+  "extends": [
+    "@droneey/devkit-ts-biome/base",
+    "@droneey/devkit-ts-biome/node",
+    "@droneey/devkit-ts-biome/test",
+    "@droneey/devkit-ts-biome/constitution"
+  ]
+}
+```
 
 ### Environments
 
@@ -69,7 +92,7 @@ The base config includes:
 
 ### Test
 
-Relaxes strict rules for test files (`*.spec.ts`, `*.test.ts`).
+Relaxes strict rules for test files (`__tests__`, `*.spec.ts(x)`, `*.test.ts(x)`).
 
 ```json
 {

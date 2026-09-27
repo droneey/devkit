@@ -46,7 +46,7 @@ const typeChecks = (input: {
   );
   writeFileSync(join(folder, 'main.ts'), input.main);
 
-  const result = spawnSync(TSC, [
+  const compilation = spawnSync(TSC, [
     '-p',
     folder,
   ]);
@@ -56,7 +56,7 @@ const typeChecks = (input: {
     recursive: true,
   });
 
-  return result.status === 0;
+  return compilation.status === 0;
 };
 
 const EMPTY = 'export {};\n';

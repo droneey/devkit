@@ -242,12 +242,7 @@
         "noForEach": "error",
         "useSimplifiedLogicExpression": "error",
         "useWhile": "error",
-        "useMaxParams": {
-          "level": "error",
-          "options": {
-            "max": 1,
-          },
-        },
+        "useMaxParams": "error",
         "noUselessReturn": "error",
         "noRedundantDefaultExport": "error",
         "useArrayFind": "error",
@@ -371,5 +366,10 @@
         },
       },
     },
+  ],
+  "plugins": [
+    "./node_modules/@droneey/devkit-ts-biome/plugins/empty-verbs.grit",
+    "./node_modules/@droneey/devkit-ts-biome/plugins/body-cast.grit",
+    "./node_modules/@droneey/devkit-ts-biome/plugins/type-names.grit",
   ],
 }
