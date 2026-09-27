@@ -17,6 +17,24 @@ Create `biome.json` in your project root:
 }
 ```
 
+### Without npm
+
+The presets live in devkit's common area, `packages/common/biome/`; this package ships a copy of them. A repository with no JavaScript takes Biome from [mise](https://mise.jdx.dev) (`mise use biome@<version>`) and the presets from devkit added as a git submodule at `.devkit`, pinned to a release tag:
+
+```bash
+git submodule add https://github.com/droneey/devkit .devkit
+git -C .devkit checkout v<version>
+git config -f .gitmodules submodule..devkit.branch v<version>
+```
+
+```json
+{
+  "extends": ["./.devkit/packages/common/biome/configs/base.jsonc"]
+}
+```
+
+`base` keeps Biome out of `.devkit`; a repository that sets its own `files.includes` keeps `"!**/.devkit"` in it.
+
 Run it in the check as `biome check --error-on-warnings`, so a warning of Biome's recommended rules fails it too; the presets themselves set every rule to `error`.
 
 ## Configuration
