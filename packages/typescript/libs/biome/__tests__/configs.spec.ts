@@ -32,8 +32,10 @@ const fileOfLines = (lines: number): string =>
     .map((index) => `export const label${String(index)} = 'label';`)
     .join('\n')}\n`;
 
-const TWO_PARAMETERS =
-  'export const join = (head: string, tail: string): string => head + tail;\n';
+const THREE_PARAMETERS =
+  "export const joinAll = (head: string, middle: string, tail: string): string =>\n  [head, middle, tail].join('');\n";
+const FOUR_PARAMETERS =
+  "export const joinAll = (head: string, middle: string, tail: string, end: string): string =>\n  [head, middle, tail, end].join('');\n";
 
 describe('biome presets', () => {
   test.each(Object.keys(EXPORTS).map((key) => key.slice(2)))(
@@ -72,6 +74,13 @@ describe('biome presets', () => {
           'export const isAbsent = (value: string | null): boolean => value == null;\n',
       },
       rule: 'noDoubleEquals',
+    },
+    {
+      condition: 'a function takes a fourth positional argument',
+      files: {
+        'src/main.ts': FOUR_PARAMETERS,
+      },
+      rule: 'useMaxParams',
     },
     {
       condition: 'shipped code writes to the console',
@@ -137,9 +146,9 @@ describe('biome presets', () => {
       rule: 'noExcessiveLinesPerFile',
     },
     {
-      condition: 'a function takes a second positional argument',
+      condition: 'a function takes a third positional argument',
       files: {
-        'src/main.ts': TWO_PARAMETERS,
+        'src/main.ts': THREE_PARAMETERS,
       },
       rule: 'useMaxParams',
     },
