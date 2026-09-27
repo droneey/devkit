@@ -18,7 +18,7 @@
   },
   "type": "module",
   "scripts": {
-    "prepare": "bun run --cwd packages/typescript/libs/biome build && lefthook install",
+    "prepare": "bun run --cwd packages/typescript/libs/biome build",
     "clean": "rm -rf node_modules packages/typescript/libs/*/node_modules bun.lock",
     "test:unit": "bun test",
     "lint:check": "biome check --error-on-warnings",
