@@ -47,7 +47,7 @@ interface HookJob {
 }
 
 interface CommitMessageCheck {
-  exitCode: number | null;
+  exitCode: number | undefined;
   output: string;
 }
 
@@ -68,7 +68,7 @@ const checkCommitMessage = (message: string): CommitMessageCheck => {
 
   writeFileSync(file, message);
 
-  const result = spawnSync(
+  const hookRun = spawnSync(
     'sh',
     [
       '-c',
@@ -85,8 +85,8 @@ const checkCommitMessage = (message: string): CommitMessageCheck => {
   });
 
   return {
-    exitCode: result.status,
-    output: result.stdout.trim(),
+    exitCode: hookRun.status ?? undefined,
+    output: hookRun.stdout.trim(),
   };
 };
 

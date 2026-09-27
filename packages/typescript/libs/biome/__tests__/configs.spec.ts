@@ -4,6 +4,7 @@ import {
   mkdtempSync,
   readFileSync,
   rmSync,
+  symlinkSync,
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -31,17 +32,34 @@ interface Project {
 interface Report {
   diagnostics: readonly {
     category: string;
+    message: string;
   }[];
 }
 
-// The rules the real Biome reports over a small project extending the presets.
-const reportedRules = (project: Project): readonly string[] => {
+interface Findings {
+  plugins: readonly string[];
+  rules: readonly string[];
+}
+
+// What the real Biome reports over a small project that installs this package
+// and extends its presets by name, as a consumer does: each lint rule by its
+// name, each GritQL plugin by its message.
+const lintFindings = (project: Project): Findings => {
   const folder = mkdtempSync(join(tmpdir(), 'devkit-biome-'));
 
+  mkdirSync(join(folder, 'node_modules/@droneey'), {
+    recursive: true,
+  });
+  symlinkSync(
+    PACKAGE_DIR,
+    join(folder, 'node_modules/@droneey/devkit-ts-biome'),
+  );
   writeFileSync(
     join(folder, 'biome.json'),
     JSON.stringify({
-      extends: project.presets.map(presetPath),
+      extends: project.presets.map(
+        (preset) => `@droneey/devkit-ts-biome/${preset}`,
+      ),
       vcs: {
         enabled: false,
       },
@@ -55,12 +73,12 @@ const reportedRules = (project: Project): readonly string[] => {
     writeFileSync(join(folder, path), source);
   }
 
-  const result = spawnSync(
+  const linting = spawnSync(
     BIOME,
     [
       'lint',
       '--reporter=json',
-      '.',
+      'src',
     ],
     {
       cwd: folder,
@@ -73,15 +91,16 @@ const reportedRules = (project: Project): readonly string[] => {
     recursive: true,
   });
 
-  const report = JSON.parse(result.stdout) as Report;
+  const report = JSON.parse(linting.stdout) as Report;
 
-  return [
-    ...new Set(
-      report.diagnostics.map(({ category }) =>
-        category.slice(category.lastIndexOf('/') + 1),
-      ),
-    ),
-  ];
+  return {
+    plugins: report.diagnostics
+      .filter(({ category }) => category === 'plugin')
+      .map(({ message }) => message),
+    rules: report.diagnostics
+      .filter(({ category }) => category !== 'plugin')
+      .map(({ category }) => category.slice(category.lastIndexOf('/') + 1)),
+  };
 };
 
 const indexes = (count: number): readonly number[] => [
@@ -121,21 +140,21 @@ describe('biome presets', () => {
     {
       condition: 'a function body passes 100 lines',
       files: {
-        'main.ts': functionWithBodyOf(101),
+        'src/main.ts': functionWithBodyOf(101),
       },
       rule: 'noExcessiveLinesPerFunction',
     },
     {
       condition: 'a file passes 500 lines',
       files: {
-        'main.ts': fileOfLines(501),
+        'src/main.ts': fileOfLines(501),
       },
       rule: 'noExcessiveLinesPerFile',
     },
     {
       condition: 'null is compared loosely',
       files: {
-        'main.ts':
+        'src/main.ts':
           'export const isAbsent = (value: string | null): boolean => value == null;\n',
       },
       rule: 'noDoubleEquals',
@@ -143,7 +162,7 @@ describe('biome presets', () => {
     {
       condition: 'a function takes a second positional argument',
       files: {
-        'main.ts':
+        'src/main.ts':
           'export const join = (head: string, tail: string): string => head + tail;\n',
       },
       rule: 'useMaxParams',
@@ -151,7 +170,7 @@ describe('biome presets', () => {
     {
       condition: 'shipped code writes to the console',
       files: {
-        'main.ts': "console.info('ready');\n",
+        'src/main.ts': "console.info('ready');\n",
       },
       rule: 'noConsole',
     },
@@ -190,7 +209,7 @@ describe('biome presets', () => {
     };
 
     // Act
-    const rules = reportedRules(project);
+    const { rules } = lintFindings(project);
 
     // Assert
     expect(rules).toContain(rule);
@@ -200,7 +219,7 @@ describe('biome presets', () => {
     {
       condition: 'a function body holds 100 lines',
       files: {
-        'main.ts': functionWithBodyOf(100),
+        'src/main.ts': functionWithBodyOf(100),
       },
       rule: 'noExcessiveLinesPerFunction',
     },
@@ -229,7 +248,7 @@ describe('biome presets', () => {
     };
 
     // Act
-    const rules = reportedRules(project);
+    const { rules } = lintFindings(project);
 
     // Assert
     expect(rules).not.toContain(rule);
@@ -244,7 +263,8 @@ describe('biome presets', () => {
       // Arrange
       const project = {
         files: {
-          'main.ts': "import { readFile } from 'fs';\n\nexport { readFile };\n",
+          'src/main.ts':
+            "import { readFile } from 'fs';\n\nexport { readFile };\n",
         },
         presets: [
           'base',
@@ -253,14 +273,14 @@ describe('biome presets', () => {
       };
 
       // Act
-      const rules = reportedRules(project);
+      const { rules } = lintFindings(project);
 
       // Assert
       expect(rules).toContain('useNodejsImportProtocol');
     },
   );
 
-  test('should hold every preset at error, so a warning never passes the check', () => {
+  test('should hold no rule at warn when a repository extends any preset', () => {
     // Arrange
     const sources = Object.keys(EXPORTS).map((key) =>
       readFileSync(presetPath(key.slice(2)), 'utf8'),
@@ -271,5 +291,133 @@ describe('biome presets', () => {
 
     // Assert
     expect(warnings).toStrictEqual([]);
+  });
+
+  test.each([
+    {
+      condition: 'null is assigned outside an adapter',
+      files: {
+        'src/features/orders/domain/order.ts':
+          'export const cancelledAt: Date | undefined = null;\n',
+      },
+      message: 'null outside the boundary',
+    },
+    {
+      condition: 'a surface declares a value',
+      files: {
+        'src/features/orders/index.ts':
+          "export { cancelOrder } from './app';\nexport const ORDERS = 'orders';\n",
+      },
+      message: 'A surface only re-exports by name',
+    },
+    {
+      condition: 'a variable is named by an empty word',
+      files: {
+        'src/features/orders/order.ts': 'export const data = 1;\n',
+      },
+      message: 'Name what it holds',
+    },
+    {
+      condition: 'a function is named by an empty verb',
+      files: {
+        'src/features/orders/order.ts':
+          'export const process = (): number => 1;\n',
+      },
+      message: 'Name what the function does',
+    },
+    {
+      condition: 'a response body is cast with .json<T>()',
+      files: {
+        'src/features/orders/order.ts':
+          'interface Order {\n  id: string;\n}\n\nexport const read = (response: Response): Promise<Order> =>\n  response.json<Order>();\n',
+      },
+      message: 'A response body is unknown until a schema parses it',
+    },
+    {
+      condition: 'an interface carries the I prefix',
+      files: {
+        'src/features/orders/order.ts':
+          'export interface IOrder {\n  id: string;\n}\n',
+      },
+      message: 'A type is a noun, undecorated',
+    },
+    {
+      condition: 'a case does not read should … when …',
+      files: {
+        'src/__tests__/order.spec.ts':
+          "import { expect, test } from 'bun:test';\n\ntest('adds totals', () => {\n  expect(1).toBe(1);\n});\n",
+      },
+      message: "A case reads 'should <behaviour> when <condition>'",
+    },
+    {
+      condition: 'a spec replaces a module',
+      files: {
+        'src/__tests__/order.spec.ts':
+          "import { mock } from 'bun:test';\n\nmock.module('./order', () => ({}));\n",
+      },
+      message: 'Fake an effect through its port',
+    },
+    {
+      condition: 'a spec compares with toEqual',
+      files: {
+        'src/__tests__/order.spec.ts':
+          "import { expect, test } from 'bun:test';\n\ntest('should keep totals when orders arrive', () => {\n  expect(1).toEqual(1);\n});\n",
+      },
+      message: 'Compare with toStrictEqual',
+    },
+  ])('should report a plugin finding when $condition', ({ files, message }) => {
+    // Arrange
+    const project = {
+      files,
+      presets: [
+        'base',
+        'test',
+      ],
+    };
+
+    // Act
+    const { plugins } = lintFindings(project);
+
+    // Assert
+    expect(plugins.some((finding) => finding.startsWith(message))).toBe(true);
+  });
+
+  test.each([
+    {
+      condition: 'an adapter maps null from the wire',
+      files: {
+        'src/features/orders/adapters/api/order.adapter.ts':
+          'export const toCancelledAt = (raw: string | null): string | undefined =>\n  raw === null ? undefined : raw;\n',
+      },
+    },
+    {
+      condition: 'generic code in libs names a value by an empty word',
+      files: {
+        'src/libs/list/list.utils.ts':
+          'export const firstOf = (items: readonly string[]): string | undefined => {\n  const value = items.at(0);\n  return value;\n};\n',
+      },
+    },
+    {
+      condition: 'a surface re-exports by name',
+      files: {
+        'src/features/orders/index.ts':
+          "export { cancelOrder } from './app';\nexport type { Order } from './domain';\n",
+      },
+    },
+  ])('should report no plugin finding when $condition', ({ files }) => {
+    // Arrange
+    const project = {
+      files,
+      presets: [
+        'base',
+        'test',
+      ],
+    };
+
+    // Act
+    const { plugins } = lintFindings(project);
+
+    // Assert
+    expect(plugins).toStrictEqual([]);
   });
 });

@@ -34,7 +34,8 @@
     "./react-native": "./configs/frameworks/react-native.jsonc"
   },
   "files": [
-    "configs/*"
+    "configs/*",
+    "plugins/*"
   ],
   "peerDependencies": {
     "@biomejs/biome": ">=2.5.0"
