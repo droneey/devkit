@@ -121,6 +121,53 @@ const fileOfLines = (lines: number): string =>
     .map((index) => `export const label${String(index)} = 'label';`)
     .join('\n')}\n`;
 
+const TWO_PARAMETERS =
+  'export const join = (head: string, tail: string): string => head + tail;\n';
+
+// Cases that follow the constitution's folders and conventions, so only its
+// preset reports them.
+const CONSTITUTION_CASES = [
+  {
+    condition: 'null is assigned outside an adapter',
+    files: {
+      'src/features/orders/domain/order.ts':
+        'export const cancelledAt: Date | undefined = null;\n',
+    },
+    message: 'null outside the boundary',
+  },
+  {
+    condition: 'a surface declares a value',
+    files: {
+      'src/features/orders/index.ts':
+        "export { cancelOrder } from './app';\nexport const ORDERS = 'orders';\n",
+    },
+    message: 'A surface only re-exports by name',
+  },
+  {
+    condition: 'a variable is named by an empty word',
+    files: {
+      'src/features/orders/order.ts': 'export const data = 1;\n',
+    },
+    message: 'Name what it holds',
+  },
+  {
+    condition: 'a case does not read should … when …',
+    files: {
+      'src/__tests__/order.spec.ts':
+        "import { expect, test } from 'bun:test';\n\ntest('adds totals', () => {\n  expect(1).toBe(1);\n});\n",
+    },
+    message: "A case reads 'should <behaviour> when <condition>'",
+  },
+  {
+    condition: 'a spec replaces a module',
+    files: {
+      'src/__tests__/order.spec.ts':
+        "import { mock } from 'bun:test';\n\nmock.module('./order', () => ({}));\n",
+    },
+    message: 'Fake an effect through its port',
+  },
+];
+
 describe('biome presets', () => {
   test.each(Object.keys(EXPORTS).map((key) => key.slice(2)))(
     'should parse when a repository extends %s',
@@ -158,14 +205,6 @@ describe('biome presets', () => {
           'export const isAbsent = (value: string | null): boolean => value == null;\n',
       },
       rule: 'noDoubleEquals',
-    },
-    {
-      condition: 'a function takes a second positional argument',
-      files: {
-        'src/main.ts':
-          'export const join = (head: string, tail: string): string => head + tail;\n',
-      },
-      rule: 'useMaxParams',
     },
     {
       condition: 'shipped code writes to the console',
@@ -227,6 +266,20 @@ describe('biome presets', () => {
       condition: 'a spec passes 500 lines',
       files: {
         'src/__tests__/main.spec.ts': fileOfLines(600),
+      },
+      rule: 'noExcessiveLinesPerFile',
+    },
+    {
+      condition: 'a function takes a second positional argument',
+      files: {
+        'src/main.ts': TWO_PARAMETERS,
+      },
+      rule: 'useMaxParams',
+    },
+    {
+      condition: 'a *.test.ts spec passes 500 lines',
+      files: {
+        'src/main.test.ts': fileOfLines(600),
       },
       rule: 'noExcessiveLinesPerFile',
     },
@@ -295,29 +348,6 @@ describe('biome presets', () => {
 
   test.each([
     {
-      condition: 'null is assigned outside an adapter',
-      files: {
-        'src/features/orders/domain/order.ts':
-          'export const cancelledAt: Date | undefined = null;\n',
-      },
-      message: 'null outside the boundary',
-    },
-    {
-      condition: 'a surface declares a value',
-      files: {
-        'src/features/orders/index.ts':
-          "export { cancelOrder } from './app';\nexport const ORDERS = 'orders';\n",
-      },
-      message: 'A surface only re-exports by name',
-    },
-    {
-      condition: 'a variable is named by an empty word',
-      files: {
-        'src/features/orders/order.ts': 'export const data = 1;\n',
-      },
-      message: 'Name what it holds',
-    },
-    {
       condition: 'a function is named by an empty verb',
       files: {
         'src/features/orders/order.ts':
@@ -342,26 +372,10 @@ describe('biome presets', () => {
       message: 'A type is a noun, undecorated',
     },
     {
-      condition: 'a case does not read should … when …',
-      files: {
-        'src/__tests__/order.spec.ts':
-          "import { expect, test } from 'bun:test';\n\ntest('adds totals', () => {\n  expect(1).toBe(1);\n});\n",
-      },
-      message: "A case reads 'should <behaviour> when <condition>'",
-    },
-    {
-      condition: 'a spec replaces a module',
-      files: {
-        'src/__tests__/order.spec.ts':
-          "import { mock } from 'bun:test';\n\nmock.module('./order', () => ({}));\n",
-      },
-      message: 'Fake an effect through its port',
-    },
-    {
       condition: 'a spec compares with toEqual',
       files: {
-        'src/__tests__/order.spec.ts':
-          "import { expect, test } from 'bun:test';\n\ntest('should keep totals when orders arrive', () => {\n  expect(1).toEqual(1);\n});\n",
+        'src/order.test.ts':
+          "import { expect, test } from 'bun:test';\n\ntest('adds totals', () => {\n  expect(1).toEqual(1);\n});\n",
       },
       message: 'Compare with toStrictEqual',
     },
@@ -380,6 +394,67 @@ describe('biome presets', () => {
 
     // Assert
     expect(plugins.some((finding) => finding.startsWith(message))).toBe(true);
+  });
+
+  test.each(CONSTITUTION_CASES)(
+    'should report a plugin finding when $condition and a repository extends constitution',
+    ({ files, message }) => {
+      // Arrange
+      const project = {
+        files,
+        presets: [
+          'base',
+          'test',
+          'constitution',
+        ],
+      };
+
+      // Act
+      const { plugins } = lintFindings(project);
+
+      // Assert
+      expect(plugins.some((finding) => finding.startsWith(message))).toBe(true);
+    },
+  );
+
+  test.each(CONSTITUTION_CASES)(
+    'should report no plugin finding when $condition and a repository extends only base and test',
+    ({ files }) => {
+      // Arrange
+      const project = {
+        files,
+        presets: [
+          'base',
+          'test',
+        ],
+      };
+
+      // Act
+      const { plugins } = lintFindings(project);
+
+      // Assert
+      expect(plugins).toStrictEqual([]);
+    },
+  );
+
+  test('should report useMaxParams when a function takes a second positional argument and a repository extends constitution', () => {
+    // Arrange
+    const project = {
+      files: {
+        'src/main.ts': TWO_PARAMETERS,
+      },
+      presets: [
+        'base',
+        'test',
+        'constitution',
+      ],
+    };
+
+    // Act
+    const { rules } = lintFindings(project);
+
+    // Assert
+    expect(rules).toContain('useMaxParams');
   });
 
   test.each([
@@ -411,6 +486,7 @@ describe('biome presets', () => {
       presets: [
         'base',
         'test',
+        'constitution',
       ],
     };
 
