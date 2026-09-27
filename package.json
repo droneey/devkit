@@ -36,6 +36,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",
     "@droneey/devkit-ts-biome": "workspace:*",
+    "@droneey/devkit-ts-dependency-cruiser": "workspace:*",
     "@droneey/devkit-ts-syncpack": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
     "@swc/core": "^1.16.2",

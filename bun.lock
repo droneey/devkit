@@ -7,6 +7,7 @@
       "devDependencies": {
         "@biomejs/biome": "^2.5.14",
         "@droneey/devkit-ts-biome": "workspace:*",
+        "@droneey/devkit-ts-dependency-cruiser": "workspace:*",
         "@droneey/devkit-ts-syncpack": "workspace:*",
         "@droneey/devkit-ts-tsconfig": "workspace:*",
         "@swc/core": "^1.16.2",
@@ -22,6 +23,14 @@
       "version": "1.22.1",
       "peerDependencies": {
         "@biomejs/biome": ">=2.5.0",
+      },
+    },
+    "packages/typescript/libs/dependency-cruiser": {
+      "name": "@droneey/devkit-ts-dependency-cruiser",
+      "version": "1.22.1",
+      "peerDependencies": {
+        "@swc/core": ">=1.0.0",
+        "dependency-cruiser": ">=17.0.0",
       },
     },
     "packages/typescript/libs/jest": {
@@ -142,6 +151,8 @@
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.5.14", "", { "os": "win32", "cpu": "x64" }, "sha512-oJWmBhoHsnhUKIke+0gXDX0mltJrWHA1UyHsrTlXwX0TL64ilVZAo+TYZm97baecV0esBdpzy3k96q+09JaZUQ=="],
 
     "@droneey/devkit-ts-biome": ["@droneey/devkit-ts-biome@workspace:packages/typescript/libs/biome"],
+
+    "@droneey/devkit-ts-dependency-cruiser": ["@droneey/devkit-ts-dependency-cruiser@workspace:packages/typescript/libs/dependency-cruiser"],
 
     "@droneey/devkit-ts-jest": ["@droneey/devkit-ts-jest@workspace:packages/typescript/libs/jest"],
 

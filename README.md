@@ -209,6 +209,7 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 | `@droneey/devkit-ts-biome` | Biome configuration (formatter + linter) |
 | `@droneey/devkit-ts-tsconfig` | TypeScript configuration variants |
 | `@droneey/devkit-ts-syncpack` | Syncpack configuration (package.json order and ranges) |
+| `@droneey/devkit-ts-dependency-cruiser` | dependency-cruiser hygiene: no cycle, no test code in production, declared and resolvable dependencies |
 
 ## ⚙️ Workflows
 
