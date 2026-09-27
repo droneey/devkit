@@ -81,7 +81,7 @@ The base config includes:
 |---|---|
 | `@droneey/devkit-ts-biome/react` | React component rules, hooks, JSX a11y; function components only, and no legacy API (`useContext`, `<Context.Provider>`, `defaultProps`, `createRef`, string refs) |
 | `@droneey/devkit-ts-biome/react-dom` | React in the browser: DOM attributes as the DOM spells them, ids from `useId`, `autoComplete` on fields for the user's own data, Testing Library queries by role, label and text |
-| `@droneey/devkit-ts-biome/tailwind` | Tailwind: no arbitrary values (in `className`, `cva`, `cn`, `clsx`, `twMerge`), `h-dvh` over `h-screen`, no `max-*:` breakpoints |
+| `@droneey/devkit-ts-biome/tailwind` | Tailwind: no arbitrary values (in `className`, `cva`, `cn`, `clsx`, `twMerge`; one that only reads a token's variable, such as `bg-[var(--color-surface)]`, carries a `biome-ignore` with its reason), `h-dvh` over `h-screen`, no `max-*:` breakpoints |
 | `@droneey/devkit-ts-biome/react-native` | React Native specific rules |
 | `@droneey/devkit-ts-biome/nestjs` | NestJS patterns |
 
