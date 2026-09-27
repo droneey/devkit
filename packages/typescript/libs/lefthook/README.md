@@ -31,6 +31,14 @@ Language-agnostic hooks:
 | `pre-commit` | `validate-branch` | Branch must match `(feature\|fix\|hotfix)/{id}-{name}` |
 | `commit-msg` | `commit-message` | Conventional Commits with the types `feat`, `fix`, `refactor`, `chore` and `!` for a breaking change; no scope, a sentence-case subject that is not a placeholder, no body or footer |
 
+### Betterleaks
+
+Language-agnostic, like the base; it needs [betterleaks](https://github.com/betterleaks/betterleaks) on the path, pinned through mise (`mise use betterleaks@<version>`).
+
+| Hook | Job | Description |
+|---|---|---|
+| `pre-commit` | `secrets` | Runs `betterleaks git --pre-commit --staged --redact` over the staged changes; the report never prints a secret |
+
 ### Biome
 
 | Hook | Job | Description |

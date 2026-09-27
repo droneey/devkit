@@ -1,3 +1,4 @@
 extends:
   - node_modules/@droneey/devkit-ts-lefthook/configs/base.yml
   - node_modules/@droneey/devkit-ts-lefthook/configs/biome.yml
+  - node_modules/@droneey/devkit-ts-lefthook/configs/betterleaks.yml

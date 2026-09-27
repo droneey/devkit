@@ -21,6 +21,20 @@ describe('lefthook configs', () => {
     expect(shipped).toBe(source);
   });
 
+  test('should ship the common secrets hook unchanged when a repository extends betterleaks.yml', () => {
+    // Arrange
+    const source = readFileSync(resolve(COMMON_DIR, 'betterleaks.yml'), 'utf8');
+
+    // Act
+    const shipped = readFileSync(
+      resolve(CONFIGS_DIR, 'betterleaks.yml'),
+      'utf8',
+    );
+
+    // Assert
+    expect(shipped).toBe(source);
+  });
+
   test('should run Biome over the staged files when a repository commits', () => {
     // Arrange
     const source = readFileSync(resolve(CONFIGS_DIR, 'biome.yml'), 'utf8');
