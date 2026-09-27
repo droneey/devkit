@@ -38,6 +38,92 @@ const FOUR_PARAMETERS =
   "export const joinAll = (head: string, middle: string, tail: string, end: string): string =>\n  [head, middle, tail, end].join('');\n";
 
 describe('biome presets', () => {
+  test('should ship the common presets with the plugin paths of the package when a repository takes them from npm', () => {
+    // Arrange
+    const common = resolve(PACKAGE_DIR, '../../../common/biome');
+    const files = [
+      ...new Bun.Glob('**/*').scanSync({
+        cwd: common,
+      }),
+    ];
+
+    // Act
+    const drifted = files.filter(
+      (file) =>
+        readFileSync(resolve(PACKAGE_DIR, file), 'utf8') !==
+        readFileSync(resolve(common, file), 'utf8').replaceAll(
+          './.devkit/common/biome/plugins/',
+          './node_modules/@droneey/devkit-ts-biome/plugins/',
+        ),
+    );
+
+    // Assert
+    expect(drifted).toStrictEqual([]);
+  });
+
+  test.each([
+    {
+      condition: 'a function is named by an empty verb',
+      message: 'Name what the function does',
+      presets: [
+        'base',
+      ],
+      path: 'src/order.ts',
+      text: 'export const process = (): number => 1;\n',
+    },
+    {
+      condition: 'a spec compares with toEqual',
+      message: 'Compare with toStrictEqual',
+      presets: [
+        'base',
+        'test',
+      ],
+      path: 'src/order.test.ts',
+      text: "import { expect, test } from 'bun:test';\n\ntest('adds totals', () => {\n  expect(1).toEqual(1);\n});\n",
+    },
+  ])(
+    'should report a plugin finding when $condition and a repository takes the presets from the release archive',
+    ({ message, path, presets, text }) => {
+      // Arrange
+      const project = {
+        files: {
+          [path]: text,
+        },
+        presets,
+        source: 'release' as const,
+      };
+
+      // Act
+      const { plugins } = lintFindings(project);
+
+      // Assert
+      expect(plugins.some((finding) => finding.startsWith(message))).toBe(true);
+    },
+  );
+
+  test('should leave .devkit alone when a repository takes the presets from the release archive', () => {
+    // Arrange
+    const project = {
+      files: {
+        '.devkit/probe.ts': 'export const data = null;\n',
+        'src/order.ts': "export const orderKind = 'order';\n",
+      },
+      presets: [
+        'base',
+      ],
+      source: 'release' as const,
+    };
+
+    // Act
+    const { plugins, rules } = lintFindings(project);
+
+    // Assert
+    expect([
+      ...plugins,
+      ...rules,
+    ]).toStrictEqual([]);
+  });
+
   test.each(Object.keys(EXPORTS).map((key) => key.slice(2)))(
     'should parse when a repository extends %s',
     (preset) => {

@@ -1,7 +1,9 @@
 import { spawnSync } from 'node:child_process';
 import {
+  cpSync,
   mkdirSync,
   mkdtempSync,
+  readFileSync,
   rmSync,
   symlinkSync,
   writeFileSync,
@@ -10,7 +12,13 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 
 const PACKAGE_DIR = resolve(import.meta.dirname, '..');
-const BIOME = resolve(PACKAGE_DIR, '../../../../node_modules/.bin/biome');
+const ROOT = resolve(PACKAGE_DIR, '../../../..');
+const BIOME = resolve(ROOT, 'node_modules/.bin/biome');
+const EXPORTS = (
+  JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')) as {
+    exports: Readonly<Record<string, string>>;
+  }
+).exports;
 
 interface Report {
   diagnostics: readonly {
@@ -19,22 +27,18 @@ interface Report {
   }[];
 }
 
-export interface Project {
+interface Project {
   files: Readonly<Record<string, string>>;
   presets: readonly string[];
+  source?: 'npm' | 'release';
 }
 
-export interface Findings {
+interface Findings {
   plugins: readonly string[];
   rules: readonly string[];
 }
 
-// What the real Biome reports over a small project that installs this package
-// and extends its presets by name, as a consumer does: each lint rule by its
-// name, each GritQL plugin by its message.
-export const lintFindings = (project: Project): Findings => {
-  const folder = mkdtempSync(join(tmpdir(), 'devkit-biome-'));
-
+const installPackage = (folder: string): void => {
   mkdirSync(join(folder, 'node_modules/@droneey'), {
     recursive: true,
   });
@@ -42,11 +46,45 @@ export const lintFindings = (project: Project): Findings => {
     PACKAGE_DIR,
     join(folder, 'node_modules/@droneey/devkit-ts-biome'),
   );
+};
+
+// The release archive holds devkit's packages folder without the npm packages,
+// which mise unpacks and the repository links as .devkit.
+const unpackRelease = (folder: string): void => {
+  cpSync(resolve(ROOT, 'packages/common'), join(folder, '.devkit/common'), {
+    recursive: true,
+  });
+};
+
+const presetReference = (input: {
+  preset: string;
+  source: 'npm' | 'release';
+}): string =>
+  input.source === 'npm'
+    ? `@droneey/devkit-ts-biome/${input.preset}`
+    : `./.devkit/common/biome/${(EXPORTS[`./${input.preset}`] ?? '').slice(2)}`;
+
+// What the real Biome reports over a small project that takes this package's
+// presets as a consumer does — from npm by name, or from devkit's release
+// archive by path: each lint rule by its name, each GritQL plugin by its message.
+const lintFindings = (project: Project): Findings => {
+  const folder = mkdtempSync(join(tmpdir(), 'devkit-biome-'));
+  const source = project.source ?? 'npm';
+
+  if (source === 'npm') {
+    installPackage(folder);
+  } else {
+    unpackRelease(folder);
+  }
+
   writeFileSync(
     join(folder, 'biome.json'),
     JSON.stringify({
-      extends: project.presets.map(
-        (preset) => `@droneey/devkit-ts-biome/${preset}`,
+      extends: project.presets.map((preset) =>
+        presetReference({
+          preset,
+          source,
+        }),
       ),
       vcs: {
         enabled: false,
@@ -54,11 +92,11 @@ export const lintFindings = (project: Project): Findings => {
     }),
   );
 
-  for (const [path, source] of Object.entries(project.files)) {
+  for (const [path, text] of Object.entries(project.files)) {
     mkdirSync(dirname(join(folder, path)), {
       recursive: true,
     });
-    writeFileSync(join(folder, path), source);
+    writeFileSync(join(folder, path), text);
   }
 
   const linting = spawnSync(
@@ -66,7 +104,7 @@ export const lintFindings = (project: Project): Findings => {
     [
       'lint',
       '--reporter=json',
-      'src',
+      source === 'npm' ? 'src' : '.',
     ],
     {
       cwd: folder,
@@ -91,4 +129,5 @@ export const lintFindings = (project: Project): Findings => {
   };
 };
 
-export { PACKAGE_DIR };
+export type { Findings, Project };
+export { lintFindings, PACKAGE_DIR };

@@ -1,3 +1,6 @@
+# devkit, unpacked by mise
+/.devkit
+
 # OS
 .DS_Store
 
