@@ -7,10 +7,9 @@ import { join, resolve } from 'node:path';
 import { describe, expect, test } from 'bun:test';
 import { YAML } from 'bun';
 
-const PACKAGE_DIR = resolve(import.meta.dirname, '..');
-const ROOT = resolve(PACKAGE_DIR, '../../../..');
-const COMMON = resolve(ROOT, 'packages/common');
-const PRESET = resolve(PACKAGE_DIR, 'configs/betterleaks.toml');
+const COMMON = resolve(import.meta.dirname, '../..');
+const ROOT = resolve(COMMON, '../..');
+const PRESET = resolve(COMMON, 'betterleaks/betterleaks.toml');
 
 // A token of GitHub's shape, drawn at random on each run: no source file holds
 // one, and a random body carries the entropy the scanner looks for.
@@ -129,20 +128,6 @@ const scanStaged = (project: Project): Scan => {
 };
 
 describe('betterleaks preset', () => {
-  test('should ship the common preset unchanged when a repository extends it', () => {
-    // Arrange
-    const source = readFileSync(
-      resolve(COMMON, 'betterleaks/betterleaks.toml'),
-      'utf8',
-    );
-
-    // Act
-    const shipped = readFileSync(PRESET, 'utf8');
-
-    // Assert
-    expect(shipped).toBe(source);
-  });
-
   test('should stop the commit when a staged file holds a token', () => {
     // Arrange
     const project = {

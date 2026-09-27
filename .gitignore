@@ -40,6 +40,3 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # copied from packages/common
 packages/typescript/libs/biome/configs/
 packages/typescript/libs/biome/plugins/
-packages/typescript/libs/lefthook/configs/base.yml
-packages/typescript/libs/lefthook/configs/betterleaks.yml
-packages/typescript/libs/betterleaks/configs/betterleaks.toml
