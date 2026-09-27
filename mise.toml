@@ -3,7 +3,7 @@ actionlint = "1.7.12"
 betterleaks = "1.8.1"
 bun = "1.4.2"
 lefthook = "2.1.14"
-"http:constitution" = { version = "0.31.0", url = "https://github.com/droneey/constitution/releases/download/v{{ version }}/constitution.tar.gz", strip_components = 0, checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f" }
+"http:constitution" = { version = "0.33.0", url = "https://github.com/droneey/constitution/releases/download/v{{ version }}/constitution.tar.gz", strip_components = 0, checksum = "sha256:8331e8c085e6bd9a653729445fae12d1a632e0490fe296f5934e795d19f3f746" }
 
 [hooks]
 postinstall = [

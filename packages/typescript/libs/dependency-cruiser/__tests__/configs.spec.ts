@@ -93,7 +93,7 @@ const cruise = (project: Project): Cruise => {
   const cruising = spawnSync(
     DEPCRUISE,
     [
-      'src',
+      '.',
       '--config',
       '.dependency-cruiser.mjs',
       '--output-type',
@@ -200,6 +200,14 @@ describe('dependency-cruiser hygiene preset', () => {
       files: {
         'src/order.ts':
           "import type { devtool } from 'devtool';\nexport type Order = typeof devtool;\n",
+      },
+    },
+    {
+      condition: 'a hidden folder holds modules that break the rules',
+      files: {
+        '.cache/order.ts':
+          "import { line } from './line';\nexport const order = line;\n",
+        'src/order.ts': 'export const order = 1;\n',
       },
     },
     {

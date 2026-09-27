@@ -81,6 +81,7 @@ export default {
     },
     exclude: {
       path: [
+        '(^|/)\\.[^/]+/',
         '(^|/)dist/',
         '\\.gen\\.',
       ],
