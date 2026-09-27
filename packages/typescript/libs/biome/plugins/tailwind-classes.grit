@@ -1,0 +1,20 @@
+language js
+
+or {
+  jsx_attribute(name=$name, value=$classes) where { $name <: r"className" },
+  or {
+    `cva($...)`,
+    `cn($...)`,
+    `clsx($...)`,
+    `twMerge($...)`
+  } as $classes where { $classes <: not within jsx_attribute() }
+} where {
+  or {
+    $classes <: r"(?s).*\bh-screen\b.*" where {
+      register_diagnostic(span=$classes, message="Size to the dynamic viewport with h-dvh: h-screen ignores the phone's toolbars", severity="error")
+    },
+    $classes <: r"(?s).*\bmax-\S*:.*" where {
+      register_diagnostic(span=$classes, message="Widen from the small screen with md:, lg: and xl:: a max-* breakpoint undoes the base", severity="error")
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noUnknownAttribute": "error",
+      },
+      "correctness": {
+        "useUniqueElementIds": "error",
+      },
+      "security": {
+        "noDangerouslySetInnerHtmlWithChildren": "error",
+      },
+      "a11y": {
+        "useValidAutocomplete": "error",
+      },
+    },
+  },
+  "plugins": [
+    "./node_modules/@droneey/devkit-ts-biome/plugins/element-ids.grit",
+    "./node_modules/@droneey/devkit-ts-biome/plugins/autocomplete.grit",
+    {
+      "path": "./node_modules/@droneey/devkit-ts-biome/plugins/test-queries.grit",
+      "includes": [
+        "**/__tests__/**",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+      ],
+    },
+  ],
+}

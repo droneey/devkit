@@ -32,6 +32,8 @@
     "./browser": "./configs/environments/browser.jsonc",
     "./nestjs": "./configs/frameworks/nestjs.jsonc",
     "./react": "./configs/frameworks/react.jsonc",
+    "./react-dom": "./configs/frameworks/react-dom.jsonc",
+    "./tailwind": "./configs/frameworks/tailwind.jsonc",
     "./react-native": "./configs/frameworks/react-native.jsonc"
   },
   "files": [

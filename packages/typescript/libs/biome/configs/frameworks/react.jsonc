@@ -28,6 +28,7 @@
           "nursery": {
             "noComponentHookFactories": "error",
             "useReactCompiler": "error",
+            "noReactStringRefs": "error",
             "useReactNamingConvention": "error",
             "useReactFunctionComponentDefinition": {
               "level": "error",
@@ -59,6 +60,8 @@
             "useValidAriaProps": "error",
             "useValidAriaRole": "error",
             "noStaticElementInteractions": "error",
+            "useFocusableInteractive": "error",
+            "noNoninteractiveElementToInteractiveRole": "error",
           },
           "suspicious": {
             "noArrayIndexKey": "error",
@@ -72,6 +75,7 @@
             "useConsistentCurlyBraces": "error",
             "useComponentExportOnlyModules": "error",
             "useSelfClosingElements": "error",
+            "useReactFunctionComponents": "error",
             "useFilenamingConvention": {
               "level": "error",
               "options": {
@@ -96,5 +100,8 @@
         },
       },
     },
+  ],
+  "plugins": [
+    "./node_modules/@droneey/devkit-ts-biome/plugins/react-legacy-api.grit",
   ],
 }
