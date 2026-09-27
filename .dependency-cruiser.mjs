@@ -81,8 +81,9 @@ export default {
     },
   ],
   options: {
+    // TypeScript 7 exposes no compiler API, so the source is parsed with swc.
+    parser: 'swc',
     preserveSymlinks: true,
-    tsPreCompilationDeps: true,
     builtInModules: {
       add: [
         'bun',
