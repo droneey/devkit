@@ -84,7 +84,7 @@ describe('framework presets', () => {
     const project = {
       files: {
         'package.json': MANIFEST,
-        'src/Panel.tsx': source,
+        'src/panel.tsx': source,
       },
       presets: WEB_PRESETS,
     };
@@ -111,13 +111,24 @@ describe('framework presets', () => {
     {
       condition: 'a list item takes a click handler',
       files: {
-        'src/Panel.tsx': component('<li onClick={() => undefined}>item</li>'),
+        'src/panel.tsx': component('<li onClick={() => undefined}>item</li>'),
       },
       presets: [
         'base',
         'react',
       ],
       rule: 'noNoninteractiveElementInteractions',
+    },
+    {
+      condition: 'a component file is in PascalCase',
+      files: {
+        'src/Panel.tsx': component('<div />'),
+      },
+      presets: [
+        'base',
+        'react',
+      ],
+      rule: 'useFilenamingConvention',
     },
   ])(
     'should report $rule when $condition and a repository extends $presets',
@@ -150,7 +161,7 @@ describe('framework presets', () => {
     {
       condition: 'a list item takes a click handler',
       files: {
-        'src/Panel.tsx': component('<li onClick={() => undefined}>item</li>'),
+        'src/panel.tsx': component('<li onClick={() => undefined}>item</li>'),
       },
       rule: 'noNoninteractiveElementInteractions',
     },
@@ -181,7 +192,7 @@ describe('framework presets', () => {
     const project = {
       files: {
         'package.json': MANIFEST,
-        'src/Panel.tsx': component("<div className='p-[13px]' />"),
+        'src/panel.tsx': component("<div className='p-[13px]' />"),
       },
       presets: [
         'base',
@@ -199,7 +210,7 @@ describe('framework presets', () => {
     {
       condition: 'a context is read with useContext',
       files: {
-        'src/Panel.tsx':
+        'src/panel.tsx':
           "import { createContext, useContext } from 'react';\n\nconst ThemeContext = createContext('light');\n\nexport function Panel(): string {\n  return useContext(ThemeContext);\n}\n",
       },
       message: 'Read a context with use(Context)',
@@ -207,7 +218,7 @@ describe('framework presets', () => {
     {
       condition: 'a context is provided through Context.Provider',
       files: {
-        'src/Panel.tsx':
+        'src/panel.tsx':
           "import { createContext } from 'react';\n\nconst ThemeContext = createContext('light');\n\nexport function Panel(): React.ReactElement {\n  return <ThemeContext.Provider value='dark' />;\n}\n",
       },
       message: 'Render the context itself as its provider',
@@ -215,7 +226,7 @@ describe('framework presets', () => {
     {
       condition: 'a component takes defaultProps',
       files: {
-        'src/Panel.tsx': `${component('<div />')}\nPanel.defaultProps = {};\n`,
+        'src/panel.tsx': `${component('<div />')}\nPanel.defaultProps = {};\n`,
       },
       message: 'Give a prop its default in the parameter',
     },
@@ -230,21 +241,21 @@ describe('framework presets', () => {
     {
       condition: 'an id is random',
       files: {
-        'src/Panel.tsx': component('<input id={crypto.randomUUID()} />'),
+        'src/panel.tsx': component('<input id={crypto.randomUUID()} />'),
       },
       message: 'Take an id from useId',
     },
     {
       condition: 'an email field declares no autocomplete',
       files: {
-        'src/Panel.tsx': component("<input aria-label='Email' type='email' />"),
+        'src/panel.tsx': component("<input aria-label='Email' type='email' />"),
       },
       message: "A field for the user's own data declares its purpose",
     },
     {
       condition: 'a spec finds an element by its test id',
       files: {
-        'src/__tests__/Panel.spec.tsx':
+        'src/__tests__/panel.spec.tsx':
           "import { screen } from '@testing-library/react';\n\nexport const panel = (): HTMLElement => screen.getByTestId('panel');\n",
       },
       message: 'Find an element as a person does',
@@ -252,7 +263,7 @@ describe('framework presets', () => {
     {
       condition: 'a spec finds an element by a selector',
       files: {
-        'src/__tests__/Panel.spec.tsx':
+        'src/__tests__/panel.spec.tsx':
           "export const panel = (container: HTMLElement): Element | null =>\n  container.querySelector('.panel');\n",
       },
       message: 'Find an element as a person does',
@@ -260,7 +271,7 @@ describe('framework presets', () => {
     {
       condition: 'a height is h-screen',
       files: {
-        'src/Panel.tsx': component("<main className='min-h-screen' />"),
+        'src/panel.tsx': component("<main className='min-h-screen' />"),
       },
       message: 'Size to the dynamic viewport with h-dvh',
     },
@@ -293,7 +304,7 @@ describe('framework presets', () => {
     {
       condition: 'a field declares its autocomplete',
       files: {
-        'src/Panel.tsx': component(
+        'src/panel.tsx': component(
           "<input aria-label='Email' autoComplete='email' type='email' />",
         ),
       },
@@ -302,7 +313,7 @@ describe('framework presets', () => {
       condition:
         'classes use the dynamic viewport and widen from the small screen',
       files: {
-        'src/Panel.tsx': component(
+        'src/panel.tsx': component(
           "<main className='h-dvh max-w-md md:flex' />",
         ),
       },
@@ -310,7 +321,7 @@ describe('framework presets', () => {
     {
       condition: 'a spec finds an element by its role',
       files: {
-        'src/__tests__/Panel.spec.tsx':
+        'src/__tests__/panel.spec.tsx':
           "import { screen } from '@testing-library/react';\n\nexport const panel = (): HTMLElement => screen.getByRole('region');\n",
       },
     },
