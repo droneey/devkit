@@ -60,10 +60,6 @@
             ],
           },
         },
-        "noDuplicateClasses": {
-          "level": "on",
-          "options": {},
-        },
         "useSortedInterfaceMembers": {
           "level": "on",
           "options": {},
@@ -209,9 +205,6 @@
         "useSpreadOverApply": "error",
         "noNonNullAssertion": "error",
       },
-      "a11y": {
-        "noNoninteractiveElementInteractions": "error",
-      },
       "complexity": {
         "noUselessConstructor": "error",
         "useFlatMap": "error",
@@ -294,13 +287,6 @@
         "useIncludes": "error",
         "useModernMathApis": "error",
         "useFlatMathMinMax": "error",
-        "noInvalidFileInputAccept": "error",
-        "useControlLabel": "error",
-        "noUndeclaredClasses": "error",
-        "noUnusedClasses": "error",
-        "noUndeclaredCustomProperties": "error",
-        "noInvalidPropertyInitValue": "error",
-        "useNamedLayer": "error",
       },
     },
   },

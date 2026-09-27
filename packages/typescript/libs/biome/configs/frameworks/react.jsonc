@@ -12,6 +12,10 @@
               "level": "on",
               "options": {},
             },
+            "noDuplicateClasses": {
+              "level": "on",
+              "options": {},
+            },
           },
         },
       },
@@ -29,6 +33,8 @@
             "noComponentHookFactories": "error",
             "useReactCompiler": "error",
             "noReactStringRefs": "error",
+            "noInvalidFileInputAccept": "error",
+            "useControlLabel": "error",
             "useReactNamingConvention": "error",
             "useReactFunctionComponentDefinition": {
               "level": "error",
@@ -61,6 +67,7 @@
             "useValidAriaRole": "error",
             "noStaticElementInteractions": "error",
             "useFocusableInteractive": "error",
+            "noNoninteractiveElementInteractions": "error",
             "noNoninteractiveElementToInteractiveRole": "error",
           },
           "suspicious": {
