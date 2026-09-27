@@ -19,12 +19,12 @@ Create `biome.json` in your project root:
 
 ### Without npm
 
-The presets live in devkit's common area, `packages/common/biome/`; this package ships a copy of them. Each devkit release also carries that area as `devkit-common.tar.gz`, with its `sha256` beside it. A repository with no JavaScript takes Biome and the archive from [mise](https://mise.jdx.dev), and links the archive as `.devkit`, which it ignores in git:
+The presets live in devkit's common area, `packages/common/biome/`; this package ships a copy of them. Each devkit release also carries its packages folder without the npm packages — today the common area — as `devkit.tar.gz`, with its `sha256` beside it. A repository with no JavaScript takes Biome and the archive from [mise](https://mise.jdx.dev), and links the archive as `.devkit`, which it ignores in git:
 
 ```toml
 [tools]
 biome = "<version>"
-"http:devkit" = { version = "<version>", url = "https://github.com/droneey/devkit/releases/download/v{{ version }}/devkit-common.tar.gz", checksum = "sha256:<the release's devkit-common.tar.gz.sha256>" }
+"http:devkit" = { version = "<version>", url = "https://github.com/droneey/devkit/releases/download/v{{ version }}/devkit.tar.gz", checksum = "sha256:<the release's devkit.tar.gz.sha256>" }
 
 [hooks]
 postinstall = "ln -sfn \"$(mise where http:devkit)\" .devkit"
@@ -32,7 +32,7 @@ postinstall = "ln -sfn \"$(mise where http:devkit)\" .devkit"
 
 ```json
 {
-  "extends": ["./.devkit/biome/configs/base.jsonc"]
+  "extends": ["./.devkit/common/biome/configs/base.jsonc"]
 }
 ```
 

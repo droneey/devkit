@@ -24,11 +24,11 @@ jobs:
       - name: Pack the common area
         run: |
           set -euo pipefail
-          tar --exclude='__tests__' -czf devkit-common.tar.gz -C packages/common .
-          sha256sum devkit-common.tar.gz > devkit-common.tar.gz.sha256
+          tar --exclude='__tests__' -czf devkit.tar.gz -C packages common
+          sha256sum devkit.tar.gz > devkit.tar.gz.sha256
 
       - name: Attach it to the release
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
-        run: gh release upload "$TAG" devkit-common.tar.gz devkit-common.tar.gz.sha256 --clobber
+        run: gh release upload "$TAG" devkit.tar.gz devkit.tar.gz.sha256 --clobber

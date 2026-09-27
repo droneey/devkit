@@ -52,7 +52,7 @@ describe('biome presets', () => {
       (file) =>
         readFileSync(resolve(PACKAGE_DIR, file), 'utf8') !==
         readFileSync(resolve(common, file), 'utf8').replaceAll(
-          './.devkit/biome/plugins/',
+          './.devkit/common/biome/plugins/',
           './node_modules/@droneey/devkit-ts-biome/plugins/',
         ),
     );

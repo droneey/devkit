@@ -364,8 +364,8 @@
     },
   ],
   "plugins": [
-    "./.devkit/biome/plugins/empty-verbs.grit",
-    "./.devkit/biome/plugins/body-cast.grit",
-    "./.devkit/biome/plugins/type-names.grit",
+    "./.devkit/common/biome/plugins/empty-verbs.grit",
+    "./.devkit/common/biome/plugins/body-cast.grit",
+    "./.devkit/common/biome/plugins/type-names.grit",
   ],
 }

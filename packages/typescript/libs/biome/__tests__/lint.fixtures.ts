@@ -48,10 +48,10 @@ const installPackage = (folder: string): void => {
   );
 };
 
-// The release archive holds the common area, which mise unpacks and the
-// repository links as .devkit.
+// The release archive holds devkit's packages folder without the npm packages,
+// which mise unpacks and the repository links as .devkit.
 const unpackRelease = (folder: string): void => {
-  cpSync(resolve(ROOT, 'packages/common'), join(folder, '.devkit'), {
+  cpSync(resolve(ROOT, 'packages/common'), join(folder, '.devkit/common'), {
     recursive: true,
   });
 };
@@ -62,7 +62,7 @@ const presetReference = (input: {
 }): string =>
   input.source === 'npm'
     ? `@droneey/devkit-ts-biome/${input.preset}`
-    : `./.devkit/biome/${(EXPORTS[`./${input.preset}`] ?? '').slice(2)}`;
+    : `./.devkit/common/biome/${(EXPORTS[`./${input.preset}`] ?? '').slice(2)}`;
 
 // What the real Biome reports over a small project that takes this package's
 // presets as a consumer does — from npm by name, or from devkit's release
