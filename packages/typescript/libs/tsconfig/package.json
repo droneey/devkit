@@ -27,6 +27,7 @@
   "exports": {
     "./base": "./configs/base.json",
     "./node": "./configs/node.json",
+    "./nestjs": "./configs/nestjs.json",
     "./browser": "./configs/browser.json",
     "./mobile": "./configs/mobile.json"
   },

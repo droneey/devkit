@@ -1,0 +1,12 @@
+{
+  "extends": "./node.json",
+  "compilerOptions": {
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": false,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "incremental": true
+  }
+}

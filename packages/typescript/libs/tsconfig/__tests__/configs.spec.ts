@@ -1,5 +1,7 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
@@ -73,4 +75,104 @@ describe('tsconfig configs', () => {
     // Assert
     expect(config).toHaveProperty('compilerOptions.jsx', 'react-jsx');
   });
+});
+
+const TSC = resolve(
+  import.meta.dirname,
+  '../../../../../node_modules/.bin/tsc',
+);
+
+// A project of two files that extends one preset, checked by the real compiler.
+const typeChecks = (input: { main: string; preset: string }): boolean => {
+  const folder = mkdtempSync(join(tmpdir(), 'devkit-tsconfig-'));
+
+  writeFileSync(
+    join(folder, 'tsconfig.json'),
+    JSON.stringify({
+      extends: resolve(CONFIGS_DIR, input.preset),
+      include: [
+        '*.ts',
+      ],
+    }),
+  );
+  writeFileSync(
+    join(folder, 'order.ts'),
+    "export interface Order { id: string }\nexport const ORDER_KIND = 'order';\n",
+  );
+  writeFileSync(join(folder, 'main.ts'), input.main);
+
+  const result = spawnSync(TSC, [
+    '-p',
+    folder,
+  ]);
+
+  rmSync(folder, {
+    force: true,
+    recursive: true,
+  });
+
+  return result.status === 0;
+};
+
+const TYPE_IMPORTED_AS_VALUE =
+  "import { Order } from './order';\nexport const orders: Order[] = [];\n";
+const IMPORT_WITH_TS_EXTENSION =
+  "import { ORDER_KIND } from './order.ts';\nexport const kind = ORDER_KIND;\n";
+
+describe('the node and nestjs presets', () => {
+  test.each([
+    {
+      condition: 'a type is imported without `import type`',
+      main: TYPE_IMPORTED_AS_VALUE,
+      preset: 'node.json',
+    },
+    {
+      condition: 'an import names its .ts extension',
+      main: IMPORT_WITH_TS_EXTENSION,
+      preset: 'nestjs.json',
+    },
+  ])(
+    'should fail the type check under $preset when $condition',
+    ({ main, preset }) => {
+      // Arrange
+      const project = {
+        main,
+        preset,
+      };
+
+      // Act
+      const isClean = typeChecks(project);
+
+      // Assert
+      expect(isClean).toBe(false);
+    },
+  );
+
+  test.each([
+    {
+      condition: 'an import names its .ts extension',
+      main: IMPORT_WITH_TS_EXTENSION,
+      preset: 'node.json',
+    },
+    {
+      condition: 'a type is imported without `import type`',
+      main: TYPE_IMPORTED_AS_VALUE,
+      preset: 'nestjs.json',
+    },
+  ])(
+    'should pass the type check under $preset when $condition',
+    ({ main, preset }) => {
+      // Arrange
+      const project = {
+        main,
+        preset,
+      };
+
+      // Act
+      const isClean = typeChecks(project);
+
+      // Assert
+      expect(isClean).toBe(true);
+    },
+  );
 });

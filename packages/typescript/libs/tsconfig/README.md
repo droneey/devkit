@@ -23,7 +23,8 @@ Add to your `tsconfig.json`:
 | Config | Extends | Description |
 |---|---|---|
 | `base` | -- | Strict TypeScript with ESM, all strict checks enabled |
-| `node` | `base` | Node.js with ESM modules |
+| `node` | `base` | A program on Node.js or Bun: the base, strict as it is |
+| `nestjs` | `node` | NestJS: legacy decorators with their metadata, `esModuleInterop`, declarations, incremental builds; `verbatimModuleSyntax` and `.ts` import extensions off |
 | `browser` | `base` | Browser with DOM types |
 | `mobile` | `base` | React Native with JSX |
 
