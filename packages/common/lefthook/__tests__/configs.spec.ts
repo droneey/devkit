@@ -6,38 +6,12 @@ import { join, resolve } from 'node:path';
 import { describe, expect, test } from 'bun:test';
 import { YAML } from 'bun';
 
-const CONFIGS_DIR = resolve(import.meta.dirname, '../configs');
-const COMMON_DIR = resolve(import.meta.dirname, '../../../../common/lefthook');
+const HOOKS_DIR = resolve(import.meta.dirname, '..');
 
 describe('lefthook configs', () => {
-  test('should ship the common base unchanged when a repository extends base.yml', () => {
+  test('should run Biome over the staged files when a repository commits, from npm or from mise', () => {
     // Arrange
-    const source = readFileSync(resolve(COMMON_DIR, 'base.yml'), 'utf8');
-
-    // Act
-    const shipped = readFileSync(resolve(CONFIGS_DIR, 'base.yml'), 'utf8');
-
-    // Assert
-    expect(shipped).toBe(source);
-  });
-
-  test('should ship the common secrets hook unchanged when a repository extends betterleaks.yml', () => {
-    // Arrange
-    const source = readFileSync(resolve(COMMON_DIR, 'betterleaks.yml'), 'utf8');
-
-    // Act
-    const shipped = readFileSync(
-      resolve(CONFIGS_DIR, 'betterleaks.yml'),
-      'utf8',
-    );
-
-    // Assert
-    expect(shipped).toBe(source);
-  });
-
-  test('should run Biome over the staged files when a repository commits', () => {
-    // Arrange
-    const source = readFileSync(resolve(CONFIGS_DIR, 'biome.yml'), 'utf8');
+    const source = readFileSync(resolve(HOOKS_DIR, 'biome.yml'), 'utf8');
 
     // Act
     const config: unknown = YAML.parse(source);
@@ -50,7 +24,7 @@ describe('lefthook configs', () => {
         0,
         'run',
       ],
-      'bunx biome check --write --no-errors-on-unmatched {staged_files}',
+      'PATH="node_modules/.bin:$PATH" biome check --write --no-errors-on-unmatched {staged_files}',
     );
   });
 });
@@ -68,7 +42,7 @@ interface CommitMessageCheck {
 // lefthook passes the message file as {1} and runs the job under sh.
 const checkCommitMessage = (message: string): CommitMessageCheck => {
   const config = YAML.parse(
-    readFileSync(resolve(COMMON_DIR, 'base.yml'), 'utf8'),
+    readFileSync(resolve(HOOKS_DIR, 'base.yml'), 'utf8'),
   ) as {
     'commit-msg': {
       jobs: HookJob[];

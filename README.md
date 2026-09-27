@@ -1,6 +1,6 @@
 # @droneey/devkit
 
-Shared development toolkit for consistent tooling across TypeScript projects.
+Shared development toolkit for consistent tooling across the fleet's repositories. The configuration of JavaScript and TypeScript tools ships as npm packages; the configuration of every other tool ships in the release archive `devkit.tar.gz`, which mise installs.
 
 ## 🚀 Quick start
 
@@ -10,12 +10,27 @@ Shared development toolkit for consistent tooling across TypeScript projects.
 bun add -d \
   @droneey/devkit-ts-biome \
   @droneey/devkit-ts-tsconfig \
-  @droneey/devkit-ts-lefthook \
   @droneey/devkit-ts-syncpack \
   @biomejs/biome \
-  lefthook \
   syncpack
 ```
+
+### The release archive (mise)
+
+Tools that are not JavaScript — lefthook, betterleaks — come from mise, and their configuration from the release archive, linked as `.devkit` and ignored in git:
+
+```toml
+# mise.toml
+[tools]
+betterleaks = "1.8.1"
+lefthook = "2.1.14"
+"http:devkit" = { version = "<version>", url = "https://github.com/droneey/devkit/releases/download/v{{ version }}/devkit.tar.gz", strip_components = 0, checksum = "sha256:<the release's devkit.tar.gz.sha256>" }
+
+[hooks]
+postinstall = "ln -sfn \"$(mise where http:devkit)\" .devkit"
+```
+
+`strip_components = 0` keeps the archive's `common/` folder, and `checksum` is checked on every platform. `mise install` relinks `.devkit` each time it runs, in a fresh clone and in CI alike; a version bump takes the new checksum from the release's `devkit.tar.gz.sha256`.
 
 ### Configuration files
 
@@ -43,24 +58,36 @@ bun add -d \
 ```yaml
 # lefthook.yml
 extends:
-  - node_modules/@droneey/devkit-ts-lefthook/configs/base.yml
-  - node_modules/@droneey/devkit-ts-lefthook/configs/biome.yml
+  - .devkit/common/lefthook/base.yml
+  - .devkit/common/lefthook/biome.yml
+  - .devkit/common/lefthook/betterleaks.yml
 ```
 
 ```bash
-bunx lefthook install
+lefthook install
 ```
 
-A repository without npm pulls the same branch and commit rules through lefthook's remotes, pinned to a release:
+| Hook | Job | Checks |
+|---|---|---|
+| `base.yml` | `validate-branch`, `commit-message` | The branch `(feature\|fix\|hotfix)/{id}-{name}`; Conventional Commits with `feat`, `fix`, `refactor`, `chore` and `!`, no scope, a sentence-case subject that is not a placeholder, no body |
+| `biome.yml` | `biome` | `biome check --write` on the staged files, with Biome from npm or from mise |
+| `betterleaks.yml` | `secrets` | `betterleaks git --pre-commit --staged --redact` over the staged changes |
 
-```yaml
-# lefthook.yml
-remotes:
-  - git_url: https://github.com/droneey/devkit
-    ref: v1.10.0
-    configs:
-      - packages/common/lefthook/base.yml
+### Secrets (betterleaks)
+
+```toml
+# .betterleaks.toml
+[extend]
+path = ".devkit/common/betterleaks/betterleaks.toml"
 ```
+
+The preset keeps betterleaks' default rules, with nothing switched off, and skips `bun.lock` as betterleaks skips the other lockfiles (until [betterleaks#370](https://github.com/betterleaks/betterleaks/pull/370) is released). The check scans the history the clone holds and the uncommitted changes, never `betterleaks dir`, which reads ignored files such as a local `.env`:
+
+```json
+"secrets:check": "betterleaks git . --redact --no-banner && betterleaks git . --pre-commit --redact --no-banner && betterleaks git . --pre-commit --staged --redact --no-banner"
+```
+
+A false positive is allowed on its line by `// betterleaks:allow <reason>`, or by its fingerprint in `.betterleaksignore` under a `#` line that states the reason; never by switching a rule off.
 
 ### Package manifests (Syncpack)
 
@@ -180,7 +207,6 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 |---|---|
 | `@droneey/devkit-ts-biome` | Biome configuration (formatter + linter) |
 | `@droneey/devkit-ts-tsconfig` | TypeScript configuration variants |
-| `@droneey/devkit-ts-lefthook` | Lefthook git hooks (biome, commit validation) |
 | `@droneey/devkit-ts-syncpack` | Syncpack configuration (package.json order and ranges) |
 
 ## ⚙️ Workflows
@@ -189,7 +215,7 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 |---|---|---|
 | `ci-check` | pull request to `main` | Runs `check`, then builds the packages |
 | `cd-version` | push to `main` | Bumps every `package.json` and tags the release - `droneey/.github` |
-| `cd-pre-release` | tag `v*` | Opens the pre-release to promote by hand - `droneey/.github` |
+| `cd-pre-release` | tag `v*` | Opens the pre-release to promote by hand, with `devkit.tar.gz` attached - `droneey/.github` |
 | `cd-deploy` | release published | Builds and publishes the packages to npm - `droneey/.github` |
 
 The last three are thin callers of the shared hub at [`droneey/.github`](https://github.com/droneey/.github), each pinned to an exact release of the hub in its `uses:` line; only `ci-check` is local.
@@ -197,12 +223,12 @@ The last three are thin callers of the shared hub at [`droneey/.github`](https:/
 ## 🛠️ Development
 
 ```bash
-mise trust && mise install   # Bun and actionlint, pinned in mise.toml
+mise trust && mise install   # Bun, lefthook, betterleaks and actionlint, pinned in mise.toml
 bun install
 bun run check
 ```
 
-`check` runs Biome, Syncpack, the type checker, the tests with full coverage and dependency-cruiser - the same gates as the pull request.
+`check` runs Biome, Syncpack, the type checker, the tests with full coverage, dependency-cruiser and betterleaks - the same gates as the pull request. devkit reads its own common files straight from `packages/common/`.
 
 ## 📐 Conventions
 

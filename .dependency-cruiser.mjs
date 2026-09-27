@@ -17,10 +17,11 @@ export default {
     {
       name: 'common-imports-nothing',
       comment:
-        'The common area holds language-agnostic files and imports nothing.',
+        'The common area holds language-agnostic files and imports nothing; only their specs import the tools that check them.',
       severity: 'error',
       from: {
         path: '^packages/common/',
+        pathNot: '/__tests__/',
       },
       to: {},
     },

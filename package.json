@@ -18,7 +18,7 @@
   },
   "type": "module",
   "scripts": {
-    "prepare": "bun run --cwd packages/typescript/libs/biome build && bun run --cwd packages/typescript/libs/lefthook build && bun run --cwd packages/typescript/libs/betterleaks build && lefthook install",
+    "prepare": "bun run --cwd packages/typescript/libs/biome build && lefthook install",
     "clean": "rm -rf node_modules packages/typescript/libs/*/node_modules bun.lock",
     "test:unit": "bun test",
     "lint:check": "biome check --error-on-warnings",
@@ -36,16 +36,13 @@
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",
     "@droneey/constitution": "github:droneey/constitution#v0.27.0",
-    "@droneey/devkit-ts-betterleaks": "workspace:*",
     "@droneey/devkit-ts-biome": "workspace:*",
-    "@droneey/devkit-ts-lefthook": "workspace:*",
     "@droneey/devkit-ts-syncpack": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
     "@swc/core": "^1.16.2",
     "@types/bun": "^1.4.2",
     "@types/node": "^24.19.0",
     "dependency-cruiser": "^18.4.0",
-    "lefthook": "^2.1.14",
     "syncpack": "^15.3.3",
     "typescript": "^7.0.2"
   }

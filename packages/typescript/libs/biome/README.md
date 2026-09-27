@@ -24,7 +24,7 @@ The presets live in devkit's common area, `packages/common/biome/`; this package
 ```toml
 [tools]
 biome = "<version>"
-"http:devkit" = { version = "<version>", url = "https://github.com/droneey/devkit/releases/download/v{{ version }}/devkit.tar.gz", checksum = "sha256:<the release's devkit.tar.gz.sha256>" }
+"http:devkit" = { version = "<version>", url = "https://github.com/droneey/devkit/releases/download/v{{ version }}/devkit.tar.gz", strip_components = 0, checksum = "sha256:<the release's devkit.tar.gz.sha256>" }
 
 [hooks]
 postinstall = "ln -sfn \"$(mise where http:devkit)\" .devkit"
