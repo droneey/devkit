@@ -60,8 +60,6 @@ const hookCommand = (): string => {
   );
 };
 
-// What the commit hook reports over a repository that extends the preset and
-// stages the given files.
 const scanStaged = (project: Project): Scan => {
   const folder = mkdtempSync(join(tmpdir(), 'devkit-betterleaks-'));
   const git = (args: readonly string[]): void => {
