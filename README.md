@@ -90,6 +90,16 @@ The preset keeps betterleaks' default rules, with nothing switched off, and skip
 
 A false positive is allowed on its line by `// betterleaks:allow <reason>`, or by its fingerprint in `.betterleaksignore` under a `#` line that states the reason; never by switching a rule off.
 
+### Names (ls-lint)
+
+ls-lint comes from mise (`ls-lint = "2.3.1"`) and reads the base from the release archive, then the repository's own additions:
+
+```json
+"names:check": "ls-lint --config .devkit/common/ls-lint/base.yaml --config .ls-lint.yaml"
+```
+
+The base names files and folders in kebab-case; root documents such as `README.md` in upper case; allows `__tests__/`, hidden folders (`.github/`) and a component file in PascalCase; and ignores `.git`, `.devkit`, `node_modules`, `coverage`, `dist`, `reports` and Stryker's sandbox. A repository adds its own ignores and rules in `.ls-lint.yaml`; ls-lint merges the configurations it is given.
+
 ### Package manifests (Syncpack)
 
 ```js

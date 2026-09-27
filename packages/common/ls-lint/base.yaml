@@ -1,0 +1,13 @@
+ls:
+  .dir: kebab-case | regex:^__tests__$ | regex:^\.[a-z0-9]+(-[a-z0-9]+)*$
+  .*: kebab-case | regex:^\.[a-z0-9]+(-[a-z0-9]+)*$
+  .md: kebab-case | regex:^[A-Z]+$
+  .tsx: kebab-case | PascalCase
+ignore:
+  - .git
+  - .devkit
+  - .stryker-tmp
+  - node_modules
+  - coverage
+  - dist
+  - reports

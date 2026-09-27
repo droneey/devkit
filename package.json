@@ -28,7 +28,8 @@
     "type:check": "tsc --noEmit",
     "architecture:check": "depcruise . --config .dependency-cruiser.mjs",
     "secrets:check": "betterleaks git . --redact --no-banner && betterleaks git . --pre-commit --redact --no-banner && betterleaks git . --pre-commit --staged --redact --no-banner",
-    "check": "bun run lint:check && bun run packages:check && bun run type:check && bun run test:unit && bun run architecture:check && bun run secrets:check"
+    "names:check": "ls-lint --config packages/common/ls-lint/base.yaml --config .ls-lint.yaml",
+    "check": "bun run lint:check && bun run packages:check && bun run type:check && bun run test:unit && bun run architecture:check && bun run secrets:check && bun run names:check"
   },
   "workspaces": [
     "packages/typescript/libs/*"
