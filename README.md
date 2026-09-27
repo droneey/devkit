@@ -20,12 +20,12 @@ bun add -d \
 ### Configuration files
 
 ```json
-// biome.json
+// biome.json — a program on Bun
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": [
     "@droneey/devkit-ts-biome/base",
-    "@droneey/devkit-ts-biome/node",
+    "@droneey/devkit-ts-biome/bun",
     "@droneey/devkit-ts-biome/test"
   ]
 }
@@ -167,7 +167,6 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 {
   "extends": [
     "@droneey/devkit-ts-biome/base",
-    "@droneey/devkit-ts-biome/browser",
     "@droneey/devkit-ts-biome/react",
     "@droneey/devkit-ts-biome/react-native",
     "@droneey/devkit-ts-biome/test"

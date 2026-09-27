@@ -1,5 +1,7 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
@@ -121,6 +123,102 @@ describe('biome configs', () => {
 
       // Assert
       expect(config).toHaveProperty('overrides.0.includes', includes);
+    },
+  );
+});
+
+const EXPORTS = (
+  JSON.parse(
+    readFileSync(resolve(import.meta.dirname, '../package.json'), 'utf8'),
+  ) as {
+    exports: Readonly<Record<string, string>>;
+  }
+).exports;
+
+const BIOME = resolve(
+  import.meta.dirname,
+  '../../../../../node_modules/.bin/biome',
+);
+
+// One file linted by the real Biome under one environment preset.
+const lintPasses = (input: {
+  environment: string;
+  source: string;
+}): boolean => {
+  const folder = mkdtempSync(join(tmpdir(), 'devkit-biome-'));
+
+  writeFileSync(
+    join(folder, 'biome.json'),
+    JSON.stringify({
+      extends: [
+        resolve(
+          import.meta.dirname,
+          '..',
+          EXPORTS[`./${input.environment}`] ?? 'missing',
+        ),
+      ],
+    }),
+  );
+  writeFileSync(join(folder, 'main.ts'), input.source);
+
+  const result = spawnSync(
+    BIOME,
+    [
+      'lint',
+      '--error-on-warnings',
+      folder,
+    ],
+    {
+      cwd: folder,
+    },
+  );
+
+  rmSync(folder, {
+    force: true,
+    recursive: true,
+  });
+
+  return result.status === 0;
+};
+
+describe('the node and bun environments', () => {
+  test.each([
+    'node',
+    'bun',
+  ])(
+    'should report a built-in module imported without its node: prefix when a repository extends %s',
+    (environment) => {
+      // Arrange
+      const project = {
+        environment,
+        source: "import { readFile } from 'fs';\n\nexport { readFile };\n",
+      };
+
+      // Act
+      const passes = lintPasses(project);
+
+      // Assert
+      expect(passes).toBe(false);
+    },
+  );
+
+  test.each([
+    'node',
+    'bun',
+  ])(
+    'should pass a built-in module imported with its node: prefix when a repository extends %s',
+    (environment) => {
+      // Arrange
+      const project = {
+        environment,
+        source: "import { readFile } from 'node:fs';\n\nexport { readFile };\n",
+      };
+
+      // Act
+      const passes = lintPasses(project);
+
+      // Assert
+      expect(passes).toBe(true);
     },
   );
 });
