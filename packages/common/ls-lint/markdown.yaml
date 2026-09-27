@@ -1,0 +1,2 @@
+ls:
+  .md: kebab-case | regex:^[A-Z]+(_[A-Z]+)*$

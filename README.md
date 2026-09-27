@@ -92,15 +92,20 @@ A false positive is allowed on its line by `// betterleaks:allow <reason>`, or b
 
 ### Names (ls-lint)
 
-ls-lint comes from mise (`ls-lint = "2.3.1"`) and reads the base from the release archive, then the repository's own additions:
+ls-lint comes from mise (`ls-lint = "2.3.1"`) and reads its parts from the release archive, then the repository's own additions:
 
 ```json
-"names:check": "ls-lint --config .devkit/common/ls-lint/base.yaml --config .ls-lint.yaml"
+"names:check": "ls-lint --config .devkit/common/ls-lint/base.yaml --config .devkit/common/ls-lint/markdown.yaml --config .devkit/common/ls-lint/typescript.yaml --config .ls-lint.yaml"
 ```
 
-The base names every file and folder in kebab-case, with the names the ecosystem fixes: documents such as `README.md` or `CODE_OF_CONDUCT.md` in upper case, `__tests__/`, hidden folders (`.github/`); it ignores `.git`, `.devkit`, `node_modules`, `coverage`, `dist`, `reports` and Stryker's sandbox.
+| Part | Names |
+| --- | --- |
+| `base.yaml` | Every file and folder in kebab-case, hidden ones (`.github/`, `.editorconfig`) too; ignores `.git`, `.devkit`, `node_modules`, `coverage`, `dist`, `reports` and Stryker's sandbox |
+| `markdown.yaml` | Documents in kebab-case or upper case (`README.md`, `CODE_OF_CONDUCT.md`) |
+| `typescript.yaml` | `.ts` and `.tsx` in kebab-case, and `__tests__/` folders |
+| `python.yaml` | Modules in snake_case with `__init__.py` and `__main__.py`, packages in snake_case; ignores `.venv` and the tools' caches |
 
-A repository adds its own ignores and rules in `.ls-lint.yaml`. ls-lint merges the configurations it is given key by key: an extension's rule beside the base's adds to it, while a folder key named in two configurations keeps only the last one's rules.
+A repository takes `base` and the parts of its languages, then adds its own ignores and rules in `.ls-lint.yaml`. ls-lint merges the configurations it is given key by key: an extension's rule adds to the others, while a key named in two configurations keeps only the last one's rules. `typescript` and `python` both name folders, so a repository with both writes its own `.dir` rule in `.ls-lint.yaml`.
 
 ### Package manifests (Syncpack)
 
