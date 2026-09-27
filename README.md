@@ -27,10 +27,13 @@ lefthook = "2.1.14"
 "http:devkit" = { version = "<version>", url = "https://github.com/droneey/devkit/releases/download/v{{ version }}/devkit.tar.gz", strip_components = 0, checksum = "sha256:<the release's devkit.tar.gz.sha256>" }
 
 [hooks]
-postinstall = "ln -sfn \"$(mise where http:devkit)\" .devkit"
+postinstall = [
+  "ln -sfn \"$(mise where http:devkit)\" .devkit",
+  "lefthook install",
+]
 ```
 
-`strip_components = 0` keeps the archive's `common/` folder, and `checksum` is checked on every platform. `mise install` relinks `.devkit` each time it runs, in a fresh clone and in CI alike; a version bump takes the new checksum from the release's `devkit.tar.gz.sha256`.
+`strip_components = 0` keeps the archive's `common/` folder, and `checksum` is checked on every platform. `mise install` relinks `.devkit` and installs the git hooks each time it runs, in a fresh clone and in CI alike — never `prepare`, which runs where mise does not, such as the npm deploy; a version bump takes the new checksum from the release's `devkit.tar.gz.sha256`.
 
 ### Configuration files
 
@@ -63,9 +66,7 @@ extends:
   - .devkit/common/lefthook/betterleaks.yml
 ```
 
-```bash
-lefthook install
-```
+`mise install` installs them, through the `postinstall` hook above.
 
 | Hook | Job | Checks |
 |---|---|---|
