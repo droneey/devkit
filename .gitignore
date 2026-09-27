@@ -12,6 +12,9 @@
 **/dist/
 **/out/
 
+# mise
+mise.local.toml
+
 # IDE
 .vscode/*
 !.vscode/settings.json

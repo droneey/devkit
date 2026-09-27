@@ -2,6 +2,8 @@
 
 Shared [betterleaks](https://github.com/betterleaks/betterleaks) configuration: the default rules — cloud keys, forge tokens, private keys, JWTs, credentials in connection strings — with nothing switched off.
 
+It also skips `bun.lock`, as betterleaks skips the other lockfiles: its default prefilter misses Bun's ([betterleaks#370](https://github.com/betterleaks/betterleaks/pull/370)), so the preset carries that prefilter with `bun.lock` added until the fix is released.
+
 ## Installation
 
 betterleaks is not an npm package; pin it through [mise](https://mise.jdx.dev):
