@@ -43,7 +43,9 @@ The base config includes:
 - a surface (`index.ts`) only re-exports by name;
 - no empty word as a name (`data`, `result`, `value`…) outside `src/libs/`;
 - a case reads `should … when …`;
-- no `mock.module`: an effect is faked through its port.
+- no `mock.module`: an effect is faked through its port;
+- no `useMemo`, `useCallback` or `memo` in React code: the React Compiler memoises;
+- no effect hook in a component file (`.tsx`): effects live in hooks in its `.hooks.ts` file.
 
 ```json
 {
@@ -77,7 +79,9 @@ The base config includes:
 
 | Config | Description |
 |---|---|
-| `@droneey/devkit-ts-biome/react` | React component rules, hooks, JSX a11y |
+| `@droneey/devkit-ts-biome/react` | React component rules, hooks, JSX a11y; function components only, and no legacy API (`useContext`, `<Context.Provider>`, `defaultProps`, `createRef`, string refs) |
+| `@droneey/devkit-ts-biome/react-dom` | React in the browser: DOM attributes as the DOM spells them, ids from `useId`, `autoComplete` on fields for the user's own data, Testing Library queries by role, label and text |
+| `@droneey/devkit-ts-biome/tailwind` | Tailwind: no arbitrary values (in `className`, `cva`, `cn`, `clsx`, `twMerge`), `h-dvh` over `h-screen`, no `max-*:` breakpoints |
 | `@droneey/devkit-ts-biome/react-native` | React Native specific rules |
 | `@droneey/devkit-ts-biome/nestjs` | NestJS patterns |
 
@@ -85,7 +89,10 @@ The base config includes:
 {
   "extends": [
     "@droneey/devkit-ts-biome/base",
-    "@droneey/devkit-ts-biome/react"
+    "@droneey/devkit-ts-biome/browser",
+    "@droneey/devkit-ts-biome/react",
+    "@droneey/devkit-ts-biome/react-dom",
+    "@droneey/devkit-ts-biome/tailwind"
   ]
 }
 ```

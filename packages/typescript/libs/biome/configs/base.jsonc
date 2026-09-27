@@ -289,7 +289,6 @@
         "useIncludes": "error",
         "useModernMathApis": "error",
         "useFlatMathMinMax": "error",
-        "noTailwindArbitraryValue": "error",
         "noInvalidFileInputAccept": "error",
         "useControlLabel": "error",
         "noUndeclaredClasses": "error",
