@@ -242,7 +242,12 @@
         "noForEach": "error",
         "useSimplifiedLogicExpression": "error",
         "useWhile": "error",
-        "useMaxParams": "error",
+        "useMaxParams": {
+          "level": "error",
+          "options": {
+            "max": 3,
+          },
+        },
         "noUselessReturn": "error",
         "noRedundantDefaultExport": "error",
         "useArrayFind": "error",
