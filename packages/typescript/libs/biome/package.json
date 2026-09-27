@@ -26,6 +26,7 @@
   "exports": {
     "./base": "./configs/base.jsonc",
     "./test": "./configs/test.jsonc",
+    "./css": "./configs/css.jsonc",
     "./node": "./configs/environments/node.jsonc",
     "./bun": "./configs/environments/node.jsonc",
     "./browser": "./configs/environments/browser.jsonc",

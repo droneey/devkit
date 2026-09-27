@@ -96,6 +96,86 @@ describe('framework presets', () => {
     expect(rules).toContain(rule);
   });
 
+  test.each([
+    {
+      condition: 'a cascade layer has no name',
+      files: {
+        'src/styles.css': '@layer {\n  a {\n    color: red;\n  }\n}\n',
+      },
+      presets: [
+        'base',
+        'css',
+      ],
+      rule: 'useNamedLayer',
+    },
+    {
+      condition: 'a list item takes a click handler',
+      files: {
+        'src/Panel.tsx': component('<li onClick={() => undefined}>item</li>'),
+      },
+      presets: [
+        'base',
+        'react',
+      ],
+      rule: 'noNoninteractiveElementInteractions',
+    },
+  ])(
+    'should report $rule when $condition and a repository extends $presets',
+    ({ files, presets, rule }) => {
+      // Arrange
+      const project = {
+        files: {
+          'package.json': MANIFEST,
+          ...files,
+        },
+        presets,
+      };
+
+      // Act
+      const { rules } = lintFindings(project);
+
+      // Assert
+      expect(rules).toContain(rule);
+    },
+  );
+
+  test.each([
+    {
+      condition: 'a cascade layer has no name',
+      files: {
+        'src/styles.css': '@layer {\n  a {\n    color: red;\n  }\n}\n',
+      },
+      rule: 'useNamedLayer',
+    },
+    {
+      condition: 'a list item takes a click handler',
+      files: {
+        'src/Panel.tsx': component('<li onClick={() => undefined}>item</li>'),
+      },
+      rule: 'noNoninteractiveElementInteractions',
+    },
+  ])(
+    'should not report $rule when $condition and a repository extends only base',
+    ({ files, rule }) => {
+      // Arrange
+      const project = {
+        files: {
+          'package.json': MANIFEST,
+          ...files,
+        },
+        presets: [
+          'base',
+        ],
+      };
+
+      // Act
+      const { rules } = lintFindings(project);
+
+      // Assert
+      expect(rules).not.toContain(rule);
+    },
+  );
+
   test('should report no arbitrary value when a repository extends only base', () => {
     // Arrange
     const project = {

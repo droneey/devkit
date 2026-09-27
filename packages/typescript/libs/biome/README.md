@@ -34,6 +34,10 @@ The base config includes:
 
 `test` applies to `**/__tests__/**` and every `*.spec.ts(x)` and `*.test.ts(x)`: specs have no line limits, keep `any` and `!` out like any other code, and compare with `toStrictEqual`.
 
+### CSS
+
+`css` holds the rules of stylesheets and the classes they declare: no undeclared or unused class, no undeclared custom property, a valid `@property` initial value, named cascade layers, a cap on classes in a selector. Extend it in a repository with CSS files.
+
 ### Environments
 
 | Config | Description |
