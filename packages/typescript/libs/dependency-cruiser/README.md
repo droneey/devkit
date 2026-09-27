@@ -30,7 +30,7 @@ dependency-cruiser resolves `extends` without a package's `exports`, so the pres
 | `no-deprecated-dependency` | A deprecated package |
 | `no-development-dependency-in-production` | Code under `src/`, outside its specs, importing a development dependency other than its types |
 
-The options parse TypeScript with swc, since TypeScript 7 has no compiler API, know Bun's built-in modules, stop at `node_modules`, and skip `dist/` and generated `.gen.` files.
+The options parse TypeScript with swc, since TypeScript 7 has no compiler API, know Bun's built-in modules, stop at `node_modules`, and skip hidden folders (`.git`, a linked `.devkit`, tool caches), `dist/` and generated `.gen.` files.
 
 ## License
 
