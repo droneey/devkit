@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-jest",
-  "version": "1.22.2",
+  "version": "1.23.0",
   "description": "Shared Jest configuration with base and e2e presets.",
   "keywords": [
     "config",
