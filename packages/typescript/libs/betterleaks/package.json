@@ -1,0 +1,35 @@
+{
+  "name": "@droneey/devkit-ts-betterleaks",
+  "version": "1.18.0",
+  "description": "Shared betterleaks configuration: the default secret rules, for a repository's .betterleaks.toml to extend.",
+  "keywords": [
+    "betterleaks",
+    "config",
+    "secrets",
+    "security",
+    "shared"
+  ],
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/betterleaks#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git",
+    "directory": "packages/typescript/libs/betterleaks"
+  },
+  "exports": {
+    "./base": "./configs/betterleaks.toml"
+  },
+  "files": [
+    "configs/*"
+  ],
+  "scripts": {
+    "build": "cp ../../../common/betterleaks/betterleaks.toml configs/betterleaks.toml"
+  }
+}

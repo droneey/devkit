@@ -25,13 +25,14 @@
   },
   "exports": {
     "./base": "./configs/base.yml",
+    "./betterleaks": "./configs/betterleaks.yml",
     "./biome": "./configs/biome.yml"
   },
   "files": [
     "configs/*"
   ],
   "scripts": {
-    "build": "cp ../../../common/lefthook/base.yml configs/base.yml"
+    "build": "cp ../../../common/lefthook/base.yml ../../../common/lefthook/betterleaks.yml configs/"
   },
   "peerDependencies": {
     "lefthook": ">=1.0.0"

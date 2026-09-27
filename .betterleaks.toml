@@ -1,0 +1,2 @@
+[extend]
+path = "node_modules/@droneey/devkit-ts-betterleaks/configs/betterleaks.toml"

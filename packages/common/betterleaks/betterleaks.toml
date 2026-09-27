@@ -1,0 +1,7 @@
+# The shared secrets configuration: betterleaks' default rules — cloud keys,
+# forge tokens, private keys, JWTs, credentials in connection strings — and
+# nothing switched off. A repository extends it from its .betterleaks.toml.
+title = "droneey"
+
+[extend]
+useDefault = true
