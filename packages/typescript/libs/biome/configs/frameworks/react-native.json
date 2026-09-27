@@ -2,7 +2,6 @@
   "linter": {
     "rules": {
       "nursery": {
-        // react-native-entry-imports-only
         "noReactNativeDeepImports": "error"
       }
     }

@@ -26,7 +26,7 @@ Run it in the check as `biome check --error-on-warnings`, so a warning of Biome'
 The base config includes:
 
 - **Formatter** -- 80 char line width, 2 spaces, single quotes, semicolons, trailing commas, LF line endings.
-- **Linter** -- 100+ rules across correctness, complexity, style, suspicious, performance, and security categories, all at `error`: a function body of at most 100 lines, a file of at most 500, cognitive complexity of at most 10, one positional parameter, strict equality with `null` too, no `any`, no non-null assertion, no console output. A setting that holds a rule of the droneey constitution names its slug in a comment.
+- **Linter** -- 100+ rules across correctness, complexity, style, suspicious, performance, and security categories, all at `error`: a function body of at most 100 lines, a file of at most 500, cognitive complexity of at most 10, one positional parameter, strict equality with `null` too, no `any`, no non-null assertion, no console output.
 - **Assist** -- import sorting, duplicate class detection, interface member sorting.
 
 ### Tests
