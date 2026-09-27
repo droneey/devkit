@@ -161,6 +161,50 @@ url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-darwin-x6
 checksum = "sha256:bad5bbd6cf14d0980d115f5954c9ff904df619d5e994d2da1ffccd3f316300b0"
 url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-darwin-x64-baseline.zip"
 
+[[tools."http:constitution"]]
+version = "0.31.0"
+backend = "http:constitution"
+specifiers = ["0.31.0"]
+
+[tools."http:constitution".options]
+strip_components = "0"
+
+[tools."http:constitution"."platforms.linux-arm64"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
+[tools."http:constitution"."platforms.linux-arm64-musl"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
+[tools."http:constitution"."platforms.linux-x64"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
+[tools."http:constitution"."platforms.linux-x64-baseline"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
+[tools."http:constitution"."platforms.linux-x64-musl"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
+[tools."http:constitution"."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
+[tools."http:constitution"."platforms.macos-arm64"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
+[tools."http:constitution"."platforms.macos-x64"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
+[tools."http:constitution"."platforms.macos-x64-baseline"]
+checksum = "sha256:f8dcabec42f3f77ff264d0060bae6e027b559f7d09f3d590c1fe21fb5599257f"
+url = "https://github.com/droneey/constitution/releases/download/v0.31.0/constitution.tar.gz"
+
 [[tools.lefthook]]
 version = "2.1.14"
 backend = "aqua:evilmartians/lefthook"
