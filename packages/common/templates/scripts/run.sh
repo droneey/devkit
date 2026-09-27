@@ -14,22 +14,12 @@ fi
 ENVIRONMENT="$1"
 ACTION="$2"
 
-if [ ! -f .env ]; then
-  echo "Error: .env file not found"
-  exit 1
-fi
-
-APP_NAME_SLUG=$(grep -m1 '^APP_NAME_SLUG=' .env | cut -d= -f2)
-
-if [ -z "$APP_NAME_SLUG" ]; then
-  echo "Error: APP_NAME_SLUG not defined in .env"
-  exit 1
-fi
+APP_NAME_SLUG=$(grep -m1 '^APP_NAME_SLUG=' .env 2>/dev/null | cut -d= -f2)
 
 case "$ENVIRONMENT" in
   dev)
     PROFILE="development"
-    NODE_MODULES_VOLUME="${APP_NAME_SLUG}-node-modules-development"
+    NODE_MODULES_VOLUME="${APP_NAME_SLUG}_node-modules"
     ;;
   *)
     echo "Error: Invalid environment '$ENVIRONMENT'"
@@ -38,25 +28,73 @@ case "$ENVIRONMENT" in
     ;;
 esac
 
+compose() {
+  docker compose --env-file .env --profile "$PROFILE" "$@"
+}
+
+compute_local_hash() {
+  {
+    sha256sum bun.lock
+    if [ -d patches ]; then
+      find patches -type f -print0 | sort -z | xargs -0 sha256sum 2>/dev/null
+    fi
+  } | sha256sum | cut -d' ' -f1
+}
+
+read_volume_hash() {
+  docker run --rm -v "$NODE_MODULES_VOLUME":/vol alpine \
+    cat /vol/.bun-lock-hash 2>/dev/null || echo ""
+}
+
+remove_node_modules_volume() {
+  # Force-stop containers using the volume so removal can succeed.
+  compose down --remove-orphans 2>/dev/null || true
+
+  # Remove the volume. If a container outside this compose project holds it,
+  # surface the error instead of swallowing it silently.
+  if docker volume inspect "$NODE_MODULES_VOLUME" >/dev/null 2>&1; then
+    if ! docker volume rm "$NODE_MODULES_VOLUME"; then
+      echo ""
+      echo "ERROR: Failed to remove volume '$NODE_MODULES_VOLUME'."
+      echo "       A container outside this compose project may still be using it."
+      echo "       Run: docker ps -a --filter \"volume=$NODE_MODULES_VOLUME\""
+      exit 1
+    fi
+  fi
+}
+
 case "$ACTION" in
   up)
-    # Remove node_modules volume if package-lock.json changed since last build
-    LOCAL_HASH=$(sha256sum package-lock.json | cut -d' ' -f1)
-    VOLUME_HASH=$(docker run --rm -v "$NODE_MODULES_VOLUME":/vol alpine cat /vol/.package-lock-hash 2>/dev/null || echo "")
+    LOCAL_HASH=$(compute_local_hash)
+    VOLUME_HASH=$(read_volume_hash)
 
-    if [ "$LOCAL_HASH" = "$VOLUME_HASH" ]; then
-      echo "package-lock.json unchanged, reusing node_modules volume."
+    if [ -n "$VOLUME_HASH" ] && [ "$LOCAL_HASH" = "$VOLUME_HASH" ]; then
+      echo "bun.lock unchanged, reusing node_modules volume."
     else
-      echo "package-lock.json changed, recreating node_modules volume..."
-      docker volume rm "$NODE_MODULES_VOLUME" 2>/dev/null || true
+      if [ -z "$VOLUME_HASH" ]; then
+        echo "node_modules volume has no hash marker (first run or stale)."
+      else
+        echo "bun.lock changed:"
+        echo "  local : $LOCAL_HASH"
+        echo "  volume: $VOLUME_HASH"
+      fi
+      echo "Recreating node_modules volume..."
+      remove_node_modules_volume
     fi
 
+    cleanup() {
+      echo ""
+      echo "Stopping $ENVIRONMENT containers..."
+      compose down
+    }
+    trap cleanup EXIT
+
     echo "Starting $ENVIRONMENT containers..."
-    docker compose --env-file .env --profile "$PROFILE" up --remove-orphans --build
+    compose up --remove-orphans --build
     ;;
   down)
     echo "Stopping $ENVIRONMENT containers..."
-    docker compose --env-file .env --profile "$PROFILE" down
+    compose down
     ;;
   *)
     echo "Error: Invalid action '$ACTION'"

@@ -1,11 +1,1 @@
-type Address = string;
-type DateString = string;
-type Email = string;
-type Id = string;
-type ItemCode = string;
-type ItemName = string;
-type Link = string;
-type Password = string;
-type PersonNamePart = string;
-type PhoneNumber = string;
-type SearchQuery = string;
+// The project's semantic aliases, e.g. `type Email = string;`: only the ones it uses, each for a meaning found in two places or more.

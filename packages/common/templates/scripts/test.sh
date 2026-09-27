@@ -11,20 +11,14 @@ fi
 
 ACTION="$1"
 
-# Customize these service names per project
-BACKEND_UNIT_SERVICE="backend-test-unit"
-BACKEND_E2E_SERVICE="backend-test-e2e"
-
 case "$ACTION" in
   unit)
-    echo "Running unit tests in Docker..."
-    docker compose --env-file .env --profile test-unit up --build --renew-anon-volumes --abort-on-container-exit "$BACKEND_UNIT_SERVICE"
-    docker compose --profile test-unit down -v
+    PROFILE="test-unit"
+    SERVICE="backend-test-unit"
     ;;
   e2e)
-    echo "Running e2e tests in Docker..."
-    docker compose --env-file .env --profile test-e2e up --build --renew-anon-volumes --abort-on-container-exit "$BACKEND_E2E_SERVICE"
-    docker compose --profile test-e2e down -v
+    PROFILE="test-e2e"
+    SERVICE="backend-test-e2e"
     ;;
   *)
     echo "Error: Invalid action '$ACTION'"
@@ -32,3 +26,21 @@ case "$ACTION" in
     exit 1
     ;;
 esac
+
+cleanup() {
+  docker compose --profile "$PROFILE" down -v --remove-orphans 2>/dev/null || true
+}
+
+# Cleanup any stale containers/volumes from a previous run that didn't tear down
+cleanup
+
+# Ensure teardown runs on success, failure, or Ctrl+C
+trap cleanup EXIT
+
+echo "Running $ACTION tests in Docker..."
+docker compose --env-file .env --profile "$PROFILE" up \
+  --build \
+  --force-recreate \
+  --renew-anon-volumes \
+  --abort-on-container-exit \
+  "$SERVICE"

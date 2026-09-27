@@ -6,8 +6,13 @@ coverageThreshold = { functions = 1.0, lines = 1.0 }
 coveragePathIgnorePatterns = [
   "**/__tests__/**",
   "**/main.ts",
-  "**/composition.ts",
+  "**/entrypoints/*/main.ts",
+  "**/root/wiring.ts",
+  "**/*.gen.*",
 ]
+
+[install]
+minimumReleaseAge = 259200 # three days, in seconds
 
 [run]
 bun = true
