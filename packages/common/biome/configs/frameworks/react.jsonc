@@ -83,16 +83,6 @@
             "useComponentExportOnlyModules": "error",
             "useSelfClosingElements": "error",
             "useReactFunctionComponents": "error",
-            "useFilenamingConvention": {
-              "level": "error",
-              "options": {
-                "strictCase": true,
-                "filenameCases": [
-                  "PascalCase",
-                  "kebab-case",
-                ],
-              },
-            },
           },
           "complexity": {
             "noUselessFragments": "error",
