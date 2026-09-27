@@ -189,6 +189,7 @@ The last three are thin callers of the shared hub at [`droneey/.github`](https:/
 ## 🛠️ Development
 
 ```bash
+mise trust && mise install   # Bun and actionlint, pinned in mise.toml
 bun install
 bun run check
 ```
@@ -197,7 +198,7 @@ bun run check
 
 ## 📐 Conventions
 
-Branches are `feature/*`, `fix/*` or `hotfix/*`, and the prefix decides the version bump. Commits are one-line Conventional Commits, `type: Subject`. See [CONTRIBUTING.md](https://github.com/droneey/.github/blob/main/CONTRIBUTING.md).
+Branches are `feature/*`, `fix/*` or `hotfix/*`, and the prefix decides the version bump. Commits are one-line Conventional Commits, `type: Subject`, with the types `feat`, `fix`, `refactor` and `chore`, and `type!: Subject` for a breaking change. See [CONTRIBUTING.md](https://github.com/droneey/.github/blob/main/CONTRIBUTING.md).
 
 ## 📚 Docs
 
