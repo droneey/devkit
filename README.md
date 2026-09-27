@@ -90,6 +90,23 @@ The preset keeps betterleaks' default rules, with nothing switched off, and skip
 
 A false positive is allowed on its line by `// betterleaks:allow <reason>`, or by its fingerprint in `.betterleaksignore` under a `#` line that states the reason; never by switching a rule off.
 
+### Names (ls-lint)
+
+ls-lint comes from mise (`ls-lint = "2.3.1"`) and reads its parts from the release archive, then the repository's own additions:
+
+```json
+"names:check": "ls-lint --config .devkit/common/ls-lint/base.yaml --config .devkit/common/ls-lint/markdown.yaml --config .devkit/common/ls-lint/typescript.yaml --config .ls-lint.yaml"
+```
+
+| Part | Names |
+| --- | --- |
+| `base.yaml` | Every file and folder in kebab-case, hidden ones (`.github/`, `.editorconfig`) too; ignores `.git`, `.devkit`, `node_modules`, `coverage`, `dist`, `reports` and Stryker's sandbox |
+| `markdown.yaml` | Documents in kebab-case or upper case (`README.md`, `CODE_OF_CONDUCT.md`) |
+| `typescript.yaml` | `.ts` and `.tsx` in kebab-case, and `__tests__/` folders |
+| `python.yaml` | Modules in snake_case with `__init__.py` and `__main__.py`, packages in snake_case; ignores `.venv` and the tools' caches |
+
+A repository takes `base` and the parts of its languages, then adds its own ignores and rules in `.ls-lint.yaml`. ls-lint merges the configurations it is given key by key: an extension's rule adds to the others, while a key named in two configurations keeps only the last one's rules. `typescript` and `python` both name folders, so a repository with both writes its own `.dir` rule in `.ls-lint.yaml`.
+
 ### Package manifests (Syncpack)
 
 ```js
