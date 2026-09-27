@@ -116,6 +116,8 @@ const typeChecks = (input: { main: string; preset: string }): boolean => {
 
 const TYPE_IMPORTED_AS_VALUE =
   "import { Order } from './order';\nexport const orders: Order[] = [];\n";
+const FIELD_WITHOUT_INITIALIZER =
+  'export class CreateOrderInput {\n  id: string;\n}\n';
 const IMPORT_WITH_TS_EXTENSION =
   "import { ORDER_KIND } from './order.ts';\nexport const kind = ORDER_KIND;\n";
 
@@ -130,6 +132,11 @@ describe('the node and nestjs presets', () => {
       condition: 'an import names its .ts extension',
       main: IMPORT_WITH_TS_EXTENSION,
       preset: 'nestjs.json',
+    },
+    {
+      condition: 'a class field has no initializer',
+      main: FIELD_WITHOUT_INITIALIZER,
+      preset: 'node.json',
     },
   ])(
     'should fail the type check under $preset when $condition',
@@ -157,6 +164,11 @@ describe('the node and nestjs presets', () => {
     {
       condition: 'a type is imported without `import type`',
       main: TYPE_IMPORTED_AS_VALUE,
+      preset: 'nestjs.json',
+    },
+    {
+      condition: 'a class field has no initializer, as the framework fills it',
+      main: FIELD_WITHOUT_INITIALIZER,
       preset: 'nestjs.json',
     },
   ])(

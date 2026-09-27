@@ -24,7 +24,7 @@ Add to your `tsconfig.json`:
 |---|---|---|
 | `base` | -- | Strict TypeScript with ESM, all strict checks enabled |
 | `node` | `base` | A program on Node.js or Bun: the base, strict as it is |
-| `nestjs` | `node` | NestJS: legacy decorators with their metadata, `esModuleInterop`, declarations, incremental builds; `verbatimModuleSyntax` and `.ts` import extensions off |
+| `nestjs` | `node` | NestJS: legacy decorators with their metadata, `esModuleInterop`, declarations, incremental builds; `verbatimModuleSyntax`, `.ts` import extensions and `strictPropertyInitialization` off |
 | `browser` | `base` | Browser with DOM types |
 | `mobile` | `base` | React Native with JSX |
 
