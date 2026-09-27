@@ -5,13 +5,6 @@ export default {
   ...config,
   versionGroups: [
     {
-      label: 'The constitution comes from git by its release tag',
-      dependencies: [
-        '@droneey/constitution',
-      ],
-      isIgnored: true,
-    },
-    {
       label: 'Workspace packages use workspace protocol',
       dependencies: [
         '@droneey/**',
