@@ -1,76 +1,224 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
-const CONFIGS_DIR = resolve(import.meta.dirname, '../configs');
+const PACKAGE_DIR = resolve(import.meta.dirname, '..');
+const ROOT = resolve(PACKAGE_DIR, '../../../..');
+const TSC = resolve(ROOT, 'node_modules/.bin/tsc');
 
-const readSource = (name: string): string =>
-  readFileSync(resolve(CONFIGS_DIR, name), 'utf8');
+const EXPORTS = (
+  JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')) as {
+    exports: Readonly<Record<string, string>>;
+  }
+).exports;
 
-describe('tsconfig configs', () => {
-  test('should hold the strict ESNext baseline when a repository extends base.json', () => {
-    // Arrange
-    const source = readSource('base.json');
+const presetPath = (name: string): string =>
+  resolve(PACKAGE_DIR, EXPORTS[`./${name}`] ?? `missing-${name}`);
 
-    // Act
-    const config: unknown = JSON.parse(source);
+// A project of two files extending the presets in order, checked by the real
+// compiler; its types resolve from devkit's own node_modules.
+const typeChecks = (input: {
+  main: string;
+  presets: readonly string[];
+}): boolean => {
+  const folder = mkdtempSync(join(tmpdir(), 'devkit-tsconfig-'));
 
-    // Assert
-    expect(config).toHaveProperty('compilerOptions.strict', true);
-    expect(config).toHaveProperty('compilerOptions.target', 'ESNext');
-    expect(config).toHaveProperty('compilerOptions.module', 'ESNext');
-    expect(config).toHaveProperty('compilerOptions.verbatimModuleSyntax', true);
-    expect(config).toHaveProperty(
-      'compilerOptions.noUncheckedSideEffectImports',
-      true,
-    );
-    expect(config).toHaveProperty(
-      'compilerOptions.exactOptionalPropertyTypes',
-      true,
-    );
-    expect(config).toHaveProperty('compilerOptions.skipLibCheck', true);
+  writeFileSync(
+    join(folder, 'tsconfig.json'),
+    JSON.stringify({
+      extends: input.presets.map(presetPath),
+      compilerOptions: {
+        typeRoots: [
+          resolve(ROOT, 'node_modules/@types'),
+        ],
+      },
+      include: [
+        '*.ts',
+      ],
+    }),
+  );
+  writeFileSync(
+    join(folder, 'order.ts'),
+    "export interface Order { id: string }\nexport const ORDER_KIND = 'order';\n",
+  );
+  writeFileSync(join(folder, 'main.ts'), input.main);
+
+  const result = spawnSync(TSC, [
+    '-p',
+    folder,
+  ]);
+
+  rmSync(folder, {
+    force: true,
+    recursive: true,
   });
+
+  return result.status === 0;
+};
+
+const EMPTY = 'export {};\n';
+const TYPE_IMPORTED_AS_VALUE =
+  "import { Order } from './order';\nexport const orders: Order[] = [];\n";
+const IMPORT_WITH_TS_EXTENSION =
+  "import { ORDER_KIND } from './order.ts';\nexport const kind = ORDER_KIND;\n";
+const FIELD_WITHOUT_INITIALIZER =
+  'export class CreateOrderInput {\n  id: string;\n}\n';
+const READS_THE_DOCUMENT = 'export const title = document.title;\n';
+const READS_BUN = 'export const version = Bun.version;\n';
+const READS_THE_PROCESS = 'export const home = process.env.HOME;\n';
+
+describe('tsconfig presets', () => {
+  test.each(Object.keys(EXPORTS).map((key) => key.slice(2)))(
+    'should resolve and check an empty project when a repository extends %s',
+    (preset) => {
+      // Arrange
+      const project = {
+        main: EMPTY,
+        presets:
+          preset === 'react' || preset === 'nestjs'
+            ? [
+                'base',
+                preset,
+              ]
+            : [
+                preset,
+              ],
+      };
+
+      // Act
+      const isClean = typeChecks(project);
+
+      // Assert
+      expect(isClean).toBe(true);
+    },
+  );
 
   test.each([
-    'node.json',
-    'browser.json',
-    'mobile.json',
-  ])('should build on the base when a repository extends %s', (file) => {
-    // Arrange
-    const source = readSource(file);
+    {
+      condition: 'a type is imported without `import type`',
+      main: TYPE_IMPORTED_AS_VALUE,
+      presets: [
+        'node',
+      ],
+    },
+    {
+      condition: 'a class field has no initializer',
+      main: FIELD_WITHOUT_INITIALIZER,
+      presets: [
+        'node',
+      ],
+    },
+    {
+      condition: 'an import names its .ts extension',
+      main: IMPORT_WITH_TS_EXTENSION,
+      presets: [
+        'node',
+        'nestjs',
+      ],
+    },
+    {
+      condition: 'code outside a browser reads the document',
+      main: READS_THE_DOCUMENT,
+      presets: [
+        'bun',
+      ],
+    },
+    {
+      condition: 'browser code reads Bun',
+      main: READS_BUN,
+      presets: [
+        'browser',
+      ],
+    },
+    {
+      condition: 'browser code reads the process',
+      main: READS_THE_PROCESS,
+      presets: [
+        'browser',
+        'react',
+      ],
+    },
+  ])(
+    'should fail the type check of $presets when $condition',
+    ({ main, presets }) => {
+      // Arrange
+      const project = {
+        main,
+        presets,
+      };
 
-    // Act
-    const config: unknown = JSON.parse(source);
+      // Act
+      const isClean = typeChecks(project);
 
-    // Assert
-    expect(config).toHaveProperty('extends', './base.json');
-  });
+      // Assert
+      expect(isClean).toBe(false);
+    },
+  );
 
-  test('should add the DOM types and React JSX when a repository extends browser.json', () => {
-    // Arrange
-    const source = readSource('browser.json');
+  test.each([
+    {
+      condition: 'an import names its .ts extension',
+      main: IMPORT_WITH_TS_EXTENSION,
+      presets: [
+        'bun',
+      ],
+    },
+    {
+      condition: 'a type is imported without `import type`',
+      main: TYPE_IMPORTED_AS_VALUE,
+      presets: [
+        'node',
+        'nestjs',
+      ],
+    },
+    {
+      condition: 'a class field has no initializer, as the framework fills it',
+      main: FIELD_WITHOUT_INITIALIZER,
+      presets: [
+        'node',
+        'nestjs',
+      ],
+    },
+    {
+      condition: 'browser code reads the document',
+      main: READS_THE_DOCUMENT,
+      presets: [
+        'browser',
+        'react',
+      ],
+    },
+    {
+      condition: 'code on Bun reads Bun',
+      main: READS_BUN,
+      presets: [
+        'bun',
+      ],
+    },
+    {
+      condition: 'code on Node reads the process',
+      main: READS_THE_PROCESS,
+      presets: [
+        'node',
+        'nestjs',
+      ],
+    },
+  ])(
+    'should pass the type check of $presets when $condition',
+    ({ main, presets }) => {
+      // Arrange
+      const project = {
+        main,
+        presets,
+      };
 
-    // Act
-    const config: unknown = JSON.parse(source);
+      // Act
+      const isClean = typeChecks(project);
 
-    // Assert
-    expect(config).toHaveProperty('compilerOptions.lib', [
-      'ESNext',
-      'DOM',
-      'DOM.Iterable',
-    ]);
-    expect(config).toHaveProperty('compilerOptions.jsx', 'react-jsx');
-  });
-
-  test('should compile React Native JSX when a repository extends mobile.json', () => {
-    // Arrange
-    const source = readSource('mobile.json');
-
-    // Act
-    const config: unknown = JSON.parse(source);
-
-    // Assert
-    expect(config).toHaveProperty('compilerOptions.jsx', 'react-jsx');
-  });
+      // Assert
+      expect(isClean).toBe(true);
+    },
+  );
 });

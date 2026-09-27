@@ -26,21 +26,16 @@
   },
   "exports": {
     "./base": "./configs/base.json",
-    "./node": "./configs/node.json",
-    "./browser": "./configs/browser.json",
-    "./mobile": "./configs/mobile.json"
+    "./browser": "./configs/environments/browser.json",
+    "./node": "./configs/environments/node.json",
+    "./bun": "./configs/environments/bun.json",
+    "./react": "./configs/frameworks/react.json",
+    "./nestjs": "./configs/frameworks/nestjs.json"
   },
   "files": [
     "configs/*"
   ],
   "peerDependencies": {
     "typescript": "^5 || ^7"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "configs/*"
-      ]
-    }
   }
 }

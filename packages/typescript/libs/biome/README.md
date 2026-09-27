@@ -32,6 +32,7 @@ The base config includes:
 | Config | Description |
 |---|---|
 | `@droneey/devkit-ts-biome/node` | Node.js environment |
+| `@droneey/devkit-ts-biome/bun` | Bun environment: the same rules as Node's, under the name the tsconfig preset uses |
 | `@droneey/devkit-ts-biome/browser` | Browser environment |
 
 ```json

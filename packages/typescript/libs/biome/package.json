@@ -27,6 +27,7 @@
     "./base": "./configs/base.json",
     "./test": "./configs/test.json",
     "./node": "./configs/environments/node.json",
+    "./bun": "./configs/environments/node.json",
     "./browser": "./configs/environments/browser.json",
     "./nestjs": "./configs/frameworks/nestjs.json",
     "./react": "./configs/frameworks/react.json",

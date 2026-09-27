@@ -18,14 +18,18 @@ Add to your `tsconfig.json`:
 
 ## Configuration
 
-### Variants
+### Presets
 
-| Config | Extends | Description |
+A project extends the **environment** its code runs in, then the **framework** it compiles, in that order. An environment brings the globals that exist there; a framework only adds its own options, so it always follows an environment or `base`. Never two environments: browser code given Bun's types would compile `Bun.file()` and fail at run time.
+
+| Preset | Kind | Adds to `base` |
 |---|---|---|
-| `base` | -- | Strict TypeScript with ESM, all strict checks enabled |
-| `node` | `base` | Node.js with ESM modules |
-| `browser` | `base` | Browser with DOM types |
-| `mobile` | `base` | React Native with JSX |
+| `base` | — | Strict TypeScript, ESNext, no DOM, no ambient types chosen |
+| `browser` | environment | the DOM, and no ambient `@types` (`types: []`) |
+| `node` | environment | Node's types (`types: ["node"]`; the project installs `@types/node`) |
+| `bun` | environment | Bun's types (`types: ["bun"]`; the project installs `@types/bun`) |
+| `react` | framework | JSX with the automatic runtime |
+| `nestjs` | framework | legacy decorators with their metadata, `esModuleInterop`, declarations, incremental builds; `verbatimModuleSyntax`, `.ts` import extensions and `strictPropertyInitialization` off |
 
 ### Base Config
 
@@ -38,19 +42,44 @@ Add to your `tsconfig.json`:
 
 ### Usage Examples
 
-Node.js project:
+A command-line tool on Bun:
 
 ```json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/node"
+  "extends": "@droneey/devkit-ts-tsconfig/bun"
 }
 ```
 
-React Native project:
+A React application in the browser:
 
 ```json
 {
-  "extends": "@droneey/devkit-ts-tsconfig/mobile"
+  "extends": [
+    "@droneey/devkit-ts-tsconfig/browser",
+    "@droneey/devkit-ts-tsconfig/react"
+  ]
+}
+```
+
+A NestJS API on Node:
+
+```json
+{
+  "extends": [
+    "@droneey/devkit-ts-tsconfig/node",
+    "@droneey/devkit-ts-tsconfig/nestjs"
+  ]
+}
+```
+
+A React Native application:
+
+```json
+{
+  "extends": [
+    "@droneey/devkit-ts-tsconfig/base",
+    "@droneey/devkit-ts-tsconfig/react"
+  ]
 }
 ```
 

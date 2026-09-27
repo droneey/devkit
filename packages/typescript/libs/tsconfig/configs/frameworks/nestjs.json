@@ -1,5 +1,4 @@
 {
-  "extends": "./base.json",
   "compilerOptions": {
     "verbatimModuleSyntax": false,
     "allowImportingTsExtensions": false,
@@ -7,6 +6,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
-    "incremental": true
+    "incremental": true,
+    "strictPropertyInitialization": false
   }
 }
