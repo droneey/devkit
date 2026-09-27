@@ -92,6 +92,22 @@ describe('ls-lint presets', () => {
       reported: 'assets/orderIcon.svg',
     },
     {
+      condition: 'a style module is in PascalCase',
+      parts: [
+        'base',
+      ],
+      path: 'assets/Theme.module.css',
+      reported: 'assets/Theme.module.css',
+    },
+    {
+      condition: 'an end-to-end spec is in PascalCase',
+      parts: [
+        'base',
+      ],
+      path: 'e2e/Checkout.e2e.spec.js',
+      reported: 'e2e/Checkout.e2e.spec.js',
+    },
+    {
       condition: 'a document is in upper case without the markdown part',
       parts: [
         'base',
@@ -124,6 +140,15 @@ describe('ls-lint presets', () => {
       ],
       path: 'src/components/OrderCard.tsx',
       reported: 'src/components/OrderCard.tsx',
+    },
+    {
+      condition: 'a spec file is in PascalCase',
+      parts: [
+        'base',
+        'typescript',
+      ],
+      path: 'src/__tests__/OrderView.spec.ts',
+      reported: 'src/__tests__/OrderView.spec.ts',
     },
     {
       condition: 'a typescript folder is in snake_case',
@@ -175,9 +200,13 @@ describe('ls-lint presets', () => {
         'base',
       ],
       paths: [
+        '.dependency-cruiser.mjs',
         '.editorconfig',
+        '.env.local',
         '.github/workflows/check.yaml',
         'assets/order-icon.svg',
+        'assets/theme.module.css',
+        'e2e/checkout.e2e.spec.js',
         'dist/Bundle.js',
         'node_modules/SomePackage/Index.js',
       ],
@@ -203,6 +232,7 @@ describe('ls-lint presets', () => {
       ],
       paths: [
         'src/__tests__/order-view.spec.ts',
+        'src/components/order-card.stories.tsx',
         'src/components/order-card.tsx',
         'src/order-view.ts',
       ],
@@ -216,6 +246,7 @@ describe('ls-lint presets', () => {
       paths: [
         '.venv/lib/SomePackage/Module.py',
         'order_domain/__init__.py',
+        'order_domain/__pycache__/order_repository.cpython-313.pyc',
         'order_domain/__main__.py',
         'order_domain/order_repository.py',
         'order_domain/order_repository.pyi',

@@ -2,6 +2,7 @@ ls:
   .dir: kebab-case | regex:^\.[a-z0-9]+(-[a-z0-9]+)*$ | snake_case
   .py: snake_case | regex:^__(init|main)__$
   .pyi: snake_case | regex:^__init__$
+  .*.pyc: snake_case | regex:^__(init|main)__$
 ignore:
   - .venv
   - .mypy_cache
