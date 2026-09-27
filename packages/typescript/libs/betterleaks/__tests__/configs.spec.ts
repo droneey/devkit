@@ -19,6 +19,13 @@ const TOKEN = `ghp_${randomBytes(48)
   .replaceAll(/[^A-Za-z0-9]/g, '')
   .slice(0, 36)}`;
 
+// The dependency a lockfile names, joined at run time: written out, this file
+// would hold the very line the preset lets through in bun.lock only.
+const PASSWORD_PACKAGE = [
+  '@inquirer',
+  'password',
+].join('/');
+
 interface Project {
   files: Readonly<Record<string, string>>;
 }
@@ -41,6 +48,12 @@ const BETTERLEAKS = spawnSync(
     encoding: 'utf8',
   },
 ).stdout.trim();
+
+if (BETTERLEAKS === '') {
+  throw new Error(
+    'betterleaks is not installed: run `mise install` in a trusted checkout',
+  );
+}
 
 const hookCommand = (): string => {
   const config = YAML.parse(
@@ -180,6 +193,12 @@ describe('betterleaks preset', () => {
         '.betterleaksignore':
           '# a fixture token in the parser spec, never a real one\nconfig.ts:github-pat:1\n',
         'config.ts': `export const token = '${TOKEN}';\n`,
+      },
+    },
+    {
+      condition: 'bun.lock names a dependency after a password',
+      files: {
+        'bun.lock': `{\n  "packages": {\n    "@inquirer/prompts": ["@inquirer/prompts@8.7.2", "", { "dependencies": {\n      "${PASSWORD_PACKAGE}": "^5.2.2",\n    } }],\n  }\n}\n`,
       },
     },
     {
