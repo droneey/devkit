@@ -4,28 +4,28 @@
       "includes": [
         "**/__tests__/**",
         "**/*.spec.ts",
-        "**/*.spec.tsx"
+        "**/*.spec.tsx",
       ],
       "linter": {
         "rules": {
           "style": {
             "noMagicNumbers": "off",
             "useConsistentMemberAccessibility": "off",
-            "noExcessiveLinesPerFile": "off"
+            "noExcessiveLinesPerFile": "off",
           },
           "suspicious": {
-            "noEmptyBlockStatements": "off"
+            "noEmptyBlockStatements": "off",
           },
           "complexity": {
             "noStaticOnlyClass": "off",
-            "noExcessiveLinesPerFunction": "off"
+            "noExcessiveLinesPerFunction": "off",
           },
           "nursery": {
             "useExplicitType": "off",
-            "noIdenticalTestTitle": "error"
-          }
-        }
-      }
-    }
-  ]
+            "noIdenticalTestTitle": "error",
+          },
+        },
+      },
+    },
+  ],
 }

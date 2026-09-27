@@ -3,17 +3,17 @@
     {
       "includes": [
         "**/*.tsx",
-        "**/*.jsx"
+        "**/*.jsx",
       ],
       "assist": {
         "actions": {
           "source": {
             "useSortedAttributes": {
               "level": "on",
-              "options": {}
-            }
-          }
-        }
+              "options": {},
+            },
+          },
+        },
       },
       "linter": {
         "rules": {
@@ -23,7 +23,7 @@
             "noChildrenProp": "error",
             "useJsxKeyInIterable": "error",
             "noNestedComponentDefinitions": "error",
-            "noNextAsyncClientComponent": "error"
+            "noNextAsyncClientComponent": "error",
           },
           "nursery": {
             "noComponentHookFactories": "error",
@@ -32,9 +32,9 @@
             "useReactFunctionComponentDefinition": {
               "level": "error",
               "options": {
-                "namedComponents": "functionDeclaration"
-              }
-            }
+                "namedComponents": "functionDeclaration",
+              },
+            },
           },
           "a11y": {
             "useButtonType": "error",
@@ -58,13 +58,13 @@
             "useSemanticElements": "error",
             "useValidAriaProps": "error",
             "useValidAriaRole": "error",
-            "noStaticElementInteractions": "error"
+            "noStaticElementInteractions": "error",
           },
           "suspicious": {
             "noArrayIndexKey": "error",
             "noDuplicateJsxProps": "error",
             "noReactForwardRef": "error",
-            "noLeakedRender": "error"
+            "noLeakedRender": "error",
           },
           "style": {
             "noImplicitBoolean": "error",
@@ -78,23 +78,23 @@
                 "strictCase": true,
                 "filenameCases": [
                   "PascalCase",
-                  "kebab-case"
-                ]
-              }
-            }
+                  "kebab-case",
+                ],
+              },
+            },
           },
           "complexity": {
-            "noUselessFragments": "error"
+            "noUselessFragments": "error",
           },
           "security": {
             "noDangerouslySetInnerHtml": "error",
-            "noBlankTarget": "error"
+            "noBlankTarget": "error",
           },
           "performance": {
-            "noJsxPropsBind": "off"
-          }
-        }
-      }
-    }
-  ]
+            "noJsxPropsBind": "off",
+          },
+        },
+      },
+    },
+  ],
 }

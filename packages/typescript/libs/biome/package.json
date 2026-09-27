@@ -24,14 +24,14 @@
     "directory": "packages/typescript/libs/biome"
   },
   "exports": {
-    "./base": "./configs/base.json",
-    "./test": "./configs/test.json",
-    "./node": "./configs/environments/node.json",
-    "./bun": "./configs/environments/node.json",
-    "./browser": "./configs/environments/browser.json",
-    "./nestjs": "./configs/frameworks/nestjs.json",
-    "./react": "./configs/frameworks/react.json",
-    "./react-native": "./configs/frameworks/react-native.json"
+    "./base": "./configs/base.jsonc",
+    "./test": "./configs/test.jsonc",
+    "./node": "./configs/environments/node.jsonc",
+    "./bun": "./configs/environments/node.jsonc",
+    "./browser": "./configs/environments/browser.jsonc",
+    "./nestjs": "./configs/frameworks/nestjs.jsonc",
+    "./react": "./configs/frameworks/react.jsonc",
+    "./react-native": "./configs/frameworks/react-native.jsonc"
   },
   "files": [
     "configs/*"

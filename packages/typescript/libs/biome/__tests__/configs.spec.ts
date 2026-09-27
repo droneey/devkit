@@ -110,7 +110,7 @@ describe('biome presets', () => {
       const path = presetPath(preset);
 
       // Act
-      const config: unknown = JSON.parse(readFileSync(path, 'utf8'));
+      const config: unknown = Bun.JSONC.parse(readFileSync(path, 'utf8'));
 
       // Assert
       expect(config).toBeObject();
