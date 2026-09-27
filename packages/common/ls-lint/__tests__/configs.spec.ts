@@ -7,6 +7,7 @@ import { describe, expect, test } from 'bun:test';
 
 const COMMON = resolve(import.meta.dirname, '../..');
 const ROOT = resolve(COMMON, '../..');
+const PRESET = resolve(COMMON, 'ls-lint/base.yaml');
 
 // mise pins ls-lint for this repository; its shim does not resolve in a
 // temporary folder, so the check runs the binary it points to.
@@ -29,7 +30,6 @@ if (LS_LINT === '') {
 }
 
 interface Project {
-  parts?: readonly string[];
   paths: readonly string[];
 }
 
@@ -45,14 +45,10 @@ const failedPaths = (project: Project): readonly string[] => {
 
   const linting = spawnSync(
     LS_LINT,
-    (
-      project.parts ?? [
-        'base',
-      ]
-    ).flatMap((part) => [
+    [
       '--config',
-      resolve(COMMON, `ls-lint/${part}.yaml`),
-    ]),
+      PRESET,
+    ],
     {
       cwd: folder,
       encoding: 'utf8',
