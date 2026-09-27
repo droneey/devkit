@@ -98,7 +98,9 @@ ls-lint comes from mise (`ls-lint = "2.3.1"`) and reads the base from the releas
 "names:check": "ls-lint --config .devkit/common/ls-lint/base.yaml --config .ls-lint.yaml"
 ```
 
-The base names files and folders in kebab-case; root documents such as `README.md` in upper case; allows `__tests__/`, hidden folders (`.github/`) and a component file in PascalCase; and ignores `.git`, `.devkit`, `node_modules`, `coverage`, `dist`, `reports` and Stryker's sandbox. A repository adds its own ignores and rules in `.ls-lint.yaml`; ls-lint merges the configurations it is given.
+The base names every file and folder in kebab-case, with the names the ecosystem fixes: documents such as `README.md` or `CODE_OF_CONDUCT.md` in upper case, `__tests__/`, hidden folders (`.github/`); it ignores `.git`, `.devkit`, `node_modules`, `coverage`, `dist`, `reports` and Stryker's sandbox.
+
+A repository adds its own ignores and rules in `.ls-lint.yaml`. ls-lint merges the configurations it is given key by key: an extension's rule beside the base's adds to it, while a folder key named in two configurations keeps only the last one's rules.
 
 ### Package manifests (Syncpack)
 

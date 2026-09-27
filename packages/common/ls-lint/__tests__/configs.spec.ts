@@ -7,7 +7,6 @@ import { describe, expect, test } from 'bun:test';
 
 const COMMON = resolve(import.meta.dirname, '../..');
 const ROOT = resolve(COMMON, '../..');
-const PRESET = resolve(COMMON, 'ls-lint/base.yaml');
 
 // mise pins ls-lint for this repository; its shim does not resolve in a
 // temporary folder, so the check runs the binary it points to.
@@ -30,6 +29,7 @@ if (LS_LINT === '') {
 }
 
 interface Project {
+  parts?: readonly string[];
   paths: readonly string[];
 }
 
@@ -45,10 +45,14 @@ const failedPaths = (project: Project): readonly string[] => {
 
   const linting = spawnSync(
     LS_LINT,
-    [
+    (
+      project.parts ?? [
+        'base',
+      ]
+    ).flatMap((part) => [
       '--config',
-      PRESET,
-    ],
+      resolve(COMMON, `ls-lint/${part}.yaml`),
+    ]),
     {
       cwd: folder,
       encoding: 'utf8',
@@ -84,6 +88,11 @@ describe('ls-lint base preset', () => {
       reported: 'docs/Guide.md',
     },
     {
+      condition: 'a component file is in PascalCase',
+      path: 'src/components/OrderCard.tsx',
+      reported: 'src/components/OrderCard.tsx',
+    },
+    {
       condition: 'a style sheet is in PascalCase',
       path: 'src/Theme.css',
       reported: 'src/Theme.css',
@@ -114,7 +123,8 @@ describe('ls-lint base preset', () => {
         'dist/Bundle.js',
         'node_modules/SomePackage/Index.js',
         'src/__tests__/order-view.spec.ts',
-        'src/components/OrderCard.tsx',
+        'docs/CODE_OF_CONDUCT.md',
+        'src/components/order-card.tsx',
         'src/order-view.ts',
       ],
     };
