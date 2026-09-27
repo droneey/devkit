@@ -1,0 +1,3 @@
+ignore:
+  - .constitution
+  - packages/typescript/libs/*/node_modules
