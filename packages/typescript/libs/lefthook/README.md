@@ -29,7 +29,7 @@ Language-agnostic hooks:
 | Hook | Job | Description |
 |---|---|---|
 | `pre-commit` | `validate-branch` | Branch must match `(feature\|fix\|hotfix)/{id}-{name}` |
-| `commit-msg` | `commitlint` | Validates conventional commit format (type, sentence-case, no body/footer) |
+| `commit-msg` | `commit-message` | Conventional Commits with the types `feat`, `fix`, `refactor`, `chore` and `!` for a breaking change; no scope, a sentence-case subject that is not a placeholder, no body or footer |
 
 ### Biome
 
