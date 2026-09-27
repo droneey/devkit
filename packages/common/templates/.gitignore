@@ -2,7 +2,9 @@
 .DS_Store
 
 # Environment
-.env
+.env*
+!.env.example
+mise.local.toml
 
 # Runtime
 pids
@@ -41,8 +43,19 @@ pids
 # Diagnostic
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-# SSL
+# Keys and credentials
 ssl/
 acme.json
 *.pem
 *.key
+*.p12
+*.pfx
+*.jks
+*.crt
+credentials.json
+id_rsa
+*.secrets
+.htpasswd
+
+# Working notes
+/local/

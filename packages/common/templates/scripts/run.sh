@@ -40,14 +40,14 @@ esac
 
 case "$ACTION" in
   up)
-    # Remove node_modules volume if package-lock.json changed since last build
-    LOCAL_HASH=$(sha256sum package-lock.json | cut -d' ' -f1)
+    # Remove node_modules volume if bun.lock changed since last build
+    LOCAL_HASH=$(sha256sum bun.lock | cut -d' ' -f1)
     VOLUME_HASH=$(docker run --rm -v "$NODE_MODULES_VOLUME":/vol alpine cat /vol/.package-lock-hash 2>/dev/null || echo "")
 
     if [ "$LOCAL_HASH" = "$VOLUME_HASH" ]; then
-      echo "package-lock.json unchanged, reusing node_modules volume."
+      echo "bun.lock unchanged, reusing node_modules volume."
     else
-      echo "package-lock.json changed, recreating node_modules volume..."
+      echo "bun.lock changed, recreating node_modules volume..."
       docker volume rm "$NODE_MODULES_VOLUME" 2>/dev/null || true
     fi
 

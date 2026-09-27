@@ -81,7 +81,7 @@ export { config as default } from '@droneey/devkit-ts-syncpack';
 
 ### Tests (Bun)
 
-Copy `packages/typescript/templates/bun/bunfig.toml`: coverage on, a gate of 100 percent for functions and lines, tests, fakes, entrypoints and composition roots excluded by glob, so the file is identical in every repository.
+Copy `packages/typescript/templates/bun/bunfig.toml`: coverage on, a gate of 100 percent for functions and lines, specs, the entry, each entrypoint's entry, the wiring file and generated files excluded by glob, a three-day cooldown before a new release is installed, so the file is identical in every repository.
 
 ### VS Code
 
