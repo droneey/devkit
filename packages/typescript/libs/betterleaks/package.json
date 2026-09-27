@@ -30,6 +30,6 @@
     "configs/*"
   ],
   "scripts": {
-    "build": "cp ../../../common/betterleaks/betterleaks.toml configs/betterleaks.toml"
+    "build": "mkdir -p configs && cp ../../../common/betterleaks/betterleaks.toml configs/betterleaks.toml"
   }
 }
