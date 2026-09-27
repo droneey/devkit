@@ -1,0 +1,35 @@
+{
+  "name": "@droneey/devkit-ts-dependency-cruiser",
+  "version": "1.22.1",
+  "description": "Shared dependency-cruiser configuration: the import hygiene any TypeScript repository keeps, for its .dependency-cruiser.mjs to extend.",
+  "keywords": [
+    "architecture",
+    "config",
+    "dependency-cruiser",
+    "shared"
+  ],
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/dependency-cruiser#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git",
+    "directory": "packages/typescript/libs/dependency-cruiser"
+  },
+  "exports": {
+    "./hygiene": "./configs/hygiene.mjs"
+  },
+  "files": [
+    "configs/*"
+  ],
+  "peerDependencies": {
+    "@swc/core": ">=1.0.0",
+    "dependency-cruiser": ">=17.0.0"
+  }
+}
