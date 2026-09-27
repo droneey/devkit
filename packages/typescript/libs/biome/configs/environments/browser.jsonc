@@ -3,8 +3,8 @@
     "rules": {
       "nursery": {
         "useDomNodeTextContent": "error",
-        "noExcessiveSelectorClasses": "error"
-      }
-    }
-  }
+        "noExcessiveSelectorClasses": "error",
+      },
+    },
+  },
 }

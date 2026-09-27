@@ -2,31 +2,30 @@
   "overrides": [
     {
       "includes": [
+        "**/__tests__/**",
         "**/*.spec.ts",
-        "**/*.test.ts",
         "**/*.spec.tsx",
-        "**/*.test.tsx"
       ],
       "linter": {
         "rules": {
           "style": {
-            "noNonNullAssertion": "off",
             "noMagicNumbers": "off",
-            "useConsistentMemberAccessibility": "off"
+            "useConsistentMemberAccessibility": "off",
+            "noExcessiveLinesPerFile": "off",
           },
           "suspicious": {
             "noEmptyBlockStatements": "off",
-            "noExplicitAny": "off"
           },
           "complexity": {
-            "noStaticOnlyClass": "off"
+            "noStaticOnlyClass": "off",
+            "noExcessiveLinesPerFunction": "off",
           },
           "nursery": {
             "useExplicitType": "off",
-            "noIdenticalTestTitle": "error"
-          }
-        }
-      }
-    }
-  ]
+            "noIdenticalTestTitle": "error",
+          },
+        },
+      },
+    },
+  ],
 }
