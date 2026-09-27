@@ -34,10 +34,6 @@ The base config includes:
 
 `test` applies to `**/__tests__/**` and every `*.spec.ts(x)` and `*.test.ts(x)`: specs have no line limits, keep `any` and `!` out like any other code, and compare with `toStrictEqual`.
 
-### Constitution
-
-A repository that follows the [droneey constitution](https://github.com/droneey/constitution) also extends the constitution's own preset, `@droneey/constitution/biome`, last: it holds the rules that name the constitution's folders and suffixes.
-
 ### Environments
 
 | Config | Description |

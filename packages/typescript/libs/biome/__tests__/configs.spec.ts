@@ -35,45 +35,6 @@ const fileOfLines = (lines: number): string =>
 const TWO_PARAMETERS =
   'export const join = (head: string, tail: string): string => head + tail;\n';
 
-// Code that breaks only the constitution's own folders and conventions, which
-// its preset holds and the general presets leave alone.
-const CONSTITUTION_CASES = [
-  {
-    condition: 'null is assigned outside an adapter',
-    files: {
-      'src/features/orders/domain/order.ts':
-        'export const cancelledAt: Date | undefined = null;\n',
-    },
-  },
-  {
-    condition: 'a surface declares a value',
-    files: {
-      'src/features/orders/index.ts':
-        "export { cancelOrder } from './app';\nexport const ORDERS = 'orders';\n",
-    },
-  },
-  {
-    condition: 'a variable is named by an empty word',
-    files: {
-      'src/features/orders/order.ts': 'export const data = 1;\n',
-    },
-  },
-  {
-    condition: 'a case does not read should … when …',
-    files: {
-      'src/__tests__/order.spec.ts':
-        "import { expect, test } from 'bun:test';\n\ntest('adds totals', () => {\n  expect(1).toBe(1);\n});\n",
-    },
-  },
-  {
-    condition: 'a spec replaces a module',
-    files: {
-      'src/__tests__/order.spec.ts':
-        "import { mock } from 'bun:test';\n\nmock.module('./order', () => ({}));\n",
-    },
-  },
-];
-
 describe('biome presets', () => {
   test.each(Object.keys(EXPORTS).map((key) => key.slice(2)))(
     'should parse when a repository extends %s',
@@ -301,24 +262,4 @@ describe('biome presets', () => {
     // Assert
     expect(plugins.some((finding) => finding.startsWith(message))).toBe(true);
   });
-
-  test.each(CONSTITUTION_CASES)(
-    'should report no plugin finding when $condition and a repository extends only base and test',
-    ({ files }) => {
-      // Arrange
-      const project = {
-        files,
-        presets: [
-          'base',
-          'test',
-        ],
-      };
-
-      // Act
-      const { plugins } = lintFindings(project);
-
-      // Assert
-      expect(plugins).toStrictEqual([]);
-    },
-  );
 });
