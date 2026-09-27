@@ -17,6 +17,6 @@
     },
   },
   "plugins": [
-    "./.devkit/packages/common/biome/plugins/tailwind-classes.grit",
+    "./.devkit/biome/plugins/tailwind-classes.grit",
   ],
 }

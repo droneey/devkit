@@ -109,6 +109,6 @@
     },
   ],
   "plugins": [
-    "./.devkit/packages/common/biome/plugins/react-legacy-api.grit",
+    "./.devkit/biome/plugins/react-legacy-api.grit",
   ],
 }

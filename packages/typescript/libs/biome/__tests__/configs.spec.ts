@@ -52,7 +52,7 @@ describe('biome presets', () => {
       (file) =>
         readFileSync(resolve(PACKAGE_DIR, file), 'utf8') !==
         readFileSync(resolve(common, file), 'utf8').replaceAll(
-          './.devkit/packages/common/biome/plugins/',
+          './.devkit/biome/plugins/',
           './node_modules/@droneey/devkit-ts-biome/plugins/',
         ),
     );
@@ -82,7 +82,7 @@ describe('biome presets', () => {
       text: "import { expect, test } from 'bun:test';\n\ntest('adds totals', () => {\n  expect(1).toEqual(1);\n});\n",
     },
   ])(
-    'should report a plugin finding when $condition and a repository takes the presets from a devkit submodule',
+    'should report a plugin finding when $condition and a repository takes the presets from the release archive',
     ({ message, path, presets, text }) => {
       // Arrange
       const project = {
@@ -90,7 +90,7 @@ describe('biome presets', () => {
           [path]: text,
         },
         presets,
-        source: 'submodule' as const,
+        source: 'release' as const,
       };
 
       // Act
@@ -101,16 +101,17 @@ describe('biome presets', () => {
     },
   );
 
-  test('should leave the devkit submodule alone when a repository takes the presets from it', () => {
+  test('should leave .devkit alone when a repository takes the presets from the release archive', () => {
     // Arrange
     const project = {
       files: {
+        '.devkit/probe.ts': 'export const data = null;\n',
         'src/order.ts': "export const orderKind = 'order';\n",
       },
       presets: [
         'base',
       ],
-      source: 'submodule' as const,
+      source: 'release' as const,
     };
 
     // Act

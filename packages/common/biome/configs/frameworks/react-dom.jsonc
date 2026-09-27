@@ -16,10 +16,10 @@
     },
   },
   "plugins": [
-    "./.devkit/packages/common/biome/plugins/element-ids.grit",
-    "./.devkit/packages/common/biome/plugins/autocomplete.grit",
+    "./.devkit/biome/plugins/element-ids.grit",
+    "./.devkit/biome/plugins/autocomplete.grit",
     {
-      "path": "./.devkit/packages/common/biome/plugins/test-queries.grit",
+      "path": "./.devkit/biome/plugins/test-queries.grit",
       "includes": [
         "**/__tests__/**",
         "**/*.spec.ts",

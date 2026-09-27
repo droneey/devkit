@@ -11,3 +11,24 @@ jobs:
       contents: write
     with:
       prerelease: true
+
+  common:
+    needs: pre-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+
+      - name: Pack the common area
+        run: |
+          set -euo pipefail
+          tar --exclude='__tests__' -czf devkit-common.tar.gz -C packages/common .
+          sha256sum devkit-common.tar.gz > devkit-common.tar.gz.sha256
+
+      - name: Attach it to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: gh release upload "$TAG" devkit-common.tar.gz devkit-common.tar.gz.sha256 --clobber

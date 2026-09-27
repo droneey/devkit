@@ -19,21 +19,24 @@ Create `biome.json` in your project root:
 
 ### Without npm
 
-The presets live in devkit's common area, `packages/common/biome/`; this package ships a copy of them. A repository with no JavaScript takes Biome from [mise](https://mise.jdx.dev) (`mise use biome@<version>`) and the presets from devkit added as a git submodule at `.devkit`, pinned to a release tag:
+The presets live in devkit's common area, `packages/common/biome/`; this package ships a copy of them. Each devkit release also carries that area as `devkit-common.tar.gz`, with its `sha256` beside it. A repository with no JavaScript takes Biome and the archive from [mise](https://mise.jdx.dev), and links the archive as `.devkit`, which it ignores in git:
 
-```bash
-git submodule add https://github.com/droneey/devkit .devkit
-git -C .devkit checkout v<version>
-git config -f .gitmodules submodule..devkit.branch v<version>
+```toml
+[tools]
+biome = "<version>"
+"http:devkit" = { version = "<version>", url = "https://github.com/droneey/devkit/releases/download/v{{ version }}/devkit-common.tar.gz", checksum = "sha256:<the release's devkit-common.tar.gz.sha256>" }
+
+[hooks]
+postinstall = "ln -sfn \"$(mise where http:devkit)\" .devkit"
 ```
 
 ```json
 {
-  "extends": ["./.devkit/packages/common/biome/configs/base.jsonc"]
+  "extends": ["./.devkit/biome/configs/base.jsonc"]
 }
 ```
 
-`base` keeps Biome out of `.devkit`; a repository that sets its own `files.includes` keeps `"!**/.devkit"` in it.
+`mise install` relinks `.devkit` every time it runs, in a fresh clone and in CI alike. `base` keeps Biome out of `.devkit`; a repository that sets its own `files.includes` keeps `"!**/.devkit"` in it.
 
 Run it in the check as `biome check --error-on-warnings`, so a warning of Biome's recommended rules fails it too; the presets themselves set every rule to `error`.
 

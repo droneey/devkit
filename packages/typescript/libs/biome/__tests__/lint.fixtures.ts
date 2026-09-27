@@ -30,7 +30,7 @@ interface Report {
 interface Project {
   files: Readonly<Record<string, string>>;
   presets: readonly string[];
-  source?: 'npm' | 'submodule';
+  source?: 'npm' | 'release';
 }
 
 interface Findings {
@@ -48,30 +48,25 @@ const installPackage = (folder: string): void => {
   );
 };
 
-// A submodule is a real folder holding devkit's own biome.json, which Biome
-// would read if it walked into it.
-const checkOutSubmodule = (folder: string): void => {
-  cpSync(
-    resolve(ROOT, 'packages/common/biome'),
-    join(folder, '.devkit/packages/common/biome'),
-    {
-      recursive: true,
-    },
-  );
-  cpSync(resolve(ROOT, 'biome.json'), join(folder, '.devkit/biome.json'));
+// The release archive holds the common area, which mise unpacks and the
+// repository links as .devkit.
+const unpackRelease = (folder: string): void => {
+  cpSync(resolve(ROOT, 'packages/common'), join(folder, '.devkit'), {
+    recursive: true,
+  });
 };
 
 const presetReference = (input: {
   preset: string;
-  source: 'npm' | 'submodule';
+  source: 'npm' | 'release';
 }): string =>
   input.source === 'npm'
     ? `@droneey/devkit-ts-biome/${input.preset}`
-    : `./.devkit/packages/common/biome/${(EXPORTS[`./${input.preset}`] ?? '').slice(2)}`;
+    : `./.devkit/biome/${(EXPORTS[`./${input.preset}`] ?? '').slice(2)}`;
 
 // What the real Biome reports over a small project that takes this package's
-// presets as a consumer does — from npm by name, or from a devkit submodule by
-// path: each lint rule by its name, each GritQL plugin by its message.
+// presets as a consumer does — from npm by name, or from devkit's release
+// archive by path: each lint rule by its name, each GritQL plugin by its message.
 const lintFindings = (project: Project): Findings => {
   const folder = mkdtempSync(join(tmpdir(), 'devkit-biome-'));
   const source = project.source ?? 'npm';
@@ -79,7 +74,7 @@ const lintFindings = (project: Project): Findings => {
   if (source === 'npm') {
     installPackage(folder);
   } else {
-    checkOutSubmodule(folder);
+    unpackRelease(folder);
   }
 
   writeFileSync(

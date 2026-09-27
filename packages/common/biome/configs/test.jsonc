@@ -32,7 +32,7 @@
   ],
   "plugins": [
     {
-      "path": "./.devkit/packages/common/biome/plugins/strict-equal.grit",
+      "path": "./.devkit/biome/plugins/strict-equal.grit",
       "includes": [
         "**/__tests__/**",
         "**/*.spec.ts",
