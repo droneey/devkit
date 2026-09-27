@@ -36,27 +36,7 @@ The base config includes:
 
 ### Constitution
 
-`constitution` adds the rules of the [droneey constitution](https://github.com/droneey/constitution) that depend on its folders and conventions. Extend it last, in a repository that follows the constitution:
-
-- one positional parameter;
-- no `null` outside `adapters/` and `models/`;
-- a surface (`index.ts`) only re-exports by name;
-- no empty word as a name (`data`, `result`, `value`…) outside `src/libs/`;
-- a case reads `should … when …`;
-- no `mock.module`: an effect is faked through its port;
-- no `useMemo`, `useCallback` or `memo` in React code: the React Compiler memoises;
-- no effect hook in a component file (`.tsx`): effects live in hooks in its `.hooks.ts` file.
-
-```json
-{
-  "extends": [
-    "@droneey/devkit-ts-biome/base",
-    "@droneey/devkit-ts-biome/node",
-    "@droneey/devkit-ts-biome/test",
-    "@droneey/devkit-ts-biome/constitution"
-  ]
-}
-```
+A repository that follows the [droneey constitution](https://github.com/droneey/constitution) also extends the constitution's own preset, `@droneey/constitution/biome`, last: it holds the rules that name the constitution's folders and suffixes.
 
 ### Environments
 

@@ -35,8 +35,8 @@ const fileOfLines = (lines: number): string =>
 const TWO_PARAMETERS =
   'export const join = (head: string, tail: string): string => head + tail;\n';
 
-// Cases that follow the constitution's folders and conventions, so only its
-// preset reports them.
+// Code that breaks only the constitution's own folders and conventions, which
+// its preset holds and the general presets leave alone.
 const CONSTITUTION_CASES = [
   {
     condition: 'null is assigned outside an adapter',
@@ -44,7 +44,6 @@ const CONSTITUTION_CASES = [
       'src/features/orders/domain/order.ts':
         'export const cancelledAt: Date | undefined = null;\n',
     },
-    message: 'null outside the boundary',
   },
   {
     condition: 'a surface declares a value',
@@ -52,14 +51,12 @@ const CONSTITUTION_CASES = [
       'src/features/orders/index.ts':
         "export { cancelOrder } from './app';\nexport const ORDERS = 'orders';\n",
     },
-    message: 'A surface only re-exports by name',
   },
   {
     condition: 'a variable is named by an empty word',
     files: {
       'src/features/orders/order.ts': 'export const data = 1;\n',
     },
-    message: 'Name what it holds',
   },
   {
     condition: 'a case does not read should … when …',
@@ -67,7 +64,6 @@ const CONSTITUTION_CASES = [
       'src/__tests__/order.spec.ts':
         "import { expect, test } from 'bun:test';\n\ntest('adds totals', () => {\n  expect(1).toBe(1);\n});\n",
     },
-    message: "A case reads 'should <behaviour> when <condition>'",
   },
   {
     condition: 'a spec replaces a module',
@@ -75,7 +71,6 @@ const CONSTITUTION_CASES = [
       'src/__tests__/order.spec.ts':
         "import { mock } from 'bun:test';\n\nmock.module('./order', () => ({}));\n",
     },
-    message: 'Fake an effect through its port',
   },
 ];
 
@@ -308,27 +303,6 @@ describe('biome presets', () => {
   });
 
   test.each(CONSTITUTION_CASES)(
-    'should report a plugin finding when $condition and a repository extends constitution',
-    ({ files, message }) => {
-      // Arrange
-      const project = {
-        files,
-        presets: [
-          'base',
-          'test',
-          'constitution',
-        ],
-      };
-
-      // Act
-      const { plugins } = lintFindings(project);
-
-      // Assert
-      expect(plugins.some((finding) => finding.startsWith(message))).toBe(true);
-    },
-  );
-
-  test.each(CONSTITUTION_CASES)(
     'should report no plugin finding when $condition and a repository extends only base and test',
     ({ files }) => {
       // Arrange
@@ -347,64 +321,4 @@ describe('biome presets', () => {
       expect(plugins).toStrictEqual([]);
     },
   );
-
-  test('should report useMaxParams when a function takes a second positional argument and a repository extends constitution', () => {
-    // Arrange
-    const project = {
-      files: {
-        'src/main.ts': TWO_PARAMETERS,
-      },
-      presets: [
-        'base',
-        'test',
-        'constitution',
-      ],
-    };
-
-    // Act
-    const { rules } = lintFindings(project);
-
-    // Assert
-    expect(rules).toContain('useMaxParams');
-  });
-
-  test.each([
-    {
-      condition: 'an adapter maps null from the wire',
-      files: {
-        'src/features/orders/adapters/api/order.adapter.ts':
-          'export const toCancelledAt = (raw: string | null): string | undefined =>\n  raw === null ? undefined : raw;\n',
-      },
-    },
-    {
-      condition: 'generic code in libs names a value by an empty word',
-      files: {
-        'src/libs/list/list.utils.ts':
-          'export const firstOf = (items: readonly string[]): string | undefined => {\n  const value = items.at(0);\n  return value;\n};\n',
-      },
-    },
-    {
-      condition: 'a surface re-exports by name',
-      files: {
-        'src/features/orders/index.ts':
-          "export { cancelOrder } from './app';\nexport type { Order } from './domain';\n",
-      },
-    },
-  ])('should report no plugin finding when $condition', ({ files }) => {
-    // Arrange
-    const project = {
-      files,
-      presets: [
-        'base',
-        'test',
-        'constitution',
-      ],
-    };
-
-    // Act
-    const { plugins } = lintFindings(project);
-
-    // Assert
-    expect(plugins).toStrictEqual([]);
-  });
 });

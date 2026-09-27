@@ -34,6 +34,7 @@
   ],
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",
+    "@droneey/constitution": "github:droneey/constitution#v0.27.0",
     "@droneey/devkit-ts-biome": "workspace:*",
     "@droneey/devkit-ts-lefthook": "workspace:*",
     "@droneey/devkit-ts-syncpack": "workspace:*",

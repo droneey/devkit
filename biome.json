@@ -3,7 +3,7 @@
     "@droneey/devkit-ts-biome/base",
     "@droneey/devkit-ts-biome/node",
     "@droneey/devkit-ts-biome/test",
-    "@droneey/devkit-ts-biome/constitution"
+    "@droneey/constitution/biome"
   ],
   "overrides": [
     {
