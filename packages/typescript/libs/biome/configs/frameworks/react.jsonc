@@ -18,10 +18,12 @@
       "linter": {
         "rules": {
           "correctness": {
+            // hooks-at-top-level
             "useHookAtTopLevel": "error",
             "useExhaustiveDependencies": "error",
             "noChildrenProp": "error",
             "useJsxKeyInIterable": "error",
+            // no-component-defined-inside-component
             "noNestedComponentDefinitions": "error",
             "noNextAsyncClientComponent": "error"
           },
@@ -41,11 +43,12 @@
             "useAnchorContent": "error",
             "useValidAnchor": "error",
             "useAriaPropsForRole": "error",
+            // every-control-has-an-accessible-name
             "useAltText": "error",
             "useHtmlLang": "error",
             "useHeadingContent": "error",
             "noRedundantRoles": "error",
-            "noAutofocus": "warn",
+            "noAutofocus": "error",
             "useKeyWithClickEvents": "error",
             "noPositiveTabindex": "error",
             "noRedundantAlt": "error",
@@ -55,13 +58,16 @@
             "noSvgWithoutTitle": "error",
             "useValidAriaValues": "error",
             "noAriaHiddenOnFocusable": "error",
+            // native-semantics-first
             "useSemanticElements": "error",
+            // aria-attributes-as-the-dom-spells-them
             "useValidAriaProps": "error",
             "useValidAriaRole": "error",
             "noStaticElementInteractions": "error"
           },
           "suspicious": {
-            "noArrayIndexKey": "warn",
+            // list-keys-from-identity
+            "noArrayIndexKey": "error",
             "noDuplicateJsxProps": "error",
             "noReactForwardRef": "error",
             "noLeakedRender": "error"
@@ -87,6 +93,7 @@
             "noUselessFragments": "error"
           },
           "security": {
+            // no-raw-html-injection
             "noDangerouslySetInnerHtml": "error",
             "noBlankTarget": "error"
           },

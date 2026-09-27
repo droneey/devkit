@@ -2,7 +2,7 @@
   "linter": {
     "rules": {
       "style": {
-        "useNodejsImportProtocol": "warn"
+        "useNodejsImportProtocol": "error"
       }
     }
   }

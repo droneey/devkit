@@ -1,0 +1,33 @@
+{
+  "overrides": [
+    {
+      "includes": [
+        "**/__tests__/**",
+        "**/*.spec.ts",
+        "**/*.spec.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noMagicNumbers": "off",
+            "useConsistentMemberAccessibility": "off",
+            // function-file-and-complexity-limits: a spec has no line limit
+            "noExcessiveLinesPerFile": "off"
+          },
+          "suspicious": {
+            "noEmptyBlockStatements": "off"
+          },
+          "complexity": {
+            "noStaticOnlyClass": "off",
+            // function-file-and-complexity-limits: a spec has no line limit
+            "noExcessiveLinesPerFunction": "off"
+          },
+          "nursery": {
+            "useExplicitType": "off",
+            "noIdenticalTestTitle": "error"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -74,30 +74,49 @@
   "linter": {
     "rules": {
       "preset": "recommended",
-
       "suspicious": {
+        // errors-surfaced-never-swallowed
         "noEmptyBlockStatements": "error",
         "noUnusedExpressions": "error",
         "useAwait": "error",
+        // no-debug-output-in-shipped-code
         "noAlert": "error",
         "useErrorMessage": "error",
         "useNumberToFixedDigitsArgument": "error",
-        "noConsole": "warn",
+        // no-debug-output-in-shipped-code
+        "noConsole": "error",
         "noConstantBinaryExpressions": "error",
         "noDeprecatedImports": "error",
+        // no-any
         "noEvolvingTypes": "error",
         "noMisplacedAssertion": "error",
+        // no-skipped-or-empty-tests
         "noSkippedTests": "error",
         "noUnassignedVariables": "error",
         "noVar": "error",
         "noReturnAssign": "error",
-        "noProto": "warn",
+        "noProto": "error",
         "noDuplicateEnumValues": "error",
         "noForIn": "error",
         "noNestedPromises": "error",
         "noShadow": "error",
         "noUnnecessaryConditions": "error",
-        "useArraySortCompare": "error"
+        "useArraySortCompare": "error",
+        // strict-equality-only
+        "noDoubleEquals": {
+          "level": "error",
+          "options": {
+            "ignoreNull": false
+          }
+        },
+        // no-any
+        "noExplicitAny": "error",
+        // no-skipped-or-empty-tests
+        "noFocusedTests": "error",
+        // no-debug-output-in-shipped-code
+        "noDebugger": "error",
+        // no-unchecked-escape-hatches
+        "noTsIgnore": "error"
       },
       "style": {
         "useImportType": {
@@ -134,6 +153,7 @@
         "noDoneCallback": "error",
         "noExportedImports": "error",
         "noNamespace": "error",
+        // identifier-case-by-kind
         "useNamingConvention": {
           "level": "error",
           "options": {
@@ -164,17 +184,19 @@
         "useGroupedAccessorPairs": "error",
         "useDefaultParameterLast": "error",
         "useDefaultSwitchClause": "error",
+        // enums-for-named-value-groups
         "useEnumInitializers": "error",
         "useAsConstAssertion": "error",
         "useCollapsedIf": "error",
         "useConsistentArrayType": "error",
         "useConsistentArrowReturn": "error",
         "useConsistentTypeDefinitions": "error",
-        "useTemplate": "warn",
-        "useArrayLiterals": "warn",
-        "useExponentiationOperator": "warn",
+        "useTemplate": "error",
+        "useArrayLiterals": "error",
+        "useExponentiationOperator": "error",
         "noShoutyConstants": "error",
         "noUnusedTemplateLiteral": "error",
+        // kebab-case-file-names
         "useFilenamingConvention": {
           "level": "error",
           "options": {
@@ -186,53 +208,66 @@
         },
         "noMultiAssign": "error",
         "noExcessiveClassesPerFile": "error",
+        // function-file-and-complexity-limits
         "noExcessiveLinesPerFile": {
-          "level": "warn",
+          "level": "error",
           "options": {
-            "maxLines": 300
+            "maxLines": 500
           }
         },
+        // enums-for-named-value-groups
         "useConsistentEnumValueType": "error",
         "useConsistentMethodSignatures": "error",
         "useErrorCause": "error",
         "useGlobalThis": "error",
         "noMultilineString": "error",
-        "useSpreadOverApply": "error"
+        "useSpreadOverApply": "error",
+        // no-unchecked-escape-hatches
+        "noNonNullAssertion": "error"
       },
       "a11y": {
         "noNoninteractiveElementInteractions": "error"
       },
       "complexity": {
-        "noUselessConstructor": "warn",
-        "useFlatMap": "warn",
-        "noUselessRename": "warn",
-        "noUselessEmptyExport": "warn",
-        "noUselessSwitchCase": "warn",
+        "noUselessConstructor": "error",
+        "useFlatMap": "error",
+        "noUselessRename": "error",
+        "noUselessEmptyExport": "error",
+        "noUselessSwitchCase": "error",
         "useLiteralKeys": "off",
-        "noUselessTernary": "warn",
-        "noUselessLoneBlockStatements": "warn",
-        "noUselessLabel": "warn",
-        "noExtraBooleanCast": "warn",
+        "noUselessTernary": "error",
+        "noUselessLoneBlockStatements": "error",
+        "noUselessLabel": "error",
+        "noExtraBooleanCast": "error",
         "noVoid": "error",
+        // undefined-is-the-only-absence
         "noUselessUndefined": "error",
         "noUselessStringConcat": "error",
+        // function-file-and-complexity-limits
         "noExcessiveCognitiveComplexity": {
           "level": "error",
           "options": {
             "maxAllowedComplexity": 10
           }
         },
+        // function-file-and-complexity-limits
         "noExcessiveLinesPerFunction": {
-          "level": "warn",
+          "level": "error",
           "options": {
-            "maxLines": 75
+            "maxLines": 100
           }
         },
         "noImplicitCoercions": "error",
         "noForEach": "error",
         "useSimplifiedLogicExpression": "error",
         "useWhile": "error",
-        "useMaxParams": "error",
+        // named-arguments-past-the-first, options-object-for-named-arguments
+        "useMaxParams": {
+          "level": "error",
+          "options": {
+            "max": 1
+          }
+        },
         "noUselessReturn": "error",
         "noRedundantDefaultExport": "error",
         "useArrayFind": "error"
@@ -256,24 +291,31 @@
         "noAccumulatingSpread": "error",
         "noAwaitInLoops": "error",
         "noDynamicNamespaceImportAccess": "error",
+        // surface-only-re-exports
         "noReExportAll": "error"
       },
       "nursery": {
+        // async-work-awaited-or-deliberately-detached
         "noFloatingPromises": "error",
         "useExplicitType": "error",
         "noConditionalExpect": "error",
+        // async-work-awaited-or-deliberately-detached
         "noMisusedPromises": "error",
         "useArraySome": "error",
+        // async-work-awaited-or-deliberately-detached
         "useAwaitThenable": "error",
+        // exhaustive-branching-over-unions
         "useExhaustiveSwitchCases": "error",
+        // no-skipped-or-empty-tests
         "useExpect": "error",
+        // nullish-operators-for-absence
         "useNullishCoalescing": "error",
         "useStringStartsEndsWith": "error",
         "useRegexpTest": "error",
         "noUselessTypeConversion": "error",
         "noEmptyObjectKeys": "error",
         "useDisposables": "error",
-        "noLoopFunc": "warn",
+        "noLoopFunc": "error",
         "noNegationInEqualityCheck": "error",
         "noThisOutsideOfClass": "error",
         "useIncludes": "error",

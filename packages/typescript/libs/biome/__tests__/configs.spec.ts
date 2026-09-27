@@ -1,175 +1,70 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
-const CONFIGS_DIR = resolve(import.meta.dirname, '../configs');
-
-const readSource = (name: string): string =>
-  readFileSync(resolve(CONFIGS_DIR, name), 'utf8');
-
-const configFiles = [
-  'base.json',
-  'test.json',
-  'environments/node.json',
-  'environments/browser.json',
-  'frameworks/nestjs.json',
-  'frameworks/react.json',
-  'frameworks/react-native.json',
-];
-
-const scopedFiles = [
-  [
-    'test.json',
-    [
-      '**/*.spec.ts',
-      '**/*.test.ts',
-      '**/*.spec.tsx',
-      '**/*.test.tsx',
-    ],
-  ],
-  [
-    'frameworks/react.json',
-    [
-      '**/*.tsx',
-      '**/*.jsx',
-    ],
-  ],
-  [
-    'frameworks/nestjs.json',
-    [
-      '**/*.ts',
-    ],
-  ],
-] as const;
-
-describe('biome configs', () => {
-  test.each(configFiles)(
-    'should parse as a JSON object when a repository extends %s',
-    (file) => {
-      // Arrange
-      const source = readSource(file);
-
-      // Act
-      const config: unknown = JSON.parse(source);
-
-      // Assert
-      expect(config).toBeObject();
-    },
-  );
-
-  test('should configure the formatter, the linter and the assist when a repository extends base.json', () => {
-    // Arrange
-    const source = readSource('base.json');
-
-    // Act
-    const config: unknown = JSON.parse(source);
-
-    // Assert
-    expect(config).toHaveProperty('formatter');
-    expect(config).toHaveProperty('linter');
-    expect(config).toHaveProperty('assist');
-  });
-
-  test('should enable the recommended rule preset when a repository extends base.json', () => {
-    // Arrange
-    const source = readSource('base.json');
-
-    // Act
-    const config: unknown = JSON.parse(source);
-
-    // Assert
-    expect(config).toHaveProperty('linter.rules.preset', 'recommended');
-    expect(config).not.toHaveProperty('linter.rules.recommended');
-  });
-
-  test('should let the tool configurations default-export when a repository extends base.json', () => {
-    // Arrange
-    const source = readSource('base.json');
-
-    // Act
-    const config: unknown = JSON.parse(source);
-
-    // Assert
-    expect(config).toHaveProperty('overrides.0.includes', [
-      '**/*.config.ts',
-      '**/*.config.js',
-      '**/*.config.mjs',
-      '**/*.config.cjs',
-      '**/.*rc.ts',
-      '**/.*rc.js',
-      '**/.*rc.mjs',
-      '**/.*rc.cjs',
-      '**/.dependency-cruiser.js',
-      '**/.dependency-cruiser.mjs',
-      '**/.dependency-cruiser.cjs',
-    ]);
-    expect(config).toHaveProperty(
-      'overrides.0.linter.rules.style.noDefaultExport',
-      'off',
-    );
-  });
-
-  test.each(scopedFiles)(
-    'should scope its override to its own files when a repository extends %s',
-    (file, includes) => {
-      // Arrange
-      const source = readSource(file);
-
-      // Act
-      const config: unknown = JSON.parse(source);
-
-      // Assert
-      expect(config).toHaveProperty('overrides.0.includes', includes);
-    },
-  );
-});
+const PACKAGE_DIR = resolve(import.meta.dirname, '..');
+const BIOME = resolve(PACKAGE_DIR, '../../../../node_modules/.bin/biome');
 
 const EXPORTS = (
-  JSON.parse(
-    readFileSync(resolve(import.meta.dirname, '../package.json'), 'utf8'),
-  ) as {
+  JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')) as {
     exports: Readonly<Record<string, string>>;
   }
 ).exports;
 
-const BIOME = resolve(
-  import.meta.dirname,
-  '../../../../../node_modules/.bin/biome',
-);
+const presetPath = (name: string): string =>
+  resolve(PACKAGE_DIR, EXPORTS[`./${name}`] ?? `missing-${name}`);
 
-// One file linted by the real Biome under one environment preset.
-const lintPasses = (input: {
-  environment: string;
-  source: string;
-}): boolean => {
+interface Project {
+  files: Readonly<Record<string, string>>;
+  presets: readonly string[];
+}
+
+interface Report {
+  diagnostics: readonly {
+    category: string;
+  }[];
+}
+
+// The rules the real Biome reports over a small project extending the presets.
+const reportedRules = (project: Project): readonly string[] => {
   const folder = mkdtempSync(join(tmpdir(), 'devkit-biome-'));
 
   writeFileSync(
     join(folder, 'biome.json'),
     JSON.stringify({
-      extends: [
-        resolve(
-          import.meta.dirname,
-          '..',
-          EXPORTS[`./${input.environment}`] ?? 'missing',
-        ),
-      ],
+      extends: project.presets.map(presetPath),
+      vcs: {
+        enabled: false,
+      },
     }),
   );
-  writeFileSync(join(folder, 'main.ts'), input.source);
+
+  for (const [path, source] of Object.entries(project.files)) {
+    mkdirSync(dirname(join(folder, path)), {
+      recursive: true,
+    });
+    writeFileSync(join(folder, path), source);
+  }
 
   const result = spawnSync(
     BIOME,
     [
       'lint',
-      '--error-on-warnings',
-      folder,
+      '--reporter=json',
+      '.',
     ],
     {
       cwd: folder,
+      encoding: 'utf8',
     },
   );
 
@@ -178,10 +73,168 @@ const lintPasses = (input: {
     recursive: true,
   });
 
-  return result.status === 0;
+  const report = JSON.parse(result.stdout) as Report;
+
+  return [
+    ...new Set(
+      report.diagnostics.map(({ category }) =>
+        category.slice(category.lastIndexOf('/') + 1),
+      ),
+    ),
+  ];
 };
 
-describe('the node and bun environments', () => {
+const indexes = (count: number): readonly number[] => [
+  ...new Array<undefined>(count).keys(),
+];
+
+const statements = (count: number): string =>
+  indexes(count)
+    .map((index) => `  total += '${String(index)}'.length;`)
+    .join('\n');
+
+// Biome counts a function's body, the lines between its braces.
+const functionWithBodyOf = (lines: number): string =>
+  `export const measure = (): number => {\n  let total = 0;\n${statements(lines - 2)}\n  return total;\n};\n`;
+
+const fileOfLines = (lines: number): string =>
+  `${indexes(lines)
+    .map((index) => `export const label${String(index)} = 'label';`)
+    .join('\n')}\n`;
+
+describe('biome presets', () => {
+  test.each(Object.keys(EXPORTS).map((key) => key.slice(2)))(
+    'should parse when a repository extends %s',
+    (preset) => {
+      // Arrange
+      const path = presetPath(preset);
+
+      // Act
+      const config: unknown = Bun.JSONC.parse(readFileSync(path, 'utf8'));
+
+      // Assert
+      expect(config).toBeObject();
+    },
+  );
+
+  test.each([
+    {
+      condition: 'a function body passes 100 lines',
+      files: {
+        'main.ts': functionWithBodyOf(101),
+      },
+      rule: 'noExcessiveLinesPerFunction',
+    },
+    {
+      condition: 'a file passes 500 lines',
+      files: {
+        'main.ts': fileOfLines(501),
+      },
+      rule: 'noExcessiveLinesPerFile',
+    },
+    {
+      condition: 'null is compared loosely',
+      files: {
+        'main.ts':
+          'export const isAbsent = (value: string | null): boolean => value == null;\n',
+      },
+      rule: 'noDoubleEquals',
+    },
+    {
+      condition: 'a function takes a second positional argument',
+      files: {
+        'main.ts':
+          'export const join = (head: string, tail: string): string => head + tail;\n',
+      },
+      rule: 'useMaxParams',
+    },
+    {
+      condition: 'shipped code writes to the console',
+      files: {
+        'main.ts': "console.info('ready');\n",
+      },
+      rule: 'noConsole',
+    },
+    {
+      condition: 'a spec types a value as any',
+      files: {
+        'src/__tests__/main.spec.ts':
+          "import { expect, test } from 'bun:test';\n\ntest('should keep any out when a spec types a value', () => {\n  const value: any = 1;\n  expect(value).toBe(1);\n});\n",
+      },
+      rule: 'noExplicitAny',
+    },
+    {
+      condition: 'a helper in __tests__ asserts non-null',
+      files: {
+        'src/__tests__/order.fixtures.ts':
+          'export const first = (items: readonly string[]): string => items[0]!;\n',
+      },
+      rule: 'noNonNullAssertion',
+    },
+    {
+      condition: 'a spec is focused',
+      files: {
+        'src/__tests__/main.spec.ts':
+          "import { expect, test } from 'bun:test';\n\ntest.only('should run alone when focused', () => {\n  expect(true).toBe(true);\n});\n",
+      },
+      rule: 'noFocusedTests',
+    },
+  ])('should report $rule when $condition', ({ files, rule }) => {
+    // Arrange
+    const project = {
+      files,
+      presets: [
+        'base',
+        'test',
+      ],
+    };
+
+    // Act
+    const rules = reportedRules(project);
+
+    // Assert
+    expect(rules).toContain(rule);
+  });
+
+  test.each([
+    {
+      condition: 'a function body holds 100 lines',
+      files: {
+        'main.ts': functionWithBodyOf(100),
+      },
+      rule: 'noExcessiveLinesPerFunction',
+    },
+    {
+      condition: 'a spec passes 500 lines',
+      files: {
+        'src/__tests__/main.spec.ts': fileOfLines(600),
+      },
+      rule: 'noExcessiveLinesPerFile',
+    },
+    {
+      condition: 'a spec holds a function of more than 100 lines',
+      files: {
+        'src/__tests__/main.spec.ts': functionWithBodyOf(150),
+      },
+      rule: 'noExcessiveLinesPerFunction',
+    },
+  ])('should not report $rule when $condition', ({ files, rule }) => {
+    // Arrange
+    const project = {
+      files,
+      presets: [
+        'base',
+        'test',
+      ],
+    };
+
+    // Act
+    const rules = reportedRules(project);
+
+    // Assert
+    expect(rules).not.toContain(rule);
+  });
+
   test.each([
     'node',
     'bun',
@@ -190,35 +243,33 @@ describe('the node and bun environments', () => {
     (environment) => {
       // Arrange
       const project = {
-        environment,
-        source: "import { readFile } from 'fs';\n\nexport { readFile };\n",
+        files: {
+          'main.ts': "import { readFile } from 'fs';\n\nexport { readFile };\n",
+        },
+        presets: [
+          'base',
+          environment,
+        ],
       };
 
       // Act
-      const passes = lintPasses(project);
+      const rules = reportedRules(project);
 
       // Assert
-      expect(passes).toBe(false);
+      expect(rules).toContain('useNodejsImportProtocol');
     },
   );
 
-  test.each([
-    'node',
-    'bun',
-  ])(
-    'should pass a built-in module imported with its node: prefix when a repository extends %s',
-    (environment) => {
-      // Arrange
-      const project = {
-        environment,
-        source: "import { readFile } from 'node:fs';\n\nexport { readFile };\n",
-      };
+  test('should hold every preset at error, so a warning never passes the check', () => {
+    // Arrange
+    const sources = Object.keys(EXPORTS).map((key) =>
+      readFileSync(presetPath(key.slice(2)), 'utf8'),
+    );
 
-      // Act
-      const passes = lintPasses(project);
+    // Act
+    const warnings = sources.filter((source) => /"warn"/.test(source));
 
-      // Assert
-      expect(passes).toBe(true);
-    },
-  );
+    // Assert
+    expect(warnings).toStrictEqual([]);
+  });
 });
