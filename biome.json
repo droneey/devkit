@@ -44,18 +44,6 @@
           }
         }
       }
-    },
-    {
-      "includes": [
-        "**/jest-preset.js"
-      ],
-      "linter": {
-        "rules": {
-          "style": {
-            "noDefaultExport": "off"
-          }
-        }
-      }
     }
   ]
 }

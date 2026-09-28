@@ -28,7 +28,7 @@ A fleet of repositories each carrying its own copy of every tool's configuration
 - **Git hooks** — the branch and commit rules, the pre-commit lint and the secret scan, in the common area.
 - **Secrets** — the betterleaks preset, in the common area.
 - **Package manifests** — the Syncpack configuration: field order, ranges, formatting.
-- **Tests** — the Jest presets for the repositories that test with Jest, and the Bun test template for the rest.
+- **Tests** — the Bun test template.
 - **Templates** — the files no tool can extend: the editor configuration, the ignore lists, the lint of YAML, the scripts, the test runner configuration, the framework setup files.
 - **Docker Compose** — a written convention on the order of keys in a compose file; a document, not a package.
 
