@@ -48,8 +48,6 @@ const installPackage = (folder: string): void => {
   );
 };
 
-// The release archive holds devkit's packages folder without the npm packages,
-// which mise unpacks and the repository links as .devkit.
 const unpackRelease = (folder: string): void => {
   cpSync(resolve(ROOT, 'packages/common'), join(folder, '.devkit/common'), {
     recursive: true,
@@ -64,9 +62,6 @@ const presetReference = (input: {
     ? `@droneey/devkit-ts-biome/${input.preset}`
     : `./.devkit/common/biome/${(EXPORTS[`./${input.preset}`] ?? '').slice(2)}`;
 
-// What the real Biome reports over a small project that takes this package's
-// presets as a consumer does — from npm by name, or from devkit's release
-// archive by path: each lint rule by its name, each GritQL plugin by its message.
 const lintFindings = (project: Project): Findings => {
   const folder = mkdtempSync(join(tmpdir(), 'devkit-biome-'));
   const source = project.source ?? 'npm';

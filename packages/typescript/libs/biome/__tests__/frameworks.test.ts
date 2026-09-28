@@ -2,8 +2,8 @@ import { describe, expect, test } from 'bun:test';
 
 import { lintFindings } from './lint.fixtures';
 
-// A React web application's manifest, so Biome sees the libraries its rules
-// are about.
+// Biome turns on the React and Tailwind rules only for a manifest that lists
+// their libraries.
 const MANIFEST = JSON.stringify({
   name: 'fixture',
   dependencies: {
