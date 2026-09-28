@@ -35,6 +35,9 @@
   "files": [
     "configs/*"
   ],
+  "devDependencies": {
+    "zod": "^4.6.5"
+  },
   "peerDependencies": {
     "typescript": "^5 || ^7"
   }

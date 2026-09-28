@@ -6,6 +6,8 @@ import { join, resolve } from 'node:path';
 import { describe, expect, test } from 'bun:test';
 import { YAML } from 'bun';
 
+import { z } from 'zod';
+
 const HOOKS_DIR = resolve(import.meta.dirname, '..');
 
 describe('lefthook configs', () => {
@@ -29,10 +31,16 @@ describe('lefthook configs', () => {
   });
 });
 
-interface HookJob {
-  name: string;
-  run: string;
-}
+const COMMIT_MESSAGE_HOOKS = z.object({
+  'commit-msg': z.object({
+    jobs: z.array(
+      z.object({
+        name: z.string(),
+        run: z.string(),
+      }),
+    ),
+  }),
+});
 
 interface CommitMessageCheck {
   exitCode: number | undefined;
@@ -41,13 +49,9 @@ interface CommitMessageCheck {
 
 // lefthook passes the message file as {1} and runs the job under sh.
 const checkCommitMessage = (message: string): CommitMessageCheck => {
-  const config = YAML.parse(
-    readFileSync(resolve(HOOKS_DIR, 'base.yaml'), 'utf8'),
-  ) as {
-    'commit-msg': {
-      jobs: HookJob[];
-    };
-  };
+  const config = COMMIT_MESSAGE_HOOKS.parse(
+    YAML.parse(readFileSync(resolve(HOOKS_DIR, 'base.yaml'), 'utf8')),
+  );
   const job = config['commit-msg'].jobs.find(
     (candidate) => candidate.name === 'commit-message',
   );

@@ -3,13 +3,17 @@ import { resolve } from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
+import { z } from 'zod';
+
 import { lintFindings, PACKAGE_DIR } from './lint.fixtures';
 
-const EXPORTS = (
-  JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')) as {
-    exports: Readonly<Record<string, string>>;
-  }
-).exports;
+const EXPORTS = z
+  .object({
+    exports: z.record(z.string(), z.string()),
+  })
+  .parse(
+    JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')),
+  ).exports;
 
 const presetPath = (name: string): string =>
   resolve(PACKAGE_DIR, EXPORTS[`./${name}`] ?? `missing-${name}`);
@@ -167,6 +171,14 @@ describe('biome presets', () => {
         'src/main.ts': FOUR_PARAMETERS,
       },
       rule: 'useMaxParams',
+    },
+    {
+      condition: 'a value is cast to the type the code hopes for',
+      files: {
+        'src/main.ts':
+          'interface Order {\n  id: string;\n}\n\nexport const read = (value: unknown): Order => value as Order;\n',
+      },
+      rule: 'noUnsafeTypeAssertion',
     },
     {
       condition: 'shipped code writes to the console',

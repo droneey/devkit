@@ -50,6 +50,7 @@
     "@types/node": "^24.19.0",
     "dependency-cruiser": "^18.4.0",
     "syncpack": "^15.3.3",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "zod": "^4.6.5"
   }
 }

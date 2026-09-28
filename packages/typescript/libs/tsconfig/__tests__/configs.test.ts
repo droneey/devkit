@@ -5,15 +5,19 @@ import { join, resolve } from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
+import { z } from 'zod';
+
 const PACKAGE_DIR = resolve(import.meta.dirname, '..');
 const ROOT = resolve(PACKAGE_DIR, '../../../..');
 const TSC = resolve(ROOT, 'node_modules/.bin/tsc');
 
-const EXPORTS = (
-  JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')) as {
-    exports: Readonly<Record<string, string>>;
-  }
-).exports;
+const EXPORTS = z
+  .object({
+    exports: z.record(z.string(), z.string()),
+  })
+  .parse(
+    JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')),
+  ).exports;
 
 const presetPath = (name: string): string =>
   resolve(PACKAGE_DIR, EXPORTS[`./${name}`] ?? `missing-${name}`);
