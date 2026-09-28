@@ -11,7 +11,7 @@ const HOOKS_DIR = resolve(import.meta.dirname, '..');
 describe('lefthook configs', () => {
   test('should run Biome over the staged files when a repository commits, from npm or from mise', () => {
     // Arrange
-    const source = readFileSync(resolve(HOOKS_DIR, 'biome.yml'), 'utf8');
+    const source = readFileSync(resolve(HOOKS_DIR, 'biome.yaml'), 'utf8');
 
     // Act
     const config: unknown = YAML.parse(source);
@@ -42,7 +42,7 @@ interface CommitMessageCheck {
 // lefthook passes the message file as {1} and runs the job under sh.
 const checkCommitMessage = (message: string): CommitMessageCheck => {
   const config = YAML.parse(
-    readFileSync(resolve(HOOKS_DIR, 'base.yml'), 'utf8'),
+    readFileSync(resolve(HOOKS_DIR, 'base.yaml'), 'utf8'),
   ) as {
     'commit-msg': {
       jobs: HookJob[];

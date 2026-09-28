@@ -59,20 +59,20 @@ postinstall = [
 ### Git hooks (Lefthook)
 
 ```yaml
-# lefthook.yml
+# lefthook.yaml
 extends:
-  - .devkit/common/lefthook/base.yml
-  - .devkit/common/lefthook/biome.yml
-  - .devkit/common/lefthook/betterleaks.yml
+  - .devkit/common/lefthook/base.yaml
+  - .devkit/common/lefthook/biome.yaml
+  - .devkit/common/lefthook/betterleaks.yaml
 ```
 
 `mise install` installs them, through the `postinstall` hook above.
 
 | Hook | Job | Checks |
 |---|---|---|
-| `base.yml` | `validate-branch`, `commit-message` | The branch `(feature\|fix\|hotfix)/{id}-{name}`; Conventional Commits with `feat`, `fix`, `refactor`, `chore` and `!`, no scope, a sentence-case subject that is not a placeholder, no body |
-| `biome.yml` | `biome` | `biome check --write` on the staged files, with Biome from npm or from mise |
-| `betterleaks.yml` | `secrets` | `betterleaks git --pre-commit --staged --redact` over the staged changes |
+| `base.yaml` | `validate-branch`, `commit-message` | The branch `(feature\|fix\|hotfix)/{id}-{name}`; Conventional Commits with `feat`, `fix`, `refactor`, `chore` and `!`, no scope, a sentence-case subject that is not a placeholder, no body |
+| `biome.yaml` | `biome` | `biome check --write` on the staged files, with Biome from npm or from mise |
+| `betterleaks.yaml` | `secrets` | `betterleaks git --pre-commit --staged --redact` over the staged changes |
 
 ### Secrets (betterleaks)
 
