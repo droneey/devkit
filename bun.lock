@@ -39,7 +39,7 @@
       "name": "@droneey/devkit-ts-stryker",
       "version": "1.28.0",
       "bin": {
-        "mutation-check": "./dist/main.js",
+        "mutation-check": "dist/main.js",
       },
       "peerDependencies": {
         "@stryker-mutator/core": ">=10.0.0",
