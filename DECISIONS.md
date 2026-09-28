@@ -7,6 +7,6 @@
 ## ADR-0002 — The TypeScript peer is a range of majors, not a floor
 **Date:** 2026-09-11 · **Deviates:** `bun-workspaces` stack §3
 
-- **Context.** The stack declares the configured tool as a peer with a floor (`>=`). The tsconfig package declares `typescript` as `^5 || ^7` and the jest package as `^5`: ranges of majors, set in the first commit of the kit. Six, the bridge release before the native seven, is outside the tsconfig range.
+- **Context.** The stack declares the configured tool as a peer with a floor (`>=`). The tsconfig package declares `typescript` as `^5 || ^7`: a range of majors, set in the first commit of the kit. Six, the bridge release before the native seven, is outside the tsconfig range.
 - **Decision.** The ranges stay as they are; the departure is recorded here rather than widened away.
 - **Why.** A floor is a promise about every future major of a compiler whose next major changes the defaults; a range of majors promises only the ones the configuration is written for.

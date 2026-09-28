@@ -100,7 +100,7 @@ ls-lint comes from mise (`ls-lint = "2.3.1"`) and reads its parts from the relea
 
 | Part | Names |
 | --- | --- |
-| `base.yaml` | Every file and folder in kebab-case, hidden ones (`.github/`, `.editorconfig`) and names with up to three extensions (`order-card.stories.tsx`, `checkout.e2e.spec.ts`) too; ignores `.git`, `.devkit`, `node_modules`, `coverage`, `dist`, `reports` and Stryker's sandbox |
+| `base.yaml` | Every file and folder in kebab-case, hidden ones (`.github/`, `.editorconfig`) and names with up to three extensions (`order-card.stories.tsx`, `checkout.e2e.test.ts`) too; ignores `.git`, `.devkit`, `node_modules`, `coverage`, `dist`, `reports` and Stryker's sandbox |
 | `markdown.yaml` | Documents in kebab-case or upper case (`README.md`, `CODE_OF_CONDUCT.md`) |
 | `typescript.yaml` | `.ts` and `.tsx` in kebab-case, and `__tests__/` folders |
 | `python.yaml` | Modules and their compiled caches in snake_case with `__init__.py` and `__main__.py`, packages in snake_case; ignores `.venv` and the tools' caches |
