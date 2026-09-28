@@ -11,21 +11,27 @@ import {
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 
+import { z } from 'zod';
+
 const PACKAGE_DIR = resolve(import.meta.dirname, '..');
 const ROOT = resolve(PACKAGE_DIR, '../../../..');
 const BIOME = resolve(ROOT, 'node_modules/.bin/biome');
-const EXPORTS = (
-  JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')) as {
-    exports: Readonly<Record<string, string>>;
-  }
-).exports;
+const EXPORTS = z
+  .object({
+    exports: z.record(z.string(), z.string()),
+  })
+  .parse(
+    JSON.parse(readFileSync(resolve(PACKAGE_DIR, 'package.json'), 'utf8')),
+  ).exports;
 
-interface Report {
-  diagnostics: readonly {
-    category: string;
-    message: string;
-  }[];
-}
+const REPORT = z.object({
+  diagnostics: z.array(
+    z.object({
+      category: z.string(),
+      message: z.string(),
+    }),
+  ),
+});
 
 interface Project {
   files: Readonly<Record<string, string>>;
@@ -112,7 +118,7 @@ const lintFindings = (project: Project): Findings => {
     recursive: true,
   });
 
-  const report = JSON.parse(linting.stdout) as Report;
+  const report = REPORT.parse(JSON.parse(linting.stdout));
 
   return {
     plugins: report.diagnostics

@@ -18,18 +18,25 @@
         "dependency-cruiser": "^18.4.0",
         "syncpack": "^15.3.3",
         "typescript": "^7.0.2",
+        "zod": "^4.6.5",
       },
     },
     "packages/typescript/libs/biome": {
       "name": "@droneey/devkit-ts-biome",
-      "version": "1.28.0",
+      "version": "1.33.0",
+      "devDependencies": {
+        "zod": "^4.6.5",
+      },
       "peerDependencies": {
         "@biomejs/biome": ">=2.5.0",
       },
     },
     "packages/typescript/libs/dependency-cruiser": {
       "name": "@droneey/devkit-ts-dependency-cruiser",
-      "version": "1.28.0",
+      "version": "1.33.0",
+      "devDependencies": {
+        "zod": "^4.6.5",
+      },
       "peerDependencies": {
         "@swc/core": ">=1.0.0",
         "dependency-cruiser": ">=17.0.0",
@@ -37,7 +44,7 @@
     },
     "packages/typescript/libs/stryker": {
       "name": "@droneey/devkit-ts-stryker",
-      "version": "1.28.0",
+      "version": "1.33.0",
       "bin": {
         "mutation-check": "dist/main.js",
       },
@@ -47,14 +54,17 @@
     },
     "packages/typescript/libs/syncpack": {
       "name": "@droneey/devkit-ts-syncpack",
-      "version": "1.28.0",
+      "version": "1.33.0",
       "peerDependencies": {
         "syncpack": ">=15.0.0",
       },
     },
     "packages/typescript/libs/tsconfig": {
       "name": "@droneey/devkit-ts-tsconfig",
-      "version": "1.28.0",
+      "version": "1.33.0",
+      "devDependencies": {
+        "zod": "^4.6.5",
+      },
       "peerDependencies": {
         "typescript": "^5 || ^7",
       },

@@ -7,6 +7,8 @@ import { join, resolve } from 'node:path';
 import { describe, expect, test } from 'bun:test';
 import { YAML } from 'bun';
 
+import { z } from 'zod';
+
 const COMMON = resolve(import.meta.dirname, '../..');
 const ROOT = resolve(COMMON, '../..');
 const PRESET = resolve(COMMON, 'betterleaks/betterleaks.toml');
@@ -54,17 +56,23 @@ if (BETTERLEAKS === '') {
   );
 }
 
+const PRE_COMMIT_HOOKS = z.object({
+  'pre-commit': z.object({
+    jobs: z.array(
+      z.object({
+        name: z.string(),
+        run: z.string(),
+      }),
+    ),
+  }),
+});
+
 const hookCommand = (): string => {
-  const config = YAML.parse(
-    readFileSync(resolve(COMMON, 'lefthook/betterleaks.yaml'), 'utf8'),
-  ) as {
-    'pre-commit': {
-      jobs: {
-        name: string;
-        run: string;
-      }[];
-    };
-  };
+  const config = PRE_COMMIT_HOOKS.parse(
+    YAML.parse(
+      readFileSync(resolve(COMMON, 'lefthook/betterleaks.yaml'), 'utf8'),
+    ),
+  );
 
   return (
     config['pre-commit'].jobs.find(({ name }) => name === 'secrets')?.run ??

@@ -274,6 +274,7 @@
       },
       "nursery": {
         "noFloatingPromises": "error",
+        "noUnsafeTypeAssertion": "error",
         "useExplicitType": "error",
         "noConditionalExpect": "error",
         "noMisusedPromises": "error",

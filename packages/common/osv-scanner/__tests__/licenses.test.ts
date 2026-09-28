@@ -5,17 +5,23 @@ import { join, resolve } from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
-interface Report {
-  results: readonly {
-    packages: readonly {
-      // biome-ignore lint/style/useNamingConvention: osv-scanner names the field license_violations
-      license_violations?: readonly string[];
-      package: {
-        name: string;
-      };
-    }[];
-  }[];
-}
+import { z } from 'zod';
+
+const REPORT = z.object({
+  results: z.array(
+    z.object({
+      packages: z.array(
+        z.object({
+          // biome-ignore lint/style/useNamingConvention: osv-scanner names the field license_violations
+          license_violations: z.array(z.string()).optional(),
+          package: z.object({
+            name: z.string(),
+          }),
+        }),
+      ),
+    }),
+  ),
+});
 
 const COMMON = resolve(import.meta.dirname, '../..');
 const ROOT = resolve(COMMON, '../..');
@@ -96,7 +102,7 @@ const violations = (
     recursive: true,
   });
 
-  const report = JSON.parse(scanning.stdout) as Report;
+  const report = REPORT.parse(JSON.parse(scanning.stdout));
 
   return report.results.flatMap(({ packages: scanned }) =>
     scanned

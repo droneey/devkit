@@ -11,6 +11,8 @@ import { dirname, join, resolve } from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
+import { z } from 'zod';
+
 const PACKAGE_DIR = resolve(import.meta.dirname, '..');
 const ROOT = resolve(PACKAGE_DIR, '../../../..');
 const DEPCRUISE = resolve(ROOT, 'node_modules/.bin/depcruise');
@@ -19,16 +21,18 @@ interface Project {
   files: Readonly<Record<string, string>>;
 }
 
-interface Report {
-  summary: {
-    totalCruised: number;
-    violations: readonly {
-      rule: {
-        name: string;
-      };
-    }[];
-  };
-}
+const REPORT = z.object({
+  summary: z.object({
+    totalCruised: z.number(),
+    violations: z.array(
+      z.object({
+        rule: z.object({
+          name: z.string(),
+        }),
+      }),
+    ),
+  }),
+});
 
 interface Cruise {
   cruised: number;
@@ -109,7 +113,7 @@ const cruise = (project: Project): Cruise => {
     recursive: true,
   });
 
-  const report = JSON.parse(cruising.stdout) as Report;
+  const report = REPORT.parse(JSON.parse(cruising.stdout));
 
   return {
     cruised: report.summary.totalCruised,
