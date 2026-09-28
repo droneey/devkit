@@ -12,6 +12,9 @@
 **/dist/
 **/out/
 
+# Mutation testing
+.stryker-tmp/
+
 # mise
 mise.local.toml
 /.constitution

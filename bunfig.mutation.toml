@@ -1,0 +1,6 @@
+[test]
+root = "./packages/typescript/libs/stryker"
+coverage = false
+
+[run]
+bun = true
