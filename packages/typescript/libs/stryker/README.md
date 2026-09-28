@@ -20,7 +20,11 @@ export default {
 };
 ```
 
-`config` runs the tests through Bun's command runner with `bunfig.mutation.toml` (copy `packages/typescript/templates/bun/bunfig.mutation.toml`: tests from `src`, no coverage), works in `.stryker-tmp`, leaves the linked `.devkit` out of its sandbox and skips Stryker's tsconfig step, which TypeScript 7 does not support. It keeps no incremental report: with the command runner Stryker cannot tell which tests a mutant meets, so a cached result can hide a survivor or report one that is gone; mutating only the changed lines keeps a run short instead.
+`config` runs the tests through Bun's command runner with `bunfig.mutation.toml` (copy `packages/typescript/templates/bun/bunfig.mutation.toml`: tests from `src`, no coverage). It works in `.stryker-tmp`, leaves the linked `.devkit` out of its sandbox and skips Stryker's tsconfig step, which TypeScript 7 does not support.
+
+It keeps no incremental report: with the command runner Stryker cannot tell which tests a mutant meets, so a cached result can hide a survivor or report one that is gone. Mutating only the changed lines keeps a run short instead.
+
+A Node project sets its own `testRunner` over `config`, such as `vitest` with its Stryker plugin.
 
 ## The mutation check
 
@@ -39,4 +43,4 @@ export default {
 - a new file, whole;
 - the file a changed spec proves, whole: `src/__tests__/order.utils.test.ts` proves `src/order.utils.ts`, so a weakened test cannot pass unseen.
 
-A change that touches no mutated line runs no mutant. `mutation-check all` mutates everything the configuration names. The bin runs under Bun, as Stryker 10 does.
+A change that touches no mutated line runs no mutant. `mutation-check all` mutates everything the configuration names. The bin is built to JavaScript on publish, so it runs under Node and Bun alike.

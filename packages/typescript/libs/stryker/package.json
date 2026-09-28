@@ -24,7 +24,7 @@
   },
   "type": "module",
   "bin": {
-    "mutation-check": "./src/main.ts"
+    "mutation-check": "./dist/main.js"
   },
   "types": "./index.d.ts",
   "exports": {
@@ -34,11 +34,14 @@
     }
   },
   "files": [
+    "dist/*",
     "index.d.ts",
-    "index.mjs",
-    "src/changes.ts",
-    "src/main.ts"
+    "index.mjs"
   ],
+  "scripts": {
+    "build": "rm -rf dist && bun build --target=node --packages=external ./src/main.ts --outdir dist",
+    "prepublishOnly": "bun run build"
+  },
   "peerDependencies": {
     "@stryker-mutator/core": ">=10.0.0"
   }
