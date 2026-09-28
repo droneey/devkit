@@ -318,6 +318,22 @@ describe('biome presets', () => {
       message: 'Name what the function does',
     },
     {
+      condition: 'a method is named by an empty verb',
+      files: {
+        'src/features/orders/order.ts':
+          'export const orders = {\n  handle(): number {\n    return 1;\n  },\n};\n',
+      },
+      message: 'Name what the function does',
+    },
+    {
+      condition: 'a spec leaves a case to do',
+      files: {
+        'src/order.test.ts':
+          "import { test } from 'bun:test';\n\ntest.todo('adds totals');\n",
+      },
+      message: 'Write the case or leave it out',
+    },
+    {
       condition: 'a response body is cast with .json<T>()',
       files: {
         'src/features/orders/order.ts':

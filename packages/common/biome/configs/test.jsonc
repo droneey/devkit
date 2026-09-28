@@ -32,6 +32,16 @@
   ],
   "plugins": [
     {
+      "path": "./.devkit/common/biome/plugins/todo-tests.grit",
+      "includes": [
+        "**/__tests__/**",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+      ],
+    },
+    {
       "path": "./.devkit/common/biome/plugins/strict-equal.grit",
       "includes": [
         "**/__tests__/**",

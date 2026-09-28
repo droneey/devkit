@@ -75,6 +75,11 @@ describe('framework presets', () => {
       rule: 'noDangerouslySetInnerHtmlWithChildren',
     },
     {
+      condition: 'an element takes an inline style',
+      source: component("<div style={{ color: 'red' }} />"),
+      rule: 'noInlineStyles',
+    },
+    {
       condition: 'a class carries an arbitrary value',
       source: component("<div className='p-[13px]' />"),
       rule: 'noTailwindArbitraryValue',
@@ -118,6 +123,41 @@ describe('framework presets', () => {
         'react',
       ],
       rule: 'noNoninteractiveElementInteractions',
+    },
+    {
+      condition: 'a hook is called inside a condition in a .ts file',
+      files: {
+        'package.json': JSON.stringify({
+          name: 'fixture',
+        }),
+        'src/order.hooks.ts':
+          "import { useState } from 'react';\n\nexport function useOrder(open: boolean): number {\n  if (open) {\n    const [count] = useState(0);\n    return count;\n  }\n  return 0;\n}\n",
+      },
+      presets: [
+        'base',
+        'react',
+      ],
+      rule: 'useHookAtTopLevel',
+    },
+    {
+      condition: 'a React Native style holds a literal colour',
+      files: {
+        'package.json': JSON.stringify({
+          name: 'fixture',
+          dependencies: {
+            react: '19.2.0',
+            'react-native': '0.81.0',
+          },
+        }),
+        'src/panel.tsx':
+          "import { View } from 'react-native';\n\nexport function Panel(): React.ReactElement {\n  return <View style={{ backgroundColor: 'red' }} />;\n}\n",
+      },
+      presets: [
+        'base',
+        'react',
+        'react-native',
+      ],
+      rule: 'noReactNativeLiteralColors',
     },
     {
       condition: 'a component file is in PascalCase',
