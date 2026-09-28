@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-dependency-cruiser",
-  "version": "1.30.0",
+  "version": "1.31.0",
   "description": "Shared dependency-cruiser configuration: the import hygiene any TypeScript repository keeps, for its .dependency-cruiser.mjs to extend.",
   "keywords": [
     "architecture",
