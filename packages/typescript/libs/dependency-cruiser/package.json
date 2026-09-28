@@ -23,7 +23,7 @@
     "directory": "packages/typescript/libs/dependency-cruiser"
   },
   "exports": {
-    "./hygiene": "./configs/hygiene.mjs"
+    "./base": "./configs/base.mjs"
   },
   "files": [
     "configs/*"

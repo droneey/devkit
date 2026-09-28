@@ -71,7 +71,7 @@ const cruise = (project: Project): Cruise => {
     // dependency-cruiser resolves `extends` without the package's exports, so the
     // preset is named by its file's path.
     '.dependency-cruiser.mjs':
-      "export default { extends: '@droneey/devkit-ts-dependency-cruiser/configs/hygiene.mjs' };\n",
+      "export default { extends: '@droneey/devkit-ts-dependency-cruiser/configs/base.mjs' };\n",
   };
 
   for (const [path, text] of Object.entries(files)) {
@@ -117,7 +117,7 @@ const cruise = (project: Project): Cruise => {
   };
 };
 
-describe('dependency-cruiser hygiene preset', () => {
+describe('dependency-cruiser base preset', () => {
   test.each([
     {
       condition: 'two modules import each other',

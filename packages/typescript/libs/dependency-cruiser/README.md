@@ -13,7 +13,7 @@ Create `.dependency-cruiser.mjs` in your project root:
 ```js
 /** @type {import('dependency-cruiser').IConfiguration} */
 export default {
-  extends: '@droneey/devkit-ts-dependency-cruiser/configs/hygiene.mjs',
+  extends: '@droneey/devkit-ts-dependency-cruiser/configs/base.mjs',
 };
 ```
 
