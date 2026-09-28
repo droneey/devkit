@@ -14,23 +14,17 @@ Create `.syncpackrc.mjs` in your project root:
 export { config as default } from '@droneey/devkit-ts-syncpack';
 ```
 
-A monorepo adds its own version groups on top:
+A repository of packages takes `packages` instead:
 
 ```js
-import { config } from '@droneey/devkit-ts-syncpack';
-
-export default {
-  ...config,
-  versionGroups: [
-    {
-      label: 'Workspace packages use the workspace protocol',
-      dependencies: ['@acme/**'],
-      dependencyTypes: ['dev'],
-      pinVersion: 'workspace:*',
-    },
-  ],
-};
+export { packages as default } from '@droneey/devkit-ts-syncpack';
 ```
+
+On top of `config`, it holds:
+
+- every package of the repository at one version: each manifest's `version` is read as one custom type under `sameRange`, so a package left behind is a `SameRangeMismatch`;
+- the repository's own packages (`$LOCAL`) taken as `workspace:*` in dependencies and dev dependencies;
+- peer dependencies left at their wider ranges.
 
 ## Scripts
 
