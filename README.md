@@ -24,16 +24,16 @@ Tools that are not JavaScript — lefthook, betterleaks — come from mise, and 
 [tools]
 betterleaks = "1.8.1"
 lefthook = "2.1.14"
-"http:devkit" = { version = "<version>", url = "https://github.com/droneey/devkit/releases/download/v{{ version }}/devkit.tar.gz", strip_components = 0, checksum = "sha256:<the release's devkit.tar.gz.sha256>" }
+"github:droneey/devkit" = { version = "<version>", asset_pattern = "devkit.tar.gz", strip_components = 0 }
 
 [hooks]
 postinstall = [
-  "ln -sfn \"$(mise where http:devkit)\" .devkit",
+  "ln -sfn \"$(mise where github:droneey/devkit)\" .devkit",
   "lefthook install",
 ]
 ```
 
-`strip_components = 0` keeps the archive's `common/` folder, and `checksum` is checked on every platform. `mise install` relinks `.devkit` and installs the git hooks each time it runs, in a fresh clone and in CI alike — never `prepare`, which runs where mise does not, such as the npm deploy; a version bump takes the new checksum from the release's `devkit.tar.gz.sha256`.
+`asset_pattern` names the archive, `strip_components = 0` keeps its `common/` folder, and `mise lock` records in `mise.lock` the checksum GitHub publishes for it; Renovate bumps the version. `mise install` relinks `.devkit` and installs the git hooks each time it runs, in a fresh clone and in CI alike — never `prepare`, which runs where mise does not, such as the npm deploy.
 
 ### Configuration files
 
