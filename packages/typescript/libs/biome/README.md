@@ -48,12 +48,12 @@ The base config includes:
 
 - **Formatter** -- 80 char line width, 2 spaces, single quotes, semicolons, trailing commas, LF line endings.
 - **Linter** -- 100+ rules across correctness, complexity, style, suspicious, performance, and security categories, all at `error`: a function body of at most 100 lines, a file of at most 500, cognitive complexity of at most 10, at most three positional parameters, strict equality with `null` too, no `any`, no non-null assertion, no console output.
-- **GritQL plugins** -- no bare verb as a function name (`handle`, `process`, `get`…), no `.json<T>()` cast of a response body, type names without an `I` prefix or a `Type`/`Interface` suffix.
+- **GritQL plugins** -- no bare verb as a function or method name (`handle`, `process`, `get`…), no `.json<T>()` cast of a response body, type names without an `I` prefix or a `Type`/`Interface` suffix.
 - **Assist** -- import sorting, duplicate class detection, interface member sorting.
 
 ### Tests
 
-`test` applies to `**/__tests__/**` and every `*.spec.ts(x)` and `*.test.ts(x)`: specs have no line limits, keep `any` and `!` out like any other code, and compare with `toStrictEqual`.
+`test` applies to `**/__tests__/**` and every `*.spec.ts(x)` and `*.test.ts(x)`: specs have no line limits, keep `any` and `!` out like any other code, compare with `toStrictEqual`, and leave no `test.todo`, `it.todo` or `describe.todo`.
 
 ### CSS
 
@@ -80,10 +80,10 @@ The base config includes:
 
 | Config | Description |
 |---|---|
-| `@droneey/devkit-ts-biome/react` | React component rules, hooks, JSX a11y; function components only, and no legacy API (`useContext`, `<Context.Provider>`, `defaultProps`, `createRef`, string refs) |
-| `@droneey/devkit-ts-biome/react-dom` | React in the browser: DOM attributes as the DOM spells them, ids from `useId`, `autoComplete` on fields for the user's own data, Testing Library queries by role, label and text |
+| `@droneey/devkit-ts-biome/react` | React component rules, hooks at the top level with complete dependencies in every `.ts` and `.tsx` file, JSX a11y; function components only, and no legacy API (`useContext`, `<Context.Provider>`, `defaultProps`, `createRef`, string refs) |
+| `@droneey/devkit-ts-biome/react-dom` | React in the browser: DOM attributes as the DOM spells them, ids from `useId`, no inline `style`, `autoComplete` on fields for the user's own data, Testing Library queries by role, label and text |
 | `@droneey/devkit-ts-biome/tailwind` | Tailwind: no arbitrary values (in `className`, `cva`, `cn`, `clsx`, `twMerge`; one that only reads a token's variable, such as `bg-[var(--color-surface)]`, carries a `biome-ignore` with its reason), `h-dvh` over `h-screen`, no `max-*:` breakpoints |
-| `@droneey/devkit-ts-biome/react-native` | React Native specific rules |
+| `@droneey/devkit-ts-biome/react-native` | React Native: no deep imports, no literal colours in styles |
 | `@droneey/devkit-ts-biome/nestjs` | NestJS patterns |
 
 ```json

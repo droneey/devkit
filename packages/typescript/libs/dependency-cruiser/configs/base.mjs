@@ -13,10 +13,10 @@ export default {
       name: 'no-test-code-in-production',
       severity: 'error',
       from: {
-        pathNot: '(^|/)(__tests__|e2e)/',
+        pathNot: '(^|/)(__tests__|e2e)/|^tests/',
       },
       to: {
-        path: '(^|/)(__tests__|e2e)/',
+        path: '(^|/)(__tests__|e2e)/|^tests/',
       },
     },
     {
@@ -53,7 +53,7 @@ export default {
       severity: 'error',
       from: {
         path: '^src/',
-        pathNot: '(^|/)(__tests__|e2e)/',
+        pathNot: '(^|/)(__tests__|e2e)/|^tests/',
       },
       to: {
         dependencyTypes: [

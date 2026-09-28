@@ -139,6 +139,15 @@ describe('dependency-cruiser base preset', () => {
       rule: 'no-test-code-in-production',
     },
     {
+      condition: 'production code imports a fixture under tests/',
+      files: {
+        'src/order.ts':
+          "import { shop } from '../tests/load/shop.fixtures';\nexport const order = shop;\n",
+        'tests/load/shop.fixtures.ts': 'export const shop = 1;\n',
+      },
+      rule: 'no-test-code-in-production',
+    },
+    {
       condition: 'code imports a package the manifest does not declare',
       files: {
         'src/order.ts':

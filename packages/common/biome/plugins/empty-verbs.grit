@@ -4,7 +4,9 @@ or {
   `function $name($_): $_ { $_ }`,
   `function $name($_) { $_ }`,
   `const $name = ($_): $_ => $_`,
-  `const $name = ($_) => $_`
+  `const $name = ($_) => $_`,
+  JsMethodClassMember(name=$name),
+  JsMethodObjectMember(name=$name)
 } where {
   $name <: or {
     `handle`,

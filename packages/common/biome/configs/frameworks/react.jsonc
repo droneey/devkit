@@ -2,6 +2,19 @@
   "overrides": [
     {
       "includes": [
+        "**/*.ts",
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useHookAtTopLevel": "error",
+            "useExhaustiveDependencies": "error",
+          },
+        },
+      },
+    },
+    {
+      "includes": [
         "**/*.tsx",
         "**/*.jsx",
       ],
