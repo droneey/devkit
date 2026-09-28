@@ -5,6 +5,7 @@ bun = "1.4.2"
 lefthook = "2.1.14"
 "github:droneey/constitution" = { version = "0.35.0", asset_pattern = "constitution.tar.gz", strip_components = 0 }
 ls-lint = "2.3.1"
+osv-scanner = "2.6.0"
 
 [hooks]
 postinstall = [
