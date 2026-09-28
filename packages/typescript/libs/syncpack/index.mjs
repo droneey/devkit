@@ -50,4 +50,42 @@ const config = {
   ],
 };
 
-export { config };
+/** @satisfies {import('syncpack').RcFile} */
+const packages = {
+  ...config,
+  customTypes: {
+    packageVersion: {
+      path: 'version',
+      strategy: 'version',
+    },
+  },
+  versionGroups: [
+    {
+      label: 'Every package of the repository shares one version',
+      dependencies: [
+        'packageVersion',
+      ],
+      policy: 'sameRange',
+    },
+    {
+      label: "The repository's own packages use the workspace protocol",
+      dependencies: [
+        '$LOCAL',
+      ],
+      dependencyTypes: [
+        'dev',
+        'prod',
+      ],
+      pinVersion: 'workspace:*',
+    },
+    {
+      label: 'Peer dependencies keep their wider ranges',
+      dependencyTypes: [
+        'peer',
+      ],
+      isIgnored: true,
+    },
+  ],
+};
+
+export { config, packages };

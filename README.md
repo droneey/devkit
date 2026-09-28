@@ -114,6 +114,8 @@ A repository takes `base` and the parts of its languages, then adds its own igno
 export { config as default } from '@droneey/devkit-ts-syncpack';
 ```
 
+A repository of packages exports `packages` instead: one version for every package, its own packages as `workspace:*`, peer ranges left alone.
+
 ```json
 // package.json
 {
