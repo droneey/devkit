@@ -90,6 +90,16 @@ The preset keeps betterleaks' default rules, with nothing switched off, and skip
 
 A false positive is allowed on its line by `// betterleaks:allow <reason>`, or by its fingerprint in `.betterleaksignore` under a `#` line that states the reason; never by switching a rule off.
 
+### Vulnerabilities and licences (osv-scanner)
+
+osv-scanner comes from mise (`osv-scanner = "2.6.0"`). It reads the lockfiles (`bun.lock`, `uv.lock` and others), fails on any known vulnerability, and checks every licence against the shared list of permissive licences in the release archive, which the check passes as a flag:
+
+```json
+"audit:check": "osv-scanner scan source --licenses=\"$(paste -sd, .devkit/common/osv-scanner/licenses.txt)\" ."
+```
+
+A repository records its exceptions in `osv-scanner.toml`: an accepted vulnerability under `[[IgnoredVulns]]` with its `reason` and `ignoreUntil`, and a package whose licence the registry names wrongly under `[[PackageOverrides]]` with `license.override` and its `reason`.
+
 ### Names (ls-lint)
 
 ls-lint comes from mise (`ls-lint = "2.3.1"`) and reads its parts from the release archive, then the repository's own additions:
