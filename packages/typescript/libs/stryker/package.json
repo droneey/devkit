@@ -1,6 +1,6 @@
 {
   "name": "@droneey/devkit-ts-stryker",
-  "version": "1.31.0",
+  "version": "1.32.0",
   "description": "Shared Stryker configuration and a mutation check that mutates only the lines a change touches.",
   "keywords": [
     "config",
