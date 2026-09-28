@@ -31,10 +31,9 @@ cleanup() {
   docker compose --profile "$PROFILE" down -v --remove-orphans 2>/dev/null || true
 }
 
-# Cleanup any stale containers/volumes from a previous run that didn't tear down
+# A previous run may have stopped before its teardown.
 cleanup
 
-# Ensure teardown runs on success, failure, or Ctrl+C
 trap cleanup EXIT
 
 echo "Running $ACTION tests in Docker..."

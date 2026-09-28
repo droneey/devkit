@@ -63,14 +63,13 @@ const INSTALLED = {
   }),
 };
 
-// What the real dependency-cruiser reports over a small project that installs
-// this package and extends its preset, as a consumer does: by the file's path,
-// since dependency-cruiser resolves extends without the package's exports.
 const cruise = (project: Project): Cruise => {
   const folder = mkdtempSync(join(tmpdir(), 'devkit-depcruise-'));
   const files = {
     ...INSTALLED,
     ...project.files,
+    // dependency-cruiser resolves `extends` without the package's exports, so the
+    // preset is named by its file's path.
     '.dependency-cruiser.mjs':
       "export default { extends: '@droneey/devkit-ts-dependency-cruiser/configs/hygiene.mjs' };\n",
   };

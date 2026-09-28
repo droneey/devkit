@@ -18,8 +18,7 @@ const EXPORTS = (
 const presetPath = (name: string): string =>
   resolve(PACKAGE_DIR, EXPORTS[`./${name}`] ?? `missing-${name}`);
 
-// A project of two files extending the presets in order, checked by the real
-// compiler; its types resolve from devkit's own node_modules.
+// The project's types resolve from devkit's own node_modules.
 const typeChecks = (input: {
   main: string;
   presets: readonly string[];
