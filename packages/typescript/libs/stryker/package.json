@@ -24,7 +24,7 @@
   },
   "type": "module",
   "bin": {
-    "mutation-check": "./dist/main.js"
+    "mutation-check": "dist/main.js"
   },
   "types": "./index.d.ts",
   "exports": {
