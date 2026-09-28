@@ -228,6 +228,7 @@ Extension: [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.b
 | `@droneey/devkit-ts-biome` | Biome configuration (formatter + linter) |
 | `@droneey/devkit-ts-tsconfig` | TypeScript configuration variants |
 | `@droneey/devkit-ts-syncpack` | Syncpack configuration (package.json order and ranges) |
+| `@droneey/devkit-ts-stryker` | Stryker configuration and `mutation-check`, which mutates the lines a change touches |
 | `@droneey/devkit-ts-dependency-cruiser` | dependency-cruiser hygiene: no cycle, no test code in production, declared and resolvable dependencies |
 
 ## ⚙️ Workflows
@@ -249,7 +250,7 @@ bun install
 bun run check
 ```
 
-`check` runs Biome, Syncpack, the type checker, the tests with full coverage, dependency-cruiser and betterleaks - the same gates as the pull request. devkit reads its own common files straight from `packages/common/`.
+`check` runs Biome, Syncpack, the type checker, the tests with full coverage, the mutation check over the lines a change touches in the packages' `src/`, dependency-cruiser and betterleaks - the same gates as the pull request. devkit reads its own common files straight from `packages/common/`.
 
 ## 📐 Conventions
 

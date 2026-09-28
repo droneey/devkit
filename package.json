@@ -26,10 +26,12 @@
     "packages:check": "syncpack lint && syncpack format --check",
     "packages:fix": "syncpack fix && syncpack format",
     "type:check": "tsc --noEmit",
+    "mutation:check": "bun packages/typescript/libs/stryker/src/main.ts",
+    "mutation:all": "bun packages/typescript/libs/stryker/src/main.ts all",
     "architecture:check": "depcruise . --config .dependency-cruiser.mjs",
     "secrets:check": "betterleaks git . --redact --no-banner && betterleaks git . --pre-commit --redact --no-banner && betterleaks git . --pre-commit --staged --redact --no-banner",
     "names:check": "ls-lint --config packages/common/ls-lint/base.yaml --config packages/common/ls-lint/markdown.yaml --config packages/common/ls-lint/typescript.yaml --config .ls-lint.yaml",
-    "check": "bun run lint:check && bun run packages:check && bun run type:check && bun run test:unit && bun run architecture:check && bun run secrets:check && bun run names:check"
+    "check": "bun run lint:check && bun run packages:check && bun run type:check && bun run test:unit && bun run mutation:check && bun run architecture:check && bun run secrets:check && bun run names:check"
   },
   "workspaces": [
     "packages/typescript/libs/*"
@@ -38,8 +40,10 @@
     "@biomejs/biome": "^2.5.14",
     "@droneey/devkit-ts-biome": "workspace:*",
     "@droneey/devkit-ts-dependency-cruiser": "workspace:*",
+    "@droneey/devkit-ts-stryker": "workspace:*",
     "@droneey/devkit-ts-syncpack": "workspace:*",
     "@droneey/devkit-ts-tsconfig": "workspace:*",
+    "@stryker-mutator/core": "^10.0.0",
     "@swc/core": "^1.16.2",
     "@types/bun": "^1.4.2",
     "@types/node": "^24.19.0",

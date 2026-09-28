@@ -1,6 +1,7 @@
 {
   "extends": "@droneey/devkit-ts-tsconfig/base",
   "exclude": [
+    "**/dist/**",
     "**/templates/**"
   ]
 }

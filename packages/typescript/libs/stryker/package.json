@@ -1,0 +1,48 @@
+{
+  "name": "@droneey/devkit-ts-stryker",
+  "version": "1.28.0",
+  "description": "Shared Stryker configuration and a mutation check that mutates only the lines a change touches.",
+  "keywords": [
+    "config",
+    "mutation-testing",
+    "shared",
+    "stryker"
+  ],
+  "homepage": "https://github.com/droneey/devkit/blob/main/packages/typescript/libs/stryker#readme",
+  "bugs": {
+    "url": "https://github.com/droneey/devkit/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dmytro Kurovskyi",
+    "url": "https://kurovskyi.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droneey/devkit.git",
+    "directory": "packages/typescript/libs/stryker"
+  },
+  "type": "module",
+  "bin": {
+    "mutation-check": "./dist/main.js"
+  },
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.mjs"
+    }
+  },
+  "files": [
+    "dist/*",
+    "index.d.ts",
+    "index.mjs"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && bun build --target=node --packages=external ./src/main.ts --outdir dist",
+    "prepublishOnly": "bun run build"
+  },
+  "peerDependencies": {
+    "@stryker-mutator/core": ">=10.0.0"
+  }
+}
