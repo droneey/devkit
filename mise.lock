@@ -162,65 +162,65 @@ checksum = "sha256:bad5bbd6cf14d0980d115f5954c9ff904df619d5e994d2da1ffccd3f31630
 url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-darwin-x64-baseline.zip"
 
 [[tools."github:droneey/constitution"]]
-version = "0.35.0"
+version = "0.41.1"
 backend = "github:droneey/constitution"
-specifiers = ["0.35.0"]
+specifiers = ["0.41.1"]
 
 [tools."github:droneey/constitution".options]
 asset_pattern = "constitution.tar.gz"
 
 [tools."github:droneey/constitution"."platforms.linux-arm64"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [tools."github:droneey/constitution"."platforms.linux-arm64-musl"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [tools."github:droneey/constitution"."platforms.linux-x64"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [tools."github:droneey/constitution"."platforms.linux-x64-baseline"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [tools."github:droneey/constitution"."platforms.linux-x64-musl"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [tools."github:droneey/constitution"."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [tools."github:droneey/constitution"."platforms.macos-arm64"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [tools."github:droneey/constitution"."platforms.macos-x64"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [tools."github:droneey/constitution"."platforms.macos-x64-baseline"]
-checksum = "sha256:7ac315fc18ec0453fc11efd7729a9c78f1868c7435e147d49f01d3f67ec12d0e"
-url = "https://github.com/droneey/constitution/releases/download/v0.35.0/constitution.tar.gz"
-url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594061238"
+checksum = "sha256:604054b1b04991f7e29db8764664cb6ca0ced155f401724913f40311cfe20a3f"
+url = "https://github.com/droneey/constitution/releases/download/v0.41.1/constitution.tar.gz"
+url_api = "https://api.github.com/repos/droneey/constitution/releases/assets/594261969"
 provenance = "github-attestations"
 
 [[tools.lefthook]]

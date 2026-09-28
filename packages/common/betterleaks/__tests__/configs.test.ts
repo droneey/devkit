@@ -56,7 +56,7 @@ if (BETTERLEAKS === '') {
 
 const hookCommand = (): string => {
   const config = YAML.parse(
-    readFileSync(resolve(COMMON, 'lefthook/betterleaks.yml'), 'utf8'),
+    readFileSync(resolve(COMMON, 'lefthook/betterleaks.yaml'), 'utf8'),
   ) as {
     'pre-commit': {
       jobs: {

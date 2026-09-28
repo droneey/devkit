@@ -1,0 +1,4 @@
+extends:
+  - packages/common/lefthook/base.yaml
+  - packages/common/lefthook/biome.yaml
+  - packages/common/lefthook/betterleaks.yaml
